@@ -64,6 +64,12 @@ Benodigde software:
 
 - Database management tool (bijv. pgAdmin of DBeaver)
 
+In de workshop wordt operating systeem Windows gebruikt, met wat kleine aanpassingen kunnen
+ook andere operating systemen gebruikt worden. 
+
+## Data bestanden
+
+In deze workshop wordt de directory c:\workshop als standaard directory gebruikt.
 
 ## Lokaal aanmaken database met Docker 
 
