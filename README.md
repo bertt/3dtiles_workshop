@@ -101,5 +101,5 @@ Met -d zorg je dat de docker ‘detached’ runt, zodat deze niet je terminal bl
 
 Met -p verzorg je de portmapping. Als je al een lokale installatie hebt van Postgres, dan zal deze waarschijnlijk al op port 5432 draaien. Daarom maken we een mapping met -p {host}:{container}, in dit geval 5439. Hiermee open je de port 5439 die aansluit op port 5432 van de container. Zo kan je dus via localhost port 5439 connectie maken met de postgres database van je container. 
 
- 
+ Start met [1_dataverwerking.md](1_dataverwerking.md)
 
