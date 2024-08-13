@@ -165,6 +165,92 @@ In dit bestand staan de referenties naar de 3D tiles.
 
 ### 3D Tiles maken van DTB punten
 
+Voor het maken van 3D tiles van de DTB punten gebruiken we i3dm.export.
+
+- Download command line tool i3dm.export (https://github.com/Geodan/i3dm.export/releases)
+
+- Unzip het bestand en copieer i3dm.export.exe naar je werkdirectory
+
+- Copieer het boom model 'tree.glb' naar je werkdirectory
+
+- Voer het volgende commando uit
+
+```shell
+ i3dm.export -c "Host=localhost;Username=postgres;Password=postgres;Database=postgres;Port=5439" -t public.v_dtb_punt_andijk -o ./dtb_punten --use_i3dm true
+```
+
+Na het opgeven van het wachtwoord wordt de 3D tileset gemaakt in de directory 'dtb_punten'. De directory bevat: 
+
+- een tileset.json bestand;
+
+- een directory 'content' met de 3D tiles in I3dm formaat;
+
+- een subtree folder met subtree file.
+
+
+## Valideren tilesets
+
+De 3D tilesets kunnen gevalideerd worden met de tool 3D Tiles Validator - https://github.com/CesiumGS/3d-tiles-validator
+
+Voor installatie van deze tool is Node.js vereist.
+
+- Download en installeer Node.js (https://nodejs.org/en/download/)
+
+- Open een command prompt en installeer de 3D Tiles Validator
+
+```shell
+npm install 3d-tiles-validator
+```
+
+- Valideer de tilesets
+
+Voor de vlakken:
+
+
+```shell
+3d-tiles-validator --tilesetFile ./dtb_vlakken/tileset.json
+Validating tileset ./dtb_vlakken/tileset.json
+Validation result:
+{
+  "date": "2024-08-13T13:08:23.895Z",
+  "numErrors": 0,
+  "numWarnings": 0,
+  "numInfos": 10,
+...
+}
+```
+
+Er komen geen errors maar 10 Info meldingen voor vanwege gebruik niet bekende glTF extensies (voor Mesh Feature en Structural Metadata). Deze informatie meldingen kunnen genegeerd worden.
+
+Voor de punten:
+  
+```shell
+3d-tiles-validator --tilesetFile ./dtb_punten/tileset.json
+Validating tileset ./dtb_punten/tileset.json
+Validation result:
+{
+  "date": "2024-08-13T13:11:54.633Z",
+  "numErrors": 0,
+  "numWarnings": 0,
+  "numInfos": 1,
+```
+Ook hier geen errors maar wel Informatie meldingen. Deze meldingen gaan over het gebruikte model (tree.glb) dat volgens glTF niet valide is. We kunnen het model valideren in https://github.khronos.org/glTF-Validator/ , dan verschijnen dezelfde meldingen. 
+
+Het beste is om met valide modellen te werken maar voor nu negeren we de meldingen. 
+
+Conclusie van de validatie: de 3D tilesets zijn valide, maar er zijn meldingen over het gebruikte model 'tree.glb'.
+
+## Facultatieve opdracht
+
+- Maak een 3D Tileset van panden in Andijk. Gebruik hiervoor BAG data (in Geopackage formaat), te downloaden via de 3dbag website (https://3dbag.nl/en/download). Zorg ervoor dat de attribuut 'identificatie' wordt meegenomen in de 3D tileset.
+
+
+
+
+
+
+
+
 
 
 
