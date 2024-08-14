@@ -12,6 +12,12 @@ Resultaat: 8-512-888.gpkg
  ogr2ogr -f PostgreSQL pg:"host=localhost user=postgres password=postgres port=5439" -t_srs epsg:4979 8-512-888.gpkg lod22_3d -nln andijk_panden
  ```
 
+- Maak een spatial index aan op de panden
+
+```
+psql -U postgres -h localhost -p 5439 -d postgres -c "CREATE INDEX andijk_panden_geom_idx ON public.andijk_panden USING GIST (geom);"
+```
+
  - Maak 3D Tiles van de andijk_panden
 
 ```

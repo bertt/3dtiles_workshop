@@ -36,7 +36,7 @@ De volgende stappen laten zien hoe je de DTB data kan downloaden en kan laden op
 
 Klik op de link 'Klik hier om dit kaartblad als Shapefile (.zip) te downloaden' in de popup om de data te downloaden.
 
-- Pak het zip-bestand uit
+- Pak het zip-bestand uit naar de werkdirectory
 
 De zip bevat 3 shapefiles:
 
@@ -44,23 +44,18 @@ De zip bevat 3 shapefiles:
 - d15cz_reg.shp (DTB vlakken)
 - d15cz_sym.shp (DTB punten)
 
- Voor het laden van de data in PostGIS gebruiken we commandline tool ogr2ogr. Als QGIS is geinstalleerd staat het in de bin directory van QGIS (bijvoorbeeld C:\Program Files\QGIS 3.36.1\bin).
+ Voor het laden van de data in PostGIS gebruiken we commandline tool ogr2ogr. 
 
- Voeg de bin directory toe aan de PATH om ogr2ogr te kunnen gebruiken. Dit kan via Windows - Settings of via de commandline:
+- Open een command prompt en navigeer naar de werkdirectory
 
- ```shell
-  set PATH=%PATH%;D:\Program Files\QGIS 3.36.1\bin
-```
-
-- Open een command prompt en navigeer naar de directory waar de shapefiles zijn uitgepakt
-
-Laden van de DTB vlakken:
+Voor het laden van de DTB vlakken in de database voer het volgende commando uit:
 
 ```
  ogr2ogr -f "PostgreSQL" PG:"host=localhost port=5439 user=postgres dbname=postgres password=postgres" d15cz_reg.shp -t_srs epsg:4979 -nln public.dtb_vlak_andijk -nlt MULTIPOLYGONZ
+
  ```
 
-Laden van de DTB punten:
+Voor het laden van de DTB punten in de database voer het volgende commando uit:
 
 ```shell
 ogr2ogr -f "PostgreSQL" PG:"host=localhost port=5439 user=postgres dbname=postgres password=postgres" d15cz_sym.shp -t_srs epsg:4979 -nln public.dtb_punt_andijk -nlt POINTZ
@@ -68,7 +63,7 @@ ogr2ogr -f "PostgreSQL" PG:"host=localhost port=5439 user=postgres dbname=postgr
 
 ### Data voorbereiden
 
-Om de data te kunnen converteren naar 3D tiles moeten we tabellen aanmaken die dienen als input voor pg2b3dm (vlakken) en i3dm.export (punten).
+Om de data te kunnen converteren naar 3D Tiles moeten we tabellen aanmaken die dienen als input voor pg2b3dm (vlakken) en i3dm.export (punten).
 
 
 Create spatial indexen
@@ -94,21 +89,58 @@ FROM public.dtb_punt_andijk
 WHERE omschr = 'Boom';
 ```
 
+De database view is gebaseerd op DTB punten en bevat de volgende gegevens:
+
+- we selecteren alleen de bomen;
+
+- gebruiken een random rotatie en schaal;
+
+- voegen het te gebruiken model model (tree.glb) toe;
+
+- voegen de attributen 'dtb id', 'omschrijving' en 'datum' toe in de 'tags' kolom.
+
 
 ### 3D Tiles maken van DTB vlakken
 
 De volgende stappen laten zien hoe je 3D tiles kan maken van de DTB vlakken.
 
 - Download command line tool pg2b3dm (https://github.com/Geodan/pg2b3dm/releases, voor Windows kies pg2b3dm-win-x64.zip
-) en pak het zip-bestand uit.
+) en pak het zip-bestand uit en copieer de executable naar de workdirectory.
 
-- Open een command prompt en navigeer naar de directory waar pg2b3dm is uitgepakt
+- Open een command prompt in de werkdirectory
+
+Check de versie van pg2b3dm
+
+```shell
+pg2b3dm --version
+Tool: pg2b3dm 2.14.0.0
+```
 
 - Voer het volgende commando uit
 
 ```
-pg2b3dm -U postgres -h localhost -p 5439 -d postgres -t public.dtb_vlak_andijk -a dtb_id,omschr,datum --use_implicit_tiling false -o ./dtb_vlakken -c wkb_geometry
+pg2b3dm -U postgres -h localhost -p 5439 -t public.dtb_vlak_andijk -a dtb_id,omschr,datum --use_implicit_tiling false -o ./dtb_vlakken -c wkb_geometry
 ```
+
+Uitleg commando:
+
+-U: gebruikersnaam van de database
+
+-h: hostnaam van de database
+
+-p: poortnummer van de database
+
+-t: naam van de tabel
+
+-a: attributen van de tabel
+
+--use_implicit_tiling: gebruik 3D Tiles 1.1 implicit 
+
+-o: output directory
+
+-c: kolom met geometrie
+
+
 
 Na het opgeven van het wachtwoord wordt de 3D tileset gemaakt in de directory 'dtb_vlakken'.
 
@@ -171,6 +203,13 @@ Voor het maken van 3D tiles van de DTB punten gebruiken we i3dm.export.
 
 - Unzip het bestand en copieer i3dm.export.exe naar je werkdirectory
 
+Check:
+
+```shell
+i3dm.export --version
+i3dm.export 2.7.2+151863f9f42ae9c3b64a8619029707221a593c30
+```
+
 - Copieer het boom model 'tree.glb' naar je werkdirectory
 
 - Voer het volgende commando uit
@@ -179,7 +218,18 @@ Voor het maken van 3D tiles van de DTB punten gebruiken we i3dm.export.
  i3dm.export -c "Host=localhost;Username=postgres;Password=postgres;Database=postgres;Port=5439" -t public.v_dtb_punt_andijk -o ./dtb_punten --use_i3dm true
 ```
 
-Na het opgeven van het wachtwoord wordt de 3D tileset gemaakt in de directory 'dtb_punten'. De directory bevat: 
+Uitleg commando:
+
+-c: connectiestring naar de database
+
+-t: naam van de tabel of view
+
+-o: output directory
+
+--use_i3dm: gebruik i3dm formaat
+
+
+Na het opgeven van het wachtwoord wordt de Instanced 3D tileset gemaakt in de directory 'dtb_punten'. De directory bevat: 
 
 - een tileset.json bestand;
 
@@ -193,8 +243,6 @@ Na het opgeven van het wachtwoord wordt de 3D tileset gemaakt in de directory 'd
 De 3D tilesets kunnen gevalideerd worden met de tool 3D Tiles Validator - https://github.com/CesiumGS/3d-tiles-validator
 
 Voor installatie van deze tool is Node.js vereist.
-
-- Download en installeer Node.js (https://nodejs.org/en/download/)
 
 - Open een command prompt en installeer de 3D Tiles Validator
 
@@ -244,7 +292,7 @@ Conclusie van de validatie: de 3D tilesets zijn valide, maar er zijn meldingen o
 
 - Maak een 3D Tileset van panden in Andijk. Gebruik hiervoor BAG data (in Geopackage formaat), te downloaden via de 3dbag website (https://3dbag.nl/en/download). Zorg ervoor dat de attribuut 'identificatie' wordt meegenomen in de 3D tileset.
 
-
+Zie eventueel de resultaten directory bestand 1_dataverwerking.txt voor de uitwerking van deze opdracht.
 
 
 

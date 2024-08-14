@@ -4,7 +4,7 @@ Digital Twins brengen data uit verschillende bronnen waarheidsgetrouw samen in e
 
 ## Workshop
 
-In deze workshop leer je aan de hand van een aantal voorbeelden hoe deze dataverwerking in elkaar steekt. De focus ligt op de 3D Tiles specificatie. Deze OGC-standaard helpt de weergave van grote 3D-datasets te optimaliseren door op slimme wijze alleen de noodzakelijke data in te laden. De hoeveelheid data in een digital twin is vaak namelijk enorm, waardoor het tegelijk opvragen van alle beschikbare data niet wenselijk is met het oog op de performance. 
+In deze workshop leer je aan de hand van een aantal voorbeelden hoe deze dataverwerking in elkaar steekt. De focus ligt op de 3D Tiles specificatie. Deze OGC-standaard helpt de weergave van grote 3D-datasets te optimaliseren door op slimme wijze alleen de noodzakelijke data in te laden. De hoeveelheid data in een digital twin is vaak enorm, waardoor het tegelijk opvragen van alle beschikbare data niet wenselijk is met het oog op de performance. 
 
 <img src = "3dtiles_ecosysteem.png">
 
@@ -12,7 +12,7 @@ Daarnaast geeft deze workshop inzicht in hoe je vanuit de geproduceerde 3D-data 
 
 In deze workshop gaan we een digital twin inrichten voor de Proefpolderdijk bij Andijk. Bij het beheer van deze dijk komt veel verschillende data kijken. We gaan aan de slag met het Digitaal Topografisch Bestand van RWS en puntenwolken. Aan de hand van deze data laten we zien welke stappen er nodig zijn om van de beschikbare brondata tot een 3D-webomgeving te komen gebruikmakend van open source tooling en open standaarden.  
 
-De workshop is ingedeeld in twee losstaande modules, te weten: 
+De workshop is ingedeeld in twee modules, te weten: 
 
 Deel 1: Dataverwerking tot 3D Tiles 
 
@@ -21,8 +21,6 @@ Deel 1: Dataverwerking tot 3D Tiles
 - Batched 3D Models en Instanced 3D Models 
 
 - PostgreSQL en PostGIS 
-
-- Puntenwolken 
 
 [1_dataverwerking.md](1_dataverwerking.md)
 
@@ -60,26 +58,72 @@ Benodigde software:
 
 - Docker
 
+Check:
+
+```shell
+docker --version
+Docker version 27.1.1, build 6312585
+```
 - QGIS
 
+Zet het path naar QGIS in de environment variables, zodat we GDAL commandline tools kunnen gebruiken.
+
+Voorbeelddirectory: C:\Program Files\QGIS 3.36.1\bin.
+
+kan via Control panel - System - Edit the system Environment Variables - Environment Variables... - System Variables - Path of via de commandline:
+
+ ```shell
+set PATH=%PATH%;D:\Program Files\QGIS 3.36.1\bin
+```
+
+Check:
+
+```shell
+ogr2ogr --version
+GDAL 3.8.4, released 2024/02/08
+```
+
 - Database management tool (bijv. pgAdmin of DBeaver)
+
+pgAdmin: https://www.pgadmin.org/
+
+DBeaver: https://dbeaver.io/
+
+De command line liefhebbers kunnen ook psql gebruiken. psql.exe staat standaard in de bin directory van de QGIS installatie.
+
+- Node.JS 
+
+Download en installeer Node.js (https://nodejs.org/en/download/)
+
+Check:
+
+```shell
+node --version
+v21.7.1
+```
 
 In de workshop wordt operating systeem Windows gebruikt, met wat kleine aanpassingen kunnen
 ook andere operating systemen gebruikt worden. 
 
-## Data bestanden
-
-In deze workshop wordt de directory c:\workshop als standaard directory gebruikt.
-
 ## Lokaal aanmaken database met Docker 
 
-Om eenvoudig lokaal een database aan te maken kan je een Docker Image pullen en deze runnen. Doe dat met de volgende command in de command line of in GIT Bash: 
+Om eenvoudig lokaal een PostGIS database aan te maken kan je een Docker Image ophalen en starten. Doe dat met de volgende command in de command line: 
 
 ```
-docker run -d --name postgis_container -e POSTGRES_PASSWORD=postgres -d -p 5439:5432 postgis/postgis 
+docker run -d -e POSTGRES_PASSWORD=postgres -d -p 5439:5432 postgis/postgis 
 ```
 
-Vervolgens kan je in DBeaver of PGAdmin en in QGIS connectie maken met deze database door een connectie toe te voegen. In de settings zet je het volgende: 
+Uitleg command: 
+
+Docker run: start een nieuwe container.
+
+Met -e environment settings, zoals een wachtwoord of username. 
+
+Met -d zorgt dat de docker ‘detached’ runt, zodat deze niet de terminal blokkeert, maar op de achtergrond draait. 
+
+Met -p verzorg de portmapping. Als je al een lokale installatie hebt van Postgres, dan zal deze waarschijnlijk al op port 5432 draaien. Daarom maken we een mapping met -p {host}:{container}, in dit geval 5439. Hiermee open je de port 5439 die aansluit op port 5432 van de container. Zo kan je dus via localhost port 5439 connectie maken met de postgres database van je container. 
+
+Vervolgens kan in DBeaver of PGAdmin en in QGIS connectie gemaakt worden met de database door een connectie toe te voegen. In de settings gebruik: 
 
 - Host: localhost 
 
@@ -89,17 +133,43 @@ Vervolgens kan je in DBeaver of PGAdmin en in QGIS connectie maken met deze data
 
 - Password: postgres 
 
-Uitleg command: 
+Check: Vraag PostGIS versie op met de volgende SQL query:
 
-Met Docker roep je Docker aan met run bouwt Docker automatisch je image en draait deze meteen als container. 
+Voorbeeld met psql client:
 
-Met --name geef je een naam aan je image. 
+```shell
+psql -h localhost -p 5439 -U postgres -d postgres -c "SELECT postgis_full_version();"
+POSTGIS="3.4.0 0874ea3"
+```
+## Werkdirectory
 
-Met -e environment settings, zoals een wachtwoord of username. 
+Maak een werkdirectory aan waarin bestanden van deze workshop worden opegslagen.
 
-Met -d zorg je dat de docker ‘detached’ runt, zodat deze niet je terminal blokkeert, maar op de achtergrond draait. 
+Bijvoorbeeld: 
 
-Met -p verzorg je de portmapping. Als je al een lokale installatie hebt van Postgres, dan zal deze waarschijnlijk al op port 5432 draaien. Daarom maken we een mapping met -p {host}:{container}, in dit geval 5439. Hiermee open je de port 5439 die aansluit op port 5432 van de container. Zo kan je dus via localhost port 5439 connectie maken met de postgres database van je container. 
+```shell
+cd c:\
+mkdir workshop_3dtiles
+```
 
- 
+## Databestanden
 
+In de workshop maken we gebruik van de volgende databestanden:
+
+- Digitaal Topografisch Bestand (DTB) van RWS
+
+- Bag 3D 
+
+In de opdrachten wordt uitgelegd hoe deze databestanden opgehaald kunnen worden. De databestanden zijn ook te vinden in de map 'data' in deze repository.
+
+## Resultaten
+
+Zie de resultaten van deze workshop in de map 'resultaten'. 
+
+Deze map bevat de volgende submappen:
+
+- andijk_panden: 3D Tiles van de panden in Andijk
+
+- dtb_punten: 3D Tiles van de DTB punten
+
+- dtb_vlakken: 3D Tiles van de DTB vlakken
