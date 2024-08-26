@@ -36,6 +36,14 @@ Open een brower en ga naar [http://localhost:8080/index.html](http://localhost:8
 
 Inpecteer de viewer op de DTB vlakken, bomen en panden. Welke attributen zijn er beschikbaar per laag?
 
+We zien dat de DTB vlakken soms verdwijnen onder het terrein, dit is eventueel op te lossen door de vlakken iets te verhogen
+  
+  ```javascript
+var translation = new Cesium.Cartesian3(0, 0, 5); 
+var modelMatrix = Cesium.Matrix4.fromTranslation(translation);
+tilesetDtbVlakken.modelMatrix = modelMatrix;
+ ```
+
 ## Tileset stijlen aanpassen
 
 Styling kan worden toegepast op de tileset op twee manieren:
