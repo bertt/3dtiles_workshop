@@ -149,18 +149,12 @@ Uitvoer van het programma moet er als volgt uitzien:
 Tool: pg2b3dm 2.14.1.0
 Options: -U postgres -h localhost -p 5439 -d postgres -t public.dtb_vlak_andijk -a dtb_id,omschr,datum --use_implicit_tiling false -o ./dtb_vlakken -c wkb_geometry --create_gltf false
 Password for user postgres:
-Start processing 2024-08-26T14:58:29....
+Start processing 2024-08-26T16:13:26....
 Input table: public.dtb_vlak_andijk
 Input geometry column: wkb_geometry
 App mode: Cesium
 Spatial reference of public.dtb_vlak_andijk.wkb_geometry: 4979
-
------------------------------------------------------------------------------
-WARNING: No spatial index detected on public.dtb_vlak_andijk.wkb_geometry
-Fix: add a spatial index, for example:
-'CREATE INDEX ON public.dtb_vlak_andijk USING gist(st_centroid(st_envelope(wkb_geometry)))'
------------------------------------------------------------------------------
-
+Spatial index detected on public.dtb_vlak_andijk.wkb_geometry
 Query bounding box of public.dtb_vlak_andijk.wkb_geometry...
 Bounding box for public.dtb_vlak_andijk.wkb_geometry (in WGS84): 5.16509253, 52.71234743, 5.29261079, 52.75545464
 Height values: [37.44 m - 74.79 m]
@@ -188,9 +182,8 @@ Geometric errors used: 2000,0
 External tileset.json files: 0
 Writing root tileset.json...
 
-Time: 0h 0m 1s 895ms
-Program finished 2024-08-26T14:58:31.
-```
+Time: 0h 0m 1s 769ms
+Program finished 2024-08-26T16:13:28.```
 
 De directory 'dtb_vlakken' bevat:
 
@@ -242,7 +235,6 @@ Na het opgeven van het wachtwoord wordt de Instanced 3D tileset gemaakt in de di
 
 - een subtree folder met subtree file.
 
-
 ## Valideren tilesets
 
 De 3D tilesets kunnen gevalideerd worden met de tool 3D Tiles Validator - https://github.com/CesiumGS/3d-tiles-validator
@@ -292,13 +284,23 @@ Het beste is om met valide modellen te werken maar voor nu negeren we de melding
 
 Conclusie van de validatie: de 3D tilesets zijn valide, maar er zijn meldingen over het gebruikte model 'tree.glb'.
 
+## Comprimeren tilesets
+
+De 3D tilesets kunnen gecomprimeerd worden met de tool 3D Tiles Compressor. Dit geldt vooral voor batched tilesets (b3dm).
+
+Voor het comprimeren van de DTB vlakken voer het volgende commanda  uit:
+
+```shell
+docker run -v c:\workshop_3dtiles\dtb_vlakken\content:/tiles -it geodan/compressor5000
+```
+
 ## Facultatieve opdracht
 
 - Maak een 3D Tileset van panden in Andijk. Gebruik hiervoor BAG data (in Geopackage formaat), te downloaden via de 3dbag website (https://3dbag.nl/en/download). Zorg ervoor dat de attribuut 'identificatie' wordt meegenomen in de 3D tileset.
 
 Zie eventueel de resultaten directory bestand 1_dataverwerking.txt voor de uitwerking van deze opdracht.
 
-
+Comprimeer de 3D tileset met de 3D Tiles Compressor.
 
 
 

@@ -4,11 +4,11 @@ Digital Twins brengen data uit verschillende bronnen waarheidsgetrouw samen in e
 
 ## Workshop
 
-In deze workshop leer je aan de hand van een aantal voorbeelden hoe deze dataverwerking in elkaar steekt. De focus ligt op de 3D Tiles specificatie. Deze OGC-standaard helpt de weergave van grote 3D-datasets te optimaliseren door op slimme wijze alleen de noodzakelijke data in te laden. De hoeveelheid data in een digital twin is vaak enorm, waardoor het tegelijk opvragen van alle beschikbare data niet wenselijk is met het oog op de performance. 
+In deze workshop wordt aan de hand van een aantal voorbeelden gedemonstreerd hoe deze dataverwerking in elkaar steekt. De focus ligt op de 3D Tiles specificatie. Deze OGC-standaard helpt de weergave van grote 3D-datasets te optimaliseren door op slimme wijze alleen de noodzakelijke data in te laden. De hoeveelheid data in een digital twin is vaak enorm, waardoor het tegelijk opvragen van alle beschikbare data niet wenselijk is met het oog op de performance. 
 
 <img src = "3dtiles_ecosysteem.png">
 
-Daarnaast geeft deze workshop inzicht in hoe je vanuit de geproduceerde 3D-data naar de daadwerkelijke visualisatie kunt komen. 3D Tiles kunnen door veel verschillende applicaties gebruikt worden (Figuur 1). In dit geval gaan we gebruik maken van CesiumJS, een krachtige open source Javascript library waarmee tilesets ingeladen kunnen worden in de browser. Met CesiumJS kan een digital twin-omgeving vormgegeven worden waarin grote hoeveelheden data als 3D Tiles geserveerd worden. 
+Na de dataverwerking gaan we de 3D Tiles visualiseren. 3D Tiles kunnen door veel verschillende applicaties gebruikt worden (Figuur 1). In dit geval gaan we gebruik maken van CesiumJS, een krachtige open source Javascript library waarmee tilesets ingeladen kunnen worden in de browser. Met CesiumJS kan een digital twin-omgeving vormgegeven worden waarin grote hoeveelheden data als 3D Tiles geserveerd worden. Ook worden de aangemaakte tilesets ingeladen in QGIS.
 
 In deze workshop gaan we een digital twin inrichten voor de Proefpolderdijk bij Andijk. Bij het beheer van deze dijk komt veel verschillende data kijken. We gaan aan de slag met het Digitaal Topografisch Bestand van RWS en puntenwolken. Aan de hand van deze data laten we zien welke stappen er nodig zijn om van de beschikbare brondata tot een 3D-webomgeving te komen gebruikmakend van open source tooling en open standaarden.  
 

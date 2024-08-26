@@ -68,6 +68,10 @@ Bekijk het resultaat in de Cesium Viewer. De vlakken zijn nu gekleurd op basis v
 
 Experimenteer met de kleuren en voeg meer condities toe.
 
+## 3D modellen toevoegen
+
+todo
+
 ## QGIS
 
 In deze oefening gaan we de gemaakte 3D Tiles inladen in QGIS.
