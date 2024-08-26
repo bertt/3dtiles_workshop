@@ -15,7 +15,7 @@
           ]
         },
         "content": {
-          "uri": "content/1_0_0.glb"
+          "uri": "content/1_0_0.b3dm"
         }
       },
       {
@@ -31,7 +31,7 @@
           ]
         },
         "content": {
-          "uri": "content/2_0_2.glb"
+          "uri": "content/2_0_2.b3dm"
         }
       },
       {
@@ -47,7 +47,7 @@
           ]
         },
         "content": {
-          "uri": "content/2_0_3.glb"
+          "uri": "content/2_0_3.b3dm"
         }
       },
       {
@@ -63,7 +63,7 @@
           ]
         },
         "content": {
-          "uri": "content/2_1_3.glb"
+          "uri": "content/2_1_3.b3dm"
         }
       },
       {
@@ -79,7 +79,7 @@
           ]
         },
         "content": {
-          "uri": "content/2_3_0.glb"
+          "uri": "content/2_3_0.b3dm"
         }
       },
       {
@@ -95,7 +95,7 @@
           ]
         },
         "content": {
-          "uri": "content/2_3_1.glb"
+          "uri": "content/2_3_1.b3dm"
         }
       },
       {
@@ -111,7 +111,7 @@
           ]
         },
         "content": {
-          "uri": "content/2_2_2.glb"
+          "uri": "content/2_2_2.b3dm"
         }
       },
       {
@@ -127,7 +127,7 @@
           ]
         },
         "content": {
-          "uri": "content/2_2_3.glb"
+          "uri": "content/2_2_3.b3dm"
         }
       },
       {
@@ -143,7 +143,7 @@
           ]
         },
         "content": {
-          "uri": "content/2_3_2.glb"
+          "uri": "content/2_3_2.b3dm"
         }
       },
       {
@@ -159,7 +159,7 @@
           ]
         },
         "content": {
-          "uri": "content/2_3_3.glb"
+          "uri": "content/2_3_3.b3dm"
         }
       }
     ],
@@ -196,6 +196,6 @@
   },
   "asset": {
     "generator": "pg2b3dm 2.14.1.0",
-    "version": "1.1"
+    "version": "1.0"
   }
 }

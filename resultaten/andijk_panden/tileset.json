@@ -15,7 +15,7 @@
           ]
         },
         "content": {
-          "uri": "content/0_0_0.glb"
+          "uri": "content/0_0_0.b3dm"
         }
       }
     ],
@@ -52,6 +52,6 @@
   },
   "asset": {
     "generator": "pg2b3dm 2.14.1.0",
-    "version": "1.1"
+    "version": "1.0"
   }
 }

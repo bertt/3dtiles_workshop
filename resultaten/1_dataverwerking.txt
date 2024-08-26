@@ -21,5 +21,5 @@ psql -U postgres -h localhost -p 5439 -d postgres -c "CREATE INDEX andijk_panden
  - Maak 3D Tiles van de andijk_panden
 
 ```
-pg2b3dm -U postgres -h localhost -p 5439 -d postgres -t public.andijk_panden -a identificatie --use_implicit_tiling false -o ./andijk_panden -c geom
+pg2b3dm -U postgres -h localhost -p 5439 -d postgres -t public.andijk_panden -a identificatie --use_implicit_tiling false -o ./andijk_panden -c geom --create_gltf false
 ```

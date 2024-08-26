@@ -119,7 +119,7 @@ Tool: pg2b3dm 2.14.0.0
 - Voer het volgende commando uit
 
 ```
-pg2b3dm -U postgres -h localhost -p 5439 -t public.dtb_vlak_andijk -a dtb_id,omschr,datum --use_implicit_tiling false -o ./dtb_vlakken -c wkb_geometry
+pg2b3dm -U postgres -h localhost -p 5439 -d postgres -t public.dtb_vlak_andijk -a dtb_id,omschr,datum --use_implicit_tiling false -o ./dtb_vlakken -c wkb_geometry --create_gltf false
 ```
 
 Uitleg commando:
@@ -141,33 +141,38 @@ Uitleg commando:
 -c: kolom met geometrie
 
 
-
 Na het opgeven van het wachtwoord wordt de 3D tileset gemaakt in de directory 'dtb_vlakken'.
 
 Uitvoer van het programma moet er als volgt uitzien:
 
 ```
 Tool: pg2b3dm 2.14.1.0
-Options: -U postgres -h localhost -p 5439 -d postgres -t public.dtb_vlak_andijk -a dtb_id,omschr,datum --use_implicit_tiling false -o ./dtb_vlakken -c wkb_geometry
+Options: -U postgres -h localhost -p 5439 -d postgres -t public.dtb_vlak_andijk -a dtb_id,omschr,datum --use_implicit_tiling false -o ./dtb_vlakken -c wkb_geometry --create_gltf false
 Password for user postgres:
-Start processing 2024-08-08T12:23:58....
+Start processing 2024-08-26T14:58:29....
 Input table: public.dtb_vlak_andijk
 Input geometry column: wkb_geometry
 App mode: Cesium
 Spatial reference of public.dtb_vlak_andijk.wkb_geometry: 4979
-Spatial index detected on public.dtb_vlak_andijk.wkb_geometry
+
+-----------------------------------------------------------------------------
+WARNING: No spatial index detected on public.dtb_vlak_andijk.wkb_geometry
+Fix: add a spatial index, for example:
+'CREATE INDEX ON public.dtb_vlak_andijk USING gist(st_centroid(st_envelope(wkb_geometry)))'
+-----------------------------------------------------------------------------
+
 Query bounding box of public.dtb_vlak_andijk.wkb_geometry...
 Bounding box for public.dtb_vlak_andijk.wkb_geometry (in WGS84): 5.16509253, 52.71234743, 5.29261079, 52.75545464
 Height values: [37.44 m - 74.79 m]
 Default color: #FFFFFF
 Default metallic roughness: #008000
 Doublesided: True
-Create glTF tiles: True
+Create glTF tiles: False
 Attribute columns: dtb_id,omschr,datum
 Center (wgs84): 5.228851660450694, 52.733901034211115
 Starting Cesium mode...
 Translation ECEF: 3854182.25,352715.03125,5052667.5
-3D Tiles version: 1.1
+3D Tiles version: 1.0
 Lod column:
 Radius column:
 Geometric errors: 2000,0
@@ -176,15 +181,15 @@ Add outlines: False
 Use 3D Tiles 1.1 implicit tiling: False
 Maximum features per tile: 1000
 Start generating tiles...
-Creating tile: 2_3_3.glb
+Creating tile: 2_3_3.b3dm
 Tiles created: 10
 Geometric errors used: 2000,0
 
 External tileset.json files: 0
 Writing root tileset.json...
 
-Time: 0h 0m 1s 972ms
-Program finished 2024-08-08T12:24:00.
+Time: 0h 0m 1s 895ms
+Program finished 2024-08-26T14:58:31.
 ```
 
 De directory 'dtb_vlakken' bevat:
@@ -193,7 +198,7 @@ De directory 'dtb_vlakken' bevat:
 
 In dit bestand staan de referenties naar de 3D tiles.
 
-- een directory 'content' met de 3D tiles in glb formaat. Een glb bestand is een binair formaat voor 3D modellen. Dubbelklik op een glb bestand om het te bekijken in programma '3D Viewer'. Het bestand kan ook geopend worden in https://gltf-viewer.donmccurdy.com/
+- een directory 'content' met de 3D tiles in b3dm formaat. 
 
 ### 3D Tiles maken van DTB punten
 
@@ -260,15 +265,14 @@ Voor de vlakken:
 Validating tileset ./dtb_vlakken/tileset.json
 Validation result:
 {
-  "date": "2024-08-13T13:08:23.895Z",
+  "date": "2024-08-26T13:00:03.503Z",
   "numErrors": 0,
   "numWarnings": 0,
-  "numInfos": 10,
-...
+  "numInfos": 0
 }
 ```
 
-Er komen geen errors maar 10 Info meldingen voor vanwege gebruik niet bekende glTF extensies (voor Mesh Feature en Structural Metadata). Deze informatie meldingen kunnen genegeerd worden.
+Er zijn geen errors, warnings of informatie meldingen. De 3D tileset is valide.
 
 Voor de punten:
   
