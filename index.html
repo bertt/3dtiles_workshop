@@ -40,7 +40,8 @@
       navigationHelpButton: false,
       navigationInstructionsInitiallyVisible: true,
       scene3DOnly: true,
-      shouldAnimate: false,
+      geocoder: false,
+      shouldAnimate: true,
       baseLayer: new Cesium.ImageryLayer(new Cesium.UrlTemplateImageryProvider({
           url: "https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0/grijs/EPSG:3857/{z}/{x}/{y}.png",
           maximumLevel: 19,
@@ -75,6 +76,13 @@ const highlighted = {
       "./resultaten//andijk_panden/tileset.json"
     );  
     viewer.scene.primitives.add(tilesetPanden);
+
+    const windturbine = viewer.entities.add({ 
+      position: Cesium.Cartesian3.fromDegrees(5.193486,52.754867), 
+      model: { 
+        uri: "windturbine.glb"         
+     }, 
+    });
 
     viewer.scene.globe.depthTestAgainstTerrain = true;
     viewer.scene.globe.enableLighting = false;

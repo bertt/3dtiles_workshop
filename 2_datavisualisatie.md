@@ -34,7 +34,15 @@ Open index.html in een teksteditor. In de code worden 3 tilesets geladen:
 
 Open een brower en ga naar [http://localhost:8080/index.html](http://localhost:8080/index.html). Je ziet nu de 3D Tiles in de Cesium Viewer.
 
-Inpecteer de viewer op de DTB vlakken, bomen en panden. Welke attributen zijn er beschikbaar per laag?
+De Cesium viewer bevat een aantal kaartlagen:
+
+- PDOK BRT achtergrondkaart;
+
+- 3D Basisvoorziening - Digitaal Terreinmodel (DTM)
+
+https://api.pdok.nl/kadaster/3d-basisvoorziening/ogc/v1_0/collections/digitaalterreinmodel
+
+Inspecteer de viewer op de DTB vlakken, bomen en panden. Welke attributen zijn er beschikbaar per laag?
 
 We zien dat de DTB vlakken soms verdwijnen onder het terrein, dit is eventueel op te lossen door de vlakken iets te verhogen
   
@@ -78,7 +86,24 @@ Experimenteer met de kleuren en voeg meer condities toe.
 
 ## 3D modellen toevoegen
 
-todo
+Naast 3D Tiles kunnen we ook losse 3D modellen toevoegen aan de visualisatie.
+
+Kopieer het 3D model 'windturbine.glb' naar de werkdirectory.
+
+Voeg de volgende code toe aan index.html en bekijk het resultaat in de browser:
+
+```javascript
+    const windturbine = viewer.entities.add({ 
+      position: Cesium.Cartesian3.fromDegrees(5.193486,52.754867), 
+      model: { 
+        uri: "windturbine.glb"         
+     }, 
+    });
+```
+
+Als het goed is zie je nu een windturbine met animatie in de Cesium Viewer.
+
+<img src = "windturbine.gif">
 
 ## QGIS
 
