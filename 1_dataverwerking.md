@@ -15,10 +15,9 @@ I3dm is een stuk lichter ten opzichte van b3dm, aangezien bij i3dm gebruik wordt
 
 De procedure voor het verwerken van data naar 3D tiles varieert tussen de verschillende 3D-databronnen en is onder andere afhankelijk of het b3dm of i3dm betreft. In de volgende opdrachten gaan we 3D tilesets maken met zowel b3dm als i3dm. 
 
- ##  Opdracht 1: Digitaal Topografisch Bestand (DTB) naar 3D Tiles
+##  Van Digitaal Topografisch Bestand (DTB) naar 3D Tiles
 
- In deze opdracht gaan we een kaartblad van het DTB converteren naar 3D tiles. Dit doen we via de open source tooling pg2b3dm en i3dm.export. De tool pg2b3dm converteert tabellen uit de database naar het b3dm-formaat en i3dm.export naar i3dm-formaat. Hierover later meer!  
-
+In deze opdracht gaan we een kaartblad van het DTB converteren naar 3D tiles. Dit doen we via de open source tooling pg2b3dm en i3dm.export. De tool pg2b3dm converteert tabellen uit de database naar het b3dm-formaat en i3dm.export naar i3dm-formaat. Hierover later meer!  
 
 Om de conversie voor elkaar te krijgen moeten we: 
 
@@ -30,7 +29,7 @@ Om de conversie voor elkaar te krijgen moeten we:
  
 ### Data downloaden en importeren 
 
-De volgende stappen laten zien hoe je de DTB data kan downloaden en kan laden op de database. Als voorbeeld gebruiken we de DTB voor Andijk.
+Van een gebiedje bij Andijk gaan we DTB downloaden en importeren in de database.
 
 - Zoek via de RWS DTB Bladindeling viewer (https://maps.rijkswaterstaat.nl/geoweb55/index.html?viewer=DTB_Bladindeling.Webviewer) het Andijk kaartblad (DTB kaartblad d15cz)
 
@@ -105,7 +104,7 @@ De database view is gebaseerd op DTB punten en bevat de volgende gegevens:
 De volgende stappen laten zien hoe je 3D tiles kan maken van de DTB vlakken.
 
 - Download command line tool pg2b3dm (https://github.com/Geodan/pg2b3dm/releases, voor Windows kies pg2b3dm-win-x64.zip
-) en pak het zip-bestand uit en copieer de executable naar de workdirectory.
+) en pak het zip-bestand uit en kopieer de executable naar de workdirectory.
 
 - Open een command prompt in de werkdirectory
 
@@ -199,7 +198,7 @@ Voor het maken van 3D tiles van de DTB punten gebruiken we i3dm.export.
 
 - Download command line tool i3dm.export (https://github.com/Geodan/i3dm.export/releases)
 
-- Unzip het bestand en copieer i3dm.export.exe naar je werkdirectory
+- Unzip het bestand en kopieer i3dm.export.exe naar je werkdirectory
 
 Check:
 
@@ -208,7 +207,7 @@ i3dm.export --version
 i3dm.export 2.7.2+151863f9f42ae9c3b64a8619029707221a593c30
 ```
 
-- Copieer het boom model 'tree.glb' naar je werkdirectory
+- kopieer het boom model 'tree.glb' naar je werkdirectory
 
 - Voer het volgende commando uit
 
@@ -286,7 +285,7 @@ Conclusie van de validatie: de 3D tilesets zijn valide, maar er zijn meldingen o
 
 ## Comprimeren tilesets
 
-De 3D tilesets kunnen gecomprimeerd worden met de tool 3D Tiles Compressor. Dit geldt vooral voor batched tilesets (b3dm).
+De 3D tilesets kunnen gecomprimeerd worden met de tool 3D Tiles Compressor.
 
 Voor het comprimeren van de DTB vlakken voer het volgende commanda  uit:
 

@@ -32,6 +32,10 @@ Deel 2: Datavisualisatie in 3D met behulp van CesiumJS
 
 - 3D modellen toevoegen 
 
+- PDOK 3D Basisvoorziening 3D Tiles gebruiken
+
+- 3D Tiles in QGIS inladen
+
 [2_datavisualisatie.md](1_datavisualisatie.md)
 
 ## Leerdoelen 
@@ -173,3 +177,5 @@ Deze map bevat de volgende submappen:
 - dtb_punten: 3D Tiles van de DTB punten
 
 - dtb_vlakken: 3D Tiles van de DTB vlakken
+
+<img src = "windturbine.gif">

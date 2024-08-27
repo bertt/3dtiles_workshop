@@ -53,14 +53,6 @@
     var terrainProvider =  await Cesium.CesiumTerrainProvider.fromUrl('https://api.pdok.nl/kadaster/3d-basisvoorziening/ogc/v1_0/collections/digitaalterreinmodel/quantized-mesh');
    viewer.scene.terrainProvider = terrainProvider;
     viewer.scene.globe.depthTestAgainstTerrain=true;
-   const normalColor = Cesium.Color.WHITE;
-   let currentColor = Cesium.Color.YELLOW;
-
-// 3D Tileset highlighting
-const highlighted = {
-  feature: undefined,
-  originalColor: new Cesium.Color(),
-};
 
     const tilesetDtbVlakken = await Cesium.Cesium3DTileset.fromUrl(
       "./resultaten/dtb_vlakken/tileset.json"
@@ -72,22 +64,32 @@ const highlighted = {
     );  
     viewer.scene.primitives.add(tilesetPunten);
 
-    const tilesetPanden = await Cesium.Cesium3DTileset.fromUrl(
-      "./resultaten//andijk_panden/tileset.json"
-    );  
-    viewer.scene.primitives.add(tilesetPanden);
+    // voeg de panden toe:
+    //const tilesetPanden = await Cesium.Cesium3DTileset.fromUrl(
+    //  "./resultaten//andijk_panden/tileset.json"
+    //);  
+    // viewer.scene.primitives.add(tilesetPanden);
 
-    const windturbine = viewer.entities.add({ 
-      position: Cesium.Cartesian3.fromDegrees(5.193486,52.754867), 
-      model: { 
-        uri: "windturbine.glb"         
-     }, 
-    });
+    const tileset3DGebouwen = await Cesium.Cesium3DTileset.fromUrl(
+     "https://api.pdok.nl/kadaster/3d-basisvoorziening/ogc/v1_0/collections/gebouwen/3dtiles"
+    );  
+    viewer.scene.primitives.add(tileset3DGebouwen);
+
 
     viewer.scene.globe.depthTestAgainstTerrain = true;
     viewer.scene.globe.enableLighting = false;
     viewer.scene.highDynamicRange = false;
     viewer.zoomTo(tilesetDtbVlakken, new Cesium.HeadingPitchRange(0, -0.5, 0));
+
+    const normalColor = Cesium.Color.WHITE;
+   let currentColor = Cesium.Color.YELLOW;
+
+// 3D Tileset highlighting
+const highlighted = {
+  feature: undefined,
+  originalColor: new Cesium.Color(),
+};
+
     // Color a feature yellow on hover.
 viewer.screenSpaceEventHandler.setInputAction(function onMouseMove(
   movement

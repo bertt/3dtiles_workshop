@@ -22,7 +22,7 @@ Open een webbrowser en ga naar [http://localhost:8080](http://localhost:8080). J
 
 Voor het inladen van de 3D Tiles in een CesiumJS-webomgeving, maken we gebruik van de Cesium Viewer.
 
-Copieer index.html naar de werkdirectory
+Kopieer index.html naar de werkdirectory
 
 Open index.html in een teksteditor. In de code worden 3 tilesets geladen:
 
@@ -66,7 +66,7 @@ Zie voor een beschrijving van de 3D Tiles Styling language https://github.com/Ce
 
 Open index.html in een teksteditor. Voeg de volgende code toe aan de tileset van de DTB vlakken:
 
-```html
+```javascript
     tilesetDtbVlakken.style = new Cesium.Cesium3DTileStyle({
       color: {
         conditions: [
@@ -104,6 +104,23 @@ Voeg de volgende code toe aan index.html en bekijk het resultaat in de browser:
 Als het goed is zie je nu een windturbine met animatie in de Cesium Viewer.
 
 <img src = "windturbine.gif">
+
+## 3D Basisvoorziening
+
+In de 3D Basis voorziening van PDOK zijn een aantal 3D Tilesets beschikbaar die we kunnen inladen in de Cesium Viewer.
+
+Zie https://api.pdok.nl/kadaster/3d-basisvoorziening/ogc/v1_0/collections/gebouwen voor een beschrijving van de 3D gebouwen 
+tileset. 
+
+Voeg deze tileset toe aan de Cesium Viewer en inspecteer de gebouwen.
+
+```javascript
+const tileset3DGebouwen = await Cesium.Cesium3DTileset.fromUrl(
+  "https://api.pdok.nl/kadaster/3d-basisvoorziening/ogc/v1_0/collections/gebouwen/3dtiles"
+);  
+viewer.scene.primitives.add(tileset3DGebouwen);
+```
+
 
 ## QGIS
 
