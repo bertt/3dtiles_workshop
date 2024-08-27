@@ -26,10 +26,30 @@
 <body>
   <div id="cesiumContainer"></div>
   <script type="module">
-    Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiNDc1ZjQwMS1hOGI2LTQyNmUtYmYxMi1jODlhNDNlMjViZTkiLCJpZCI6NDc4OSwic2NvcGVzIjpbImFzciIsImdjIl0sImlhdCI6MTU0MTYyNTg3OX0.mNoGLdYuwqsnRRkQtdYNMbJfMBoZF2hPkbc4SRVVqNw';
     var viewer = new Cesium.Viewer('cesiumContainer', {
+      animation: false,
+      baseLayerPicker: false,
+      fullscreenButton: true,
+      vrButton: false,
+      geocoder: true,
+      homeButton: false,
+      infoBox: true,
+      selectionIndicator: true,
+      timeline: false,
+      shadows: false,
+      navigationHelpButton: false,
+      navigationInstructionsInitiallyVisible: true,
+      scene3DOnly: true,
+      shouldAnimate: false,
+      baseLayer: new Cesium.ImageryLayer(new Cesium.UrlTemplateImageryProvider({
+          url: "https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0/grijs/EPSG:3857/{z}/{x}/{y}.png",
+          maximumLevel: 19,
+      }))
     });
-   var terrainProvider =  await Cesium.CesiumTerrainProvider.fromUrl('https://api.pdok.nl/kadaster/3d-basisvoorziening/ogc/v1_0/collections/digitaalterreinmodel/quantized-mesh');
+
+    viewer.scene.globe.baseColor = Cesium.Color.WHITE; 
+
+    var terrainProvider =  await Cesium.CesiumTerrainProvider.fromUrl('https://api.pdok.nl/kadaster/3d-basisvoorziening/ogc/v1_0/collections/digitaalterreinmodel/quantized-mesh');
    viewer.scene.terrainProvider = terrainProvider;
     viewer.scene.globe.depthTestAgainstTerrain=true;
    const normalColor = Cesium.Color.WHITE;
@@ -41,28 +61,18 @@ const highlighted = {
   originalColor: new Cesium.Color(),
 };
 
-viewer.scene.light = new Cesium.DirectionalLight({
-  direction: viewer.scene.camera.directionWC,
-});
-viewer.scene.preRender.addEventListener(function (scene, time) {
-  viewer.scene.light.direction = Cesium.Cartesian3.clone(
-    viewer.scene.camera.directionWC,
-    viewer.scene.light.direction
-  );
-});
-
     const tilesetDtbVlakken = await Cesium.Cesium3DTileset.fromUrl(
-      "./dtb_vlakken/tileset.json"
+      "./resultaten/dtb_vlakken/tileset.json"
     );  
     viewer.scene.primitives.add(tilesetDtbVlakken);
     
     const tilesetPunten = await Cesium.Cesium3DTileset.fromUrl(
-      "./dtb_punten/tileset.json"
+      "./resultaten/dtb_punten/tileset.json"
     );  
     viewer.scene.primitives.add(tilesetPunten);
 
     const tilesetPanden = await Cesium.Cesium3DTileset.fromUrl(
-      "./andijk_panden/tileset.json"
+      "./resultaten//andijk_panden/tileset.json"
     );  
     viewer.scene.primitives.add(tilesetPanden);
 
