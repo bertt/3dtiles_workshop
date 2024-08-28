@@ -191,7 +191,7 @@ Voor het maken van Instanced 3D Models van de DTB punten gebruiken we i3dm.expor
 
 - Download command line tool i3dm.export (https://github.com/Geodan/i3dm.export/releases)
 
-- Unzip het bestand en kopieer i3dm.export.exe naar je werkdirectory
+- Unzip het bestand en kopieer i3dm.export.exe naar de werkdirectory
 
 Check:
 
@@ -200,7 +200,7 @@ i3dm.export --version
 i3dm.export 2.7.2
 ```
 
-- kopieer het boom model 'tree.glb' naar je werkdirectory
+- kopieer het boom model 'tree.glb' naar de werkdirectory
 
 - Voer het volgende commando uit
 

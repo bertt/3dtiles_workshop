@@ -4,7 +4,9 @@ Digital Twins brengen data uit verschillende bronnen waarheidsgetrouw samen in e
 
 ## Workshop
 
-In deze workshop wordt aan de hand van een aantal voorbeelden gedemonstreerd hoe deze dataverwerking in elkaar steekt. De focus ligt op de 3D Tiles specificatie. Deze OGC-standaard helpt de weergave van grote 3D-datasets te optimaliseren door op slimme wijze alleen de noodzakelijke data in te laden. Een gedetailleerd overzicht van de 3D Tiles specificatie kun je inzien (https://github.com/CesiumGS/3d-tiles/blob/main/3d-tiles-reference-card.pdf)[https://github.com/CesiumGS/3d-tiles/blob/main/3d-tiles-reference-card.pdf]. 
+In deze workshop wordt aan de hand van een aantal voorbeelden gedemonstreerd hoe deze dataverwerking in elkaar steekt. De focus ligt op de 3D Tiles specificatie. Deze OGC-standaard helpt de weergave van grote 3D-datasets te optimaliseren door op slimme wijze alleen de noodzakelijke data in te laden. 
+
+Zie voor een gedetailleerd overzicht van de 3D Tiles specificatie (https://github.com/CesiumGS/3d-tiles/blob/main/3d-tiles-reference-card.pdf)[https://github.com/CesiumGS/3d-tiles/blob/main/3d-tiles-reference-card.pdf]. 
 
 De hoeveelheid data in een digital twin is vaak enorm, waardoor het tegelijk opvragen van alle beschikbare data niet wenselijk is met het oog op de performance. 
 
@@ -44,15 +46,16 @@ Deel 2: Datavisualisatie in 3D
 
 ## Leerdoelen 
 
-Na afronding van deze cursus: 
 
-- weet je wat de 3D Tiles standaard is; 
+Na het voltooien van deze cursus:
 
-- heb je inzicht in de software en technieken die nodig zijn om 3D tilesets te maken; 
+- Is er kennis van de 3D Tiles-standaard;
 
-- kun je een 3D tileset inladen in een CesiumJS-webomgeving; 
+- Is er inzicht in de software en technieken die nodig zijn voor het maken van 3D-tilesets;
 
-- weet je wat de mogelijkheden zijn voor datavisualisatie met CesiumJS. 
+- kan een 3D-tileset worden geladen in een CesiumJS-webomgeving;
+
+- zijn de mogelijkheden voor datavisualisatie met CesiumJS bekend.
 
 ## Benodigdheden
 
@@ -113,9 +116,9 @@ v21.7.1
 In de workshop wordt operating systeem Windows gebruikt, met wat kleine aanpassingen kunnen
 ook andere operating systemen gebruikt worden. 
 
-## Lokaal aanmaken database met Docker 
+## Aanmaken database met Docker 
 
-Om eenvoudig lokaal een PostGIS database aan te maken kan je een Docker Image ophalen en starten. Doe dat met de volgende command in de command line: 
+We gebruiken Docker om de PostGIS database te starten. Open een terminal en voer het volgende commando uit:
 
 ```
 docker run -d -e POSTGRES_PASSWORD=postgres -d -p 5439:5432 postgis/postgis 
@@ -129,7 +132,7 @@ Met -e environment settings, zoals een wachtwoord of username.
 
 Met -d zorgt dat de docker ‘detached’ runt, zodat deze niet de terminal blokkeert, maar op de achtergrond draait. 
 
-Met -p verzorg de portmapping. Als je al een lokale installatie hebt van Postgres, dan zal deze waarschijnlijk al op port 5432 draaien. Daarom maken we een mapping met -p {host}:{container}, in dit geval 5439. Hiermee open je de port 5439 die aansluit op port 5432 van de container. Zo kan je dus via localhost port 5439 connectie maken met de postgres database van je container. 
+Met -p verzorgt de portmapping, we gebruiken poort 5439.
 
 Vervolgens kan in DBeaver of PGAdmin en in QGIS connectie gemaakt worden met de database door een connectie toe te voegen. In de settings gebruik: 
 
@@ -143,6 +146,11 @@ Vervolgens kan in DBeaver of PGAdmin en in QGIS connectie gemaakt worden met de 
 
 Check: Vraag PostGIS versie op met de volgende SQL query:
 
+
+```sql
+SELECT postgis_full_version();
+``` 
+
 Voorbeeld met psql client:
 
 ```shell
@@ -151,7 +159,7 @@ POSTGIS="3.4.0 0874ea3"
 ```
 ## Werkdirectory
 
-Maak een werkdirectory aan waarin bestanden van deze workshop worden opegslagen.
+Maak een werkdirectory aan waarin bestanden van deze workshop worden opgeslagen.
 
 Bijvoorbeeld: 
 

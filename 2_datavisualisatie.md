@@ -16,7 +16,7 @@ Open de command line en navigeer naar werkdirectory. Start de server met het vol
 http-server
 ```
 
-Open een webbrowser en ga naar [http://localhost:8080](http://localhost:8080). Je ziet nu de bestanden in de werkdirectory.
+Open een webbrowser en ga naar [http://localhost:8080](http://localhost:8080). Bestanden in de werkdirectory worden nu getoond.
 
 ## Cesium Viewer
 
@@ -32,7 +32,7 @@ Open index.html in een teksteditor. In de code worden 3 tilesets geladen:
 
 -  Andijk panden: ./andijk_panden/tileset.json
 
-Open een brower en ga naar [http://localhost:8080/index.html](http://localhost:8080/index.html). Je ziet nu de 3D Tiles in de Cesium Viewer.
+Open een brower en ga naar [http://localhost:8080/index.html](http://localhost:8080/index.html). 3D Tiles worden nu getoond in de Cesium Viewer.
 
 De Cesium viewer bevat een aantal kaartlagen:
 
@@ -101,7 +101,7 @@ Voeg de volgende code toe aan index.html en bekijk het resultaat in de browser:
     });
 ```
 
-Als het goed is zie je nu een windturbine met animatie in de Cesium Viewer.
+Er wordt een windturbine met animatie getoond in de Cesium Viewer.
 
 <img src = "windturbine.gif">
 
@@ -137,7 +137,7 @@ Name: DTB Vlakken
 
 URL: http://localhost:8080/dtb_vlakken/tileset.json
 
-Klik op Add en als het goed is zie je nu de DTB vlakken in QGIS.
+Klik op Add, DTB vlakken worden getoond in QGIS.
 
 Vraag: Waarom zien we de gedefinieerde stylen niet in QGIS?
 
