@@ -294,6 +294,9 @@ Zie eventueel de resultaten directory bestand 1_dataverwerking.txt voor de uitwe
 
 Comprimeer de 3D tileset met de 3D Tiles Compressor.
 
+Ga door naar [2_datavisualisatie.md](1_datavisualisatie.md)
+
+
 
 
 
