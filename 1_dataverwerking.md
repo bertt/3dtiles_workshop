@@ -135,48 +135,6 @@ Uitleg commando:
 
 Na het opgeven van het wachtwoord wordt de 3D tileset gemaakt in de directory 'dtb_vlakken'.
 
-Uitvoer van het programma moet er als volgt uitzien:
-
-```
-Tool: pg2b3dm 2.14.1.0
-Options: -U postgres -h localhost -p 5439 -d postgres -t public.dtb_vlak_andijk -a dtb_id,omschr,datum --use_implicit_tiling false -o ./dtb_vlakken -c wkb_geometry --create_gltf false
-Password for user postgres:
-Start processing 2024-08-26T16:13:26....
-Input table: public.dtb_vlak_andijk
-Input geometry column: wkb_geometry
-App mode: Cesium
-Spatial reference of public.dtb_vlak_andijk.wkb_geometry: 4979
-Spatial index detected on public.dtb_vlak_andijk.wkb_geometry
-Query bounding box of public.dtb_vlak_andijk.wkb_geometry...
-Bounding box for public.dtb_vlak_andijk.wkb_geometry (in WGS84): 5.16509253, 52.71234743, 5.29261079, 52.75545464
-Height values: [37.44 m - 74.79 m]
-Default color: #FFFFFF
-Default metallic roughness: #008000
-Doublesided: True
-Create glTF tiles: False
-Attribute columns: dtb_id,omschr,datum
-Center (wgs84): 5.228851660450694, 52.733901034211115
-Starting Cesium mode...
-Translation ECEF: 3854182.25,352715.03125,5052667.5
-3D Tiles version: 1.0
-Lod column:
-Radius column:
-Geometric errors: 2000,0
-Refinement: REPLACE
-Add outlines: False
-Use 3D Tiles 1.1 implicit tiling: False
-Maximum features per tile: 1000
-Start generating tiles...
-Creating tile: 2_3_3.b3dm
-Tiles created: 10
-Geometric errors used: 2000,0
-
-External tileset.json files: 0
-Writing root tileset.json...
-
-Time: 0h 0m 1s 769ms
-Program finished 2024-08-26T16:13:28.```
-
 De directory 'dtb_vlakken' bevat:
 
 - een tileset.json bestand. 
@@ -217,7 +175,6 @@ Uitleg commando:
 -o: output directory
 
 --use_i3dm: gebruik i3dm formaat
-
 
 Na het opgeven van het wachtwoord wordt de Instanced 3D tileset gemaakt in de directory 'dtb_punten'. De directory bevat: 
 
