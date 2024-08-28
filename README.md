@@ -4,27 +4,31 @@ Digital Twins brengen data uit verschillende bronnen waarheidsgetrouw samen in e
 
 ## Workshop
 
-In deze workshop wordt aan de hand van een aantal voorbeelden gedemonstreerd hoe deze dataverwerking in elkaar steekt. De focus ligt op de 3D Tiles specificatie. Deze OGC-standaard helpt de weergave van grote 3D-datasets te optimaliseren door op slimme wijze alleen de noodzakelijke data in te laden. De hoeveelheid data in een digital twin is vaak enorm, waardoor het tegelijk opvragen van alle beschikbare data niet wenselijk is met het oog op de performance. 
+In deze workshop wordt aan de hand van een aantal voorbeelden gedemonstreerd hoe deze dataverwerking in elkaar steekt. De focus ligt op de 3D Tiles specificatie. Deze OGC-standaard helpt de weergave van grote 3D-datasets te optimaliseren door op slimme wijze alleen de noodzakelijke data in te laden. Een gedetailleerd overzicht van de 3D Tiles specificatie kun je inzien (https://github.com/CesiumGS/3d-tiles/blob/main/3d-tiles-reference-card.pdf)[https://github.com/CesiumGS/3d-tiles/blob/main/3d-tiles-reference-card.pdf]. 
+
+De hoeveelheid data in een digital twin is vaak enorm, waardoor het tegelijk opvragen van alle beschikbare data niet wenselijk is met het oog op de performance. 
+
+Na de dataverwerking gaan we de 3D Tiles visualiseren. 3D Tiles kunnen door meerdere applicaties gebruikt worden. In dit geval gebruiken we Cesium, een krachtige open source Javascript library. 
+
+Naast visualisatie in Cesium worden de aangemaakte tilesets ingeladen in QGIS.
 
 <img src = "3dtiles_ecosysteem.png">
 
-Na de dataverwerking gaan we de 3D Tiles visualiseren. 3D Tiles kunnen door veel verschillende applicaties gebruikt worden (Figuur 1). In dit geval gaan we gebruik maken van CesiumJS, een krachtige open source Javascript library waarmee tilesets ingeladen kunnen worden in de browser. Met CesiumJS kan een digital twin-omgeving vormgegeven worden waarin grote hoeveelheden data als 3D Tiles geserveerd worden. Ook worden de aangemaakte tilesets ingeladen in QGIS.
-
-In deze workshop gaan we een digital twin inrichten voor de Proefpolderdijk bij Andijk. Bij het beheer van deze dijk komt veel verschillende data kijken. We gaan aan de slag met het Digitaal Topografisch Bestand van RWS en puntenwolken. Aan de hand van deze data laten we zien welke stappen er nodig zijn om van de beschikbare brondata tot een 3D-webomgeving te komen gebruikmakend van open source tooling en open standaarden.  
+In deze workshop gaan we een digital twin inrichten voor de Proefpolderdijk bij Andijk. Bij het beheer van deze dijk komt veel verschillende data kijken. We gaan aan de slag met het Digitaal Topografisch Bestand (DTB) van RWS. Aan de hand van deze data laten we zien welke stappen er nodig zijn om van de beschikbare brondata tot een 3D-webomgeving te komen gebruikmakend van open source tooling en open standaarden.  
 
 De workshop is ingedeeld in twee modules, te weten: 
 
 Deel 1: Dataverwerking tot 3D Tiles 
 
-- 3D Tiles specificatie 
+- Data downloaden en importeren; 
 
-- Batched 3D Models en Instanced 3D Models 
+- Data voorbereiden
 
-- PostgreSQL en PostGIS 
+- 3D Tiles maken 
 
 [1_dataverwerking.md](1_dataverwerking.md)
 
-Deel 2: Datavisualisatie in 3D met behulp van CesiumJS 
+Deel 2: Datavisualisatie in 3D
 
 - 3D tilesets inladen 
 
@@ -177,5 +181,7 @@ Deze map bevat de volgende submappen:
 - dtb_punten: 3D Tiles van de DTB punten
 
 - dtb_vlakken: 3D Tiles van de DTB vlakken
+
+Het resultaat van de workshop is een 3D-webomgeving waarin de 3D tilesets in Andijk ingeladen zijn.
 
 <img src = "windturbine.gif">

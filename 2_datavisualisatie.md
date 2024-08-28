@@ -107,7 +107,7 @@ Als het goed is zie je nu een windturbine met animatie in de Cesium Viewer.
 
 ## 3D Basisvoorziening
 
-In de 3D Basis voorziening van PDOK zijn een aantal 3D Tilesets beschikbaar die we kunnen inladen in de Cesium Viewer.
+In de 3D Basis voorziening van PDOK zijn een aantal landelijke 3D Tilesets beschikbaar die we kunnen inladen in de Cesium Viewer.
 
 Zie https://api.pdok.nl/kadaster/3d-basisvoorziening/ogc/v1_0/collections/gebouwen voor een beschrijving van de 3D gebouwen 
 tileset. 
@@ -120,7 +120,6 @@ const tileset3DGebouwen = await Cesium.Cesium3DTileset.fromUrl(
 );  
 viewer.scene.primitives.add(tileset3DGebouwen);
 ```
-
 
 ## QGIS
 

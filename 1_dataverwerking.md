@@ -1,31 +1,24 @@
 # Dataverwerking
 
-## 3D Tiles specificatie
+## Inleiding
 
-Bij de verwerking van data naar 3D ligt de focus op de 3D Tiles standaard. En niet zonder reden. Een digital twin bestaat vaak uit enorme hoeveelheden data. Als deze data allemaal in één keer ingeladen zou worden, zou dit tot problemen leiden met de performance. In een 3D tileset zijn de objecten hiërarchisch ingedeeld in tegels (Figuur 2) en wordt alleen de data geserveerd die zich in de buurt bevindt van het gezichtspunt van de gebruiker. Hierdoor wordt de performance van de applicatie zo veel mogelijk gewaarborgd. 3D Tiles is een open standaard van het Open Geospatial Consortium (OGC) en is ontwikkeld voor het serveren en visualiseren van grote 3D ruimtelijke datasets. 
+In deze opdracht gaan we 3D tilesets maken van geografische data. We gebruiken open source tools om data uit een PostgreSQL database te converteren naar 3D Tiles.
 
-Een gedetailleerd overzicht van de 3D Tiles specificatie kun je inzien (https://github.com/CesiumGS/3d-tiles/blob/main/3d-tiles-reference-card.pdf)[https://github.com/CesiumGS/3d-tiles/blob/main/3d-tiles-reference-card.pdf]. 
+Als brondata gebruiken we het Digitaal Topografisch Bestand (DTB) van Rijkswaterstaat. Het DTB bevat topografische gegevens van Nederland in de vorm van lijnen, vlakken en punten.
 
+Uit de DTB gebruiken we twee bestanden:
 
-Wat betreft 3D tiling kan er een onderscheid gemaakt worden tussen batched 3D models (b3dm) en instanced 3D models (i3dm). 
+- DTB vlakken voor modellen in Batched 3D Models (b3dm) formaat;
 
-Bij b3dm kan een grote hoeveelheid unieke 3D-objecten samengevoegd worden in een set. Bijvoorbeeld een set van panden. Deze 3D-objecten worden vervolgens in een enkel b3dm-bestand opgeslagen.
-
-I3dm is een stuk lichter ten opzichte van b3dm, aangezien bij i3dm gebruik wordt gemaakt van een beperkt aantal standaard 3D-modellen die ingeladen worden op een groot aantal gedefinieerde locaties. Dit komt vooral van pas bij de weergave van objecten als windmolens, bomen of lantaarnpalen waarvoor steeds eenzelfde 3D-model kan worden gebruikt. 
-
-De procedure voor het verwerken van data naar 3D tiles varieert tussen de verschillende 3D-databronnen en is onder andere afhankelijk of het b3dm of i3dm betreft. In de volgende opdrachten gaan we 3D tilesets maken met zowel b3dm als i3dm. 
-
-##  Van Digitaal Topografisch Bestand (DTB) naar 3D Tiles
-
-In deze opdracht gaan we een kaartblad van het DTB converteren naar 3D tiles. Dit doen we via de open source tooling pg2b3dm en i3dm.export. De tool pg2b3dm converteert tabellen uit de database naar het b3dm-formaat en i3dm.export naar i3dm-formaat. Hierover later meer!  
+- DTB punten voor modellen in Instanced 3D Models (i3dm) formaat.
 
 Om de conversie voor elkaar te krijgen moeten we: 
 
-- het DTB downloaden als Shapefile en importeren naar de PostgreSQL database met de PostGIS extensie; 
+- DTB downloaden en importeren naar de PostgreSQL database met de PostGIS extensie; 
 
-- twee tabellen aanmaken die dienen als input voor pg2b3dm en i3dm.export;  
+- Twee tabellen aanmaken die dienen als input voor pg2b3dm en i3dm.export;  
 
-- deze vervolgens converteren naar 3D tiles; 
+- 3D tilesets maken van de DTB vlakken en punten;
  
 ### Data downloaden en importeren 
 
@@ -101,7 +94,7 @@ De database view is gebaseerd op DTB punten en bevat de volgende gegevens:
 
 ### 3D Tiles maken van DTB vlakken
 
-De volgende stappen laten zien hoe je 3D tiles kan maken van de DTB vlakken.
+De volgende stappen laten zien hoe we Batched 3D Models kunnen maken van de DTB vlakken.
 
 - Download command line tool pg2b3dm (https://github.com/Geodan/pg2b3dm/releases, voor Windows kies pg2b3dm-win-x64.zip
 ) en pak het zip-bestand uit en kopieer de executable naar de workdirectory.
@@ -194,7 +187,7 @@ In dit bestand staan de referenties naar de 3D tiles.
 
 ### 3D Tiles maken van DTB punten
 
-Voor het maken van 3D tiles van de DTB punten gebruiken we i3dm.export.
+Voor het maken van Instanced 3D Models van de DTB punten gebruiken we i3dm.export.
 
 - Download command line tool i3dm.export (https://github.com/Geodan/i3dm.export/releases)
 
@@ -204,7 +197,7 @@ Check:
 
 ```shell
 i3dm.export --version
-i3dm.export 2.7.2+151863f9f42ae9c3b64a8619029707221a593c30
+i3dm.export 2.7.2
 ```
 
 - kopieer het boom model 'tree.glb' naar je werkdirectory

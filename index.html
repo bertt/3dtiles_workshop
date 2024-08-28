@@ -55,12 +55,12 @@
     viewer.scene.globe.depthTestAgainstTerrain=true;
 
     const tilesetDtbVlakken = await Cesium.Cesium3DTileset.fromUrl(
-      "./resultaten/dtb_vlakken/tileset.json"
+      "./dtb_vlakken/tileset.json"
     );  
     viewer.scene.primitives.add(tilesetDtbVlakken);
     
     const tilesetPunten = await Cesium.Cesium3DTileset.fromUrl(
-      "./resultaten/dtb_punten/tileset.json"
+      "./dtb_punten/tileset.json"
     );  
     viewer.scene.primitives.add(tilesetPunten);
 
