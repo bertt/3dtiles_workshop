@@ -42,7 +42,7 @@ Deel 2: Datavisualisatie in 3D
 
 - 3D Tiles in QGIS inladen
 
-[2_datavisualisatie.md](1_datavisualisatie.md)
+[2_datavisualisatie.md](2_datavisualisatie.md)
 
 ## Leerdoelen 
 
