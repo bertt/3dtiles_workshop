@@ -1,197 +1,155 @@
-# Introductie 
+# Introduction
 
-Digital Twins brengen data uit verschillende bronnen waarheidsgetrouw samen in een digitale kopie van de fysieke werkelijkheid. Het begrip digital twin is zeer breed. In deze workshop richten we ons op digital twins van de fysieke leefomgeving. Hierin wordt een realistisch beeld gegeven van een gebied of regio, waarbij ruimtelijke data overzichtelijk weergegeven wordt en gebruikt kan worden voor vele toepassingen. Een dergelijke digital twin kan niet zonder de 3D component. De meeste data is echter niet direct als 3D beschikbaar. Daarom moet de data vaak eerst verwerkt worden. Deze verwerkingsstappen kunnen flink uiteenlopen afhankelijk van het type brondata. 
+Digital Twins bring data from various sources together truthfully in a digital copy of the physical reality. The concept of a digital twin is very broad. In this workshop, we focus on digital twins of the physical living environment. Here, a realistic image of an area or region is provided, where spatial data is displayed clearly and can be used for many applications. Such a digital twin cannot do without the 3D component. However, most data is not directly available as 3D. Therefore, the data often needs to be processed first. These processing steps can vary greatly depending on the type of source data.
 
 ## Workshop
 
-In deze workshop wordt aan de hand van een aantal voorbeelden gedemonstreerd hoe deze dataverwerking in elkaar steekt. De focus ligt op de 3D Tiles specificatie. Deze OGC-standaard helpt de weergave van grote 3D-datasets te optimaliseren door op slimme wijze alleen de noodzakelijke data in te laden. 
+In this workshop, we demonstrate how this data processing works using several examples. The focus is on the 3D Tiles specification. This OGC standard helps optimize the display of large 3D datasets by smartly loading only the necessary data.
 
-Zie voor een gedetailleerd overzicht van de 3D Tiles specificatie (https://github.com/CesiumGS/3d-tiles/blob/main/3d-tiles-reference-card.pdf)[https://github.com/CesiumGS/3d-tiles/blob/main/3d-tiles-reference-card.pdf]. 
+For a detailed overview of the 3D Tiles specification, see [https://github.com/CesiumGS/3d-tiles/blob/main/3d-tiles-reference-card.pdf](https://github.com/CesiumGS/3d-tiles/blob/main/3d-tiles-reference-card.pdf).
 
-De hoeveelheid data in een digital twin is vaak enorm, waardoor het tegelijk opvragen van alle beschikbare data niet wenselijk is met het oog op de performance. 
+The amount of data in a digital twin is often enormous, making it undesirable to request all available data at once with performance in mind.
 
-Na de dataverwerking gaan we de 3D Tiles visualiseren. 3D Tiles kunnen door meerdere applicaties gebruikt worden. In dit geval gebruiken we Cesium, een krachtige open source Javascript library. 
+After data processing, we will visualize the 3D Tiles. 3D Tiles can be used by multiple applications. In this case, we use Cesium, a powerful open-source JavaScript library.
 
-Naast visualisatie in Cesium worden de aangemaakte tilesets ingeladen in QGIS.
+In addition to visualization in Cesium, the created tilesets are loaded into QGIS.
 
-<img src = "3dtiles_ecosysteem.png">
+<img src="3dtiles_ecosysteem.png">
 
-In deze workshop gaan we een digital twin inrichten voor de Proefpolderdijk bij Andijk. Bij het beheer van deze dijk komt veel verschillende data kijken. We gaan aan de slag met het Digitaal Topografisch Bestand (DTB) van RWS. Aan de hand van deze data laten we zien welke stappen er nodig zijn om van de beschikbare brondata tot een 3D-webomgeving te komen gebruikmakend van open source tooling en open standaarden.  
+In this workshop, we will set up a digital twin for the Proefpolderdijk near Andijk. Managing this dike involves a lot of different data. We will work with the Digital Topographic File (DTB) of RWS. Using this data, we will show the steps needed to go from the available source data to a 3D web environment using open-source tools and open standards.
 
-De workshop is ingedeeld in twee modules, te weten: 
+The workshop is divided into two modules:
 
-Deel 1: Dataverwerking tot 3D Tiles 
+**Part 1: Data Processing to 3D Tiles**
+- Download and import data;
+- Prepare data;
+- Create 3D Tiles;
 
-- Data downloaden en importeren; 
+[1 - Data Processing](1_dataprocessing.md)
 
-- Data voorbereiden
+**Part 2: Data Visualization in 3D**
+- Load 3D tilesets;
+- Adjust tileset style;
+- Add 3D models;
+- Use PDOK 3D Basic Provision 3D Tiles;
+- Load 3D Tiles in QGIS;
 
-- 3D Tiles maken 
+[2 - Data Visualisation](2_datavisualisation.md)
 
-[1_dataverwerking.md](1_dataverwerking.md)
+## Learning Objectives
 
-Deel 2: Datavisualisatie in 3D
+After completing this course:
 
-- 3D tilesets inladen 
+- You will have knowledge of the 3D Tiles standard;
+- You will have insight into the software and techniques needed to create 3D tilesets;
+- You will be able to load a 3D tileset into a CesiumJS web environment;
+- You will be familiar with the possibilities for data visualization with CesiumJS.
 
-- Tileset stijl aanpassen 
-
-- 3D modellen toevoegen 
-
-- PDOK 3D Basisvoorziening 3D Tiles gebruiken
-
-- 3D Tiles in QGIS inladen
-
-[2_datavisualisatie.md](2_datavisualisatie.md)
-
-## Leerdoelen 
-
-
-Na het voltooien van deze cursus:
-
-- Is er kennis van de 3D Tiles-standaard;
-
-- Is er inzicht in de software en technieken die nodig zijn voor het maken van 3D-tilesets;
-
-- kan een 3D-tileset worden geladen in een CesiumJS-webomgeving;
-
-- zijn de mogelijkheden voor datavisualisatie met CesiumJS bekend.
-
-## Benodigdheden
+## Requirements
 
 - Laptop
+- Internet connection
+- Web browser
 
-- Internetverbinding
-
-- Webbrowser
-
-Benodigde software:
+Required software:
 
 - Docker
-
-Check:
-
-```shell
-docker --version
-Docker version 27.1.1, build 6312585
-```
+    - Check: `docker --version`
 - QGIS
+    -  Set the path to QGIS in the environment variables so we can use GDAL command line tools.
 
-Zet het path naar QGIS in de environment variables, zodat we GDAL commandline tools kunnen gebruiken.
+        Example directory: `C:\Program Files\QGIS 3.36.1\bin`
 
-Voorbeelddirectory: C:\Program Files\QGIS 3.36.1\bin.
+        This can be done via Control Panel - System - Edit the system Environment Variables - Environment Variables... - System Variables - Path or via the command line:
 
-kan via Control panel - System - Edit the system Environment Variables - Environment Variables... - System Variables - Path of via de commandline:
+        ```shell
+        set PATH=%PATH%;D:\Program Files\QGIS 3.36.1\bin
+        ```
 
- ```shell
-set PATH=%PATH%;D:\Program Files\QGIS 3.36.1\bin
-```
+        Check: `ogr2ogr --version`
+- Database management tool
+    - E.g. [pgAdmin](https://www.pgadmin.org/) or [DBeaver](https://dbeaver.io/)
+    - Command line enthusiasts can also use psql. psql.exe is typically located in the bin directory of the QGIS installation.
+- Node.JS or Python (for setting up a quick HTTP server)
+    - Download and install [Node.js](https://nodejs.org/en/download/)
 
-Check:
+In the workshop, the operating system used is Windows, but with minor adjustments, other operating systems can also be used.
 
-```shell
-ogr2ogr --version
-GDAL 3.8.4, released 2024/02/08
-```
+## Creating a database with docker
 
-- Database management tool (bijv. pgAdmin of DBeaver)
-
-pgAdmin: https://www.pgadmin.org/
-
-DBeaver: https://dbeaver.io/
-
-De command line liefhebbers kunnen ook psql gebruiken. psql.exe staat standaard in de bin directory van de QGIS installatie.
-
-- Node.JS 
-
-Download en installeer Node.js (https://nodejs.org/en/download/)
-
-Check:
-
-```shell
-node --version
-v21.7.1
-```
-
-In de workshop wordt operating systeem Windows gebruikt, met wat kleine aanpassingen kunnen
-ook andere operating systemen gebruikt worden. 
-
-## Aanmaken database met Docker 
-
-We gebruiken Docker om de PostGIS database te starten. Open een terminal en voer het volgende commando uit:
+We use Docker to start the PostGIS database. Open a terminal and execute the following command:
 
 ```
-docker run -d -e POSTGRES_PASSWORD=postgres -d -p 5439:5432 postgis/postgis 
+docker run -d -e POSTGRES_PASSWORD=postgres -d -p 5439:5432 postgis/postgis
 ```
 
-Uitleg command: 
+*Command explanation*
 
-Docker run: start een nieuwe container.
+Docker run: starts a new container.
 
-Met -e environment settings, zoals een wachtwoord of username. 
+With **-e** environment settings, such as a password or username.
 
-Met -d zorgt dat de docker ‘detached’ runt, zodat deze niet de terminal blokkeert, maar op de achtergrond draait. 
+With **-d** ensures that Docker runs 'detached', so it does not block the terminal but runs in the background.
 
-Met -p verzorgt de portmapping, we gebruiken poort 5439.
+With **-p** provides port mapping, we use port 5439.
 
-Vervolgens kan in DBeaver of PGAdmin en in QGIS connectie gemaakt worden met de database door een connectie toe te voegen. In de settings gebruik: 
+*Connect to the database*
 
-- Host: localhost 
+In DBeaver or PGAdmin and in QGIS, a connection can be made to the database by adding a connection. In the settings, use:
 
-- Port: 5439 
+- Host: localhost
+- Port: 5439
+- Username: postgres
+- Password: postgres
 
-- Username: postgres 
-
-- Password: postgres 
-
-Check: Vraag PostGIS versie op met de volgende SQL query:
-
+Check: Request the PostGIS version with the following SQL query:
 
 ```sql
 SELECT postgis_full_version();
-``` 
+```
 
-Voorbeeld met psql client:
+Example with psql client:
 
 ```shell
 psql -h localhost -p 5439 -U postgres -d postgres -c "SELECT postgis_full_version();"
-POSTGIS="3.4.0 0874ea3"
+
+>>> POSTGIS="3.4.0 0874ea3"
 ```
-## Werkdirectory
 
-Maak een werkdirectory aan waarin bestanden van deze workshop worden opgeslagen.
+# Work Directory
 
-Bijvoorbeeld: 
+Create a work directory where files from this workshop will be stored.
+
+For example:
 
 ```shell
 cd c:\
 mkdir workshop_3dtiles
 ```
 
-## Databestanden
+## Data Files
 
-In de workshop maken we gebruik van de volgende databestanden:
+In the workshop, we will use the following data files:
 
-- Digitaal Topografisch Bestand (DTB) van RWS
+- Digital Topographic File (DTB) from RWS
+- Bag 3D
 
-- Bag 3D 
+The assignments explain how to retrieve these data files. The data files can also be found in the 'data' folder in this repository.
 
-In de opdrachten wordt uitgelegd hoe deze databestanden opgehaald kunnen worden. De databestanden zijn ook te vinden in de map 'data' in deze repository.
+## Results
+See the results of this workshop in the 'results' folder.
 
-## Resultaten
+This folder contains the following subfolders:
 
-Zie de resultaten van deze workshop in de map 'resultaten'. 
+- andijk_buildings: 3D Tiles of the buildings in Andijk
+- dtb_points: 3D Tiles of the DTB points
+- dtb_surfaces: 3D Tiles of the DTB surfaces
 
-Deze map bevat de volgende submappen:
+The result of the workshop is a 3D web environment in which the 3D tilesets in Andijk are loaded.
 
-- andijk_panden: 3D Tiles van de panden in Andijk
+## Continue the workshop
+Proceed to [1 - Data Processing](1_dataprocessing.md)
 
-- dtb_punten: 3D Tiles van de DTB punten
-
-- dtb_vlakken: 3D Tiles van de DTB vlakken
-
-Het resultaat van de workshop is een 3D-webomgeving waarin de 3D tilesets in Andijk ingeladen zijn.
 
 <img src = "windturbine.gif">
 
-Ga door naar [1_dataverwerking.md](1_dataverwerking.md)

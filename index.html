@@ -55,12 +55,12 @@
     viewer.scene.globe.depthTestAgainstTerrain=true;
 
     const tilesetDtbVlakken = await Cesium.Cesium3DTileset.fromUrl(
-      "./dtb_vlakken/tileset.json"
+      "./output/tileset.json"
     );  
     viewer.scene.primitives.add(tilesetDtbVlakken);
     
     const tilesetPunten = await Cesium.Cesium3DTileset.fromUrl(
-      "./dtb_punten/tileset.json"
+      "./output_i3dm/tileset.json"
     );  
     viewer.scene.primitives.add(tilesetPunten);
 
@@ -79,7 +79,7 @@
     viewer.scene.globe.depthTestAgainstTerrain = true;
     viewer.scene.globe.enableLighting = false;
     viewer.scene.highDynamicRange = false;
-    viewer.zoomTo(tilesetDtbVlakken, new Cesium.HeadingPitchRange(0, -0.5, 0));
+    viewer.zoomTo(tilesetPunten, new Cesium.HeadingPitchRange(0, -0.5, 0));
 
     const normalColor = Cesium.Color.WHITE;
    let currentColor = Cesium.Color.YELLOW;

@@ -1,28 +1,34 @@
-# 2. Data visualisatie
+# 2 - Data visualisatie
 
-In deze module gaan we aan de slag met het visualiseren van de 3D Tiles die we in de vorige module hebben gemaakt. We gaan de 3D Tiles inladen in een CesiumJS-webomgeving en de tileset stijlen aanpassen. Daarnaast voegen we 3D modellen toe aan de visualisatie.
+In this module, we will work on visualizing the 3D Tiles we created in the previous module. We will load the 3D Tiles into a CesiumJS web environment and adjust the tileset styles. In addition, we will add 3D models to the visualization.
 
-## Server opzetten
+## Setting up a server
 
-We beginnen met het installeren van een webserver om de 3D Tiles te serveren. We gebruiken hiervoor Node.JS tool 'http-server'.
+We start by installing a web server to serve the 3D Tiles. We will use the Node.JS tool 'http-server'.
 
 ```shell
 npm install -g http-server
-``` 
+```
 
-Open de command line en navigeer naar werkdirectory. Start de server met het volgende commando:
+Open the command line and navigate to the working directory. Start the server with the following command:
 
 ```shell
 http-server
 ```
 
-Open een webbrowser en ga naar [http://localhost:8080](http://localhost:8080). Bestanden in de werkdirectory worden nu getoond.
+Or, if you are using Python:
+
+```shell
+python -m http.server 8080
+```
+
+Open a web browser and go to [http://localhost:8080](http://localhost:8080). Files in the working directory will now be displayed.
 
 ## Cesium Viewer
 
-Voor het inladen van de 3D Tiles in een CesiumJS-webomgeving, maken we gebruik van de Cesium Viewer.
+To load the 3D Tiles into a CesiumJS web environment, we will use the Cesium Viewer.
 
-Kopieer index.html naar de werkdirectory
+
 
 Open index.html in een teksteditor. In de code worden 3 tilesets geladen:
 
