@@ -10,15 +10,15 @@ Zie voor een gedetailleerd overzicht van de 3D Tiles specificatie (https://githu
 
 De hoeveelheid data in een digital twin is vaak enorm, waardoor het tegelijk opvragen van alle beschikbare data niet wenselijk is met het oog op de performance. 
 
-Na de dataverwerking gaan we de 3D Tiles visualiseren. 3D Tiles kunnen door meerdere applicaties gebruikt worden. In dit geval gebruiken we Cesium, een krachtige open source Javascript library. 
+Na de dataverwerking gaan we de 3D Tiles visualiseren. 3D Tiles kunnen door meerdere applicaties gebruikt worden. In deze workshop gebruiken we Cesium, een krachtige open source Javascript library. 
 
 Naast visualisatie in Cesium worden de aangemaakte tilesets ingeladen in QGIS.
 
-<img src = "3dtiles_ecosysteem.png">
+<img src = "./images/3dtiles_ecosysteem.png">
 
 In deze workshop gaan we een digital twin inrichten voor de Proefpolderdijk bij Andijk. Bij het beheer van deze dijk komt veel verschillende data kijken. We gaan aan de slag met het Digitaal Topografisch Bestand (DTB) van RWS. Aan de hand van deze data laten we zien welke stappen er nodig zijn om van de beschikbare brondata tot een 3D-webomgeving te komen gebruikmakend van open source tooling en open standaarden.  
 
-De workshop is ingedeeld in twee modules, te weten: 
+De workshop is ingedeeld in twee delen, te weten: 
 
 Deel 1: Dataverwerking tot 3D Tiles 
 
@@ -45,7 +45,6 @@ Deel 2: Datavisualisatie in 3D
 [2_datavisualisatie.md](2_datavisualisatie.md)
 
 ## Leerdoelen 
-
 
 Na het voltooien van deze cursus:
 
@@ -79,19 +78,19 @@ Docker version 27.1.1, build 6312585
 
 Zet het path naar QGIS in de environment variables, zodat we GDAL commandline tools kunnen gebruiken.
 
-Voorbeelddirectory: C:\Program Files\QGIS 3.36.1\bin.
+Voorbeelddirectory: C:\Program Files\QGIS 3.38.3\bin\.
 
 kan via Control panel - System - Edit the system Environment Variables - Environment Variables... - System Variables - Path of via de commandline:
 
  ```shell
-set PATH=%PATH%;D:\Program Files\QGIS 3.36.1\bin
+set PATH=%PATH%;C:\Program Files\QGIS 3.38.3\bin
 ```
 
 Check:
 
 ```shell
 ogr2ogr --version
-GDAL 3.8.4, released 2024/02/08
+GDAL 3.9.2, released 2024/08/13
 ```
 
 - Database management tool (bijv. pgAdmin of DBeaver)
@@ -99,6 +98,8 @@ GDAL 3.8.4, released 2024/02/08
 pgAdmin: https://www.pgadmin.org/
 
 DBeaver: https://dbeaver.io/
+
+Het voordeel van DBeaver is dat een groot aantal typen databases gebruikt kunnen worden.
 
 De command line liefhebbers kunnen ook psql gebruiken. psql.exe staat standaard in de bin directory van de QGIS installatie.
 
@@ -110,7 +111,7 @@ Check:
 
 ```shell
 node --version
-v21.7.1
+v20.18.0
 ```
 
 In de workshop wordt operating systeem Windows gebruikt, met wat kleine aanpassingen kunnen
@@ -121,7 +122,8 @@ ook andere operating systemen gebruikt worden.
 We gebruiken Docker om de PostGIS database te starten. Open een terminal en voer het volgende commando uit:
 
 ```
-docker run -d -e POSTGRES_PASSWORD=postgres -d -p 5439:5432 postgis/postgis 
+docker run -d -e POSTGRES_PASSWORD=postgres -d -p 5439:5432 postgis/postgis
+3cc40f09c573141a90e1a7abdc4f5d0cdfc2bebfe4ab2ff9e3ecf81f83af4529 
 ```
 
 Uitleg command: 
@@ -144,18 +146,32 @@ Vervolgens kan in DBeaver of PGAdmin en in QGIS connectie gemaakt worden met de 
 
 - Password: postgres 
 
+Voorbeeld aanmaken database connectie met DBeaver - via Database - New database connection - PostgreSQL:
+
+<img src = "./images/dbeaver_connection.png">
+
+Via SQL Editor -> OpenSQL Script kunnen queries op de database worden uitgevoerd.
+
+Voorbeeld aanmaken database connectie met QGIS - Browser window - PostgreSQL rechtermuis - new connection
+
+<img src = "./images/qgis_connection.png">
+
+Via optie 'Execute SQL' kunnen queries op de database worden uitgevoerd.
+
 Check: Vraag PostGIS versie op met de volgende SQL query:
 
-
 ```sql
-SELECT postgis_full_version();
+SELECT postgis_version();
 ``` 
 
 Voorbeeld met psql client:
 
 ```shell
-psql -h localhost -p 5439 -U postgres -d postgres -c "SELECT postgis_full_version();"
-POSTGIS="3.4.0 0874ea3"
+psql -h localhost -p 5439 -U postgres -d postgres -c "select PostGIS_Version();"
+            postgis_version
+---------------------------------------
+ 3.5 USE_GEOS=1 USE_PROJ=1 USE_STATS=1
+(1 row)
 ```
 ## Werkdirectory
 
@@ -192,6 +208,6 @@ Deze map bevat de volgende submappen:
 
 Het resultaat van de workshop is een 3D-webomgeving waarin de 3D tilesets in Andijk ingeladen zijn.
 
-<img src = "windturbine.gif">
+<img src = "./images/windturbine.gif">
 
 Ga door naar [1_dataverwerking.md](1_dataverwerking.md)
