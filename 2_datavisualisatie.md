@@ -157,6 +157,8 @@ Name: panden
 
 URL: http://localhost:8080/andijk_panden/tileset.json
 
+<img src = "./images/qgis_tiled_scene_connection.png">
+
 Klik op Add, 3D Bah panden worden getoond in QGIS.
 
 <img src = "./images/qgis_3dtiles_2d.png">
