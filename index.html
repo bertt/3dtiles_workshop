@@ -1,31 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cesium/1.118.2/Cesium.js"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/cesium/1.118.2/Widgets/widgets.min.css" rel="stylesheet">
-  
-    <style>
-      html, body, #cesiumContainer {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
 
-        .toolbar-left {
-            display: block;
-            position: absolute;
-            top: 5px;
-            left: 5px;
-        }
+  <style>
+    html,
+    body,
+    #cesiumContainer {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
 
+    .toolbar-left {
+      display: block;
+      position: absolute;
+      top: 5px;
+      left: 5px;
+    }
   </style>
 </head>
+
 <body>
   <div id="cesiumContainer"></div>
   <script type="module">
+    // Initialize Cesium viewer with settings
     var viewer = new Cesium.Viewer('cesiumContainer', {
       animation: false,
       baseLayerPicker: false,
@@ -43,37 +47,26 @@
       geocoder: false,
       shouldAnimate: true,
       baseLayer: new Cesium.ImageryLayer(new Cesium.UrlTemplateImageryProvider({
-          url: "https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0/grijs/EPSG:3857/{z}/{x}/{y}.png",
-          maximumLevel: 19,
+        url: "https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0/grijs/EPSG:3857/{z}/{x}/{y}.png",
+        maximumLevel: 19,
       }))
     });
 
-    viewer.scene.globe.baseColor = Cesium.Color.WHITE; 
+    viewer.scene.globe.baseColor = Cesium.Color.WHITE;
 
-    var terrainProvider =  await Cesium.CesiumTerrainProvider.fromUrl('https://api.pdok.nl/kadaster/3d-basisvoorziening/ogc/v1_0/collections/digitaalterreinmodel/quantized-mesh');
-   viewer.scene.terrainProvider = terrainProvider;
-    viewer.scene.globe.depthTestAgainstTerrain=true;
+    var terrainProvider = await Cesium.CesiumTerrainProvider.fromUrl('https://api.pdok.nl/kadaster/3d-basisvoorziening/ogc/v1_0/collections/digitaalterreinmodel/quantized-mesh');
+    viewer.scene.terrainProvider = terrainProvider;
+    viewer.scene.globe.depthTestAgainstTerrain = true;
 
     const tilesetDtbVlakken = await Cesium.Cesium3DTileset.fromUrl(
       "./output/tileset.json"
-    );  
+    );
     viewer.scene.primitives.add(tilesetDtbVlakken);
-    
+
     const tilesetPunten = await Cesium.Cesium3DTileset.fromUrl(
       "./output_i3dm/tileset.json"
-    );  
+    );
     viewer.scene.primitives.add(tilesetPunten);
-
-    // voeg de panden toe:
-    //const tilesetPanden = await Cesium.Cesium3DTileset.fromUrl(
-    //  "./resultaten//andijk_panden/tileset.json"
-    //);  
-    // viewer.scene.primitives.add(tilesetPanden);
-
-    const tileset3DGebouwen = await Cesium.Cesium3DTileset.fromUrl(
-     "https://api.pdok.nl/kadaster/3d-basisvoorziening/ogc/v1_0/collections/gebouwen/3dtiles"
-    );  
-    viewer.scene.primitives.add(tileset3DGebouwen);
 
 
     viewer.scene.globe.depthTestAgainstTerrain = true;
@@ -82,36 +75,37 @@
     viewer.zoomTo(tilesetPunten, new Cesium.HeadingPitchRange(0, -0.5, 0));
 
     const normalColor = Cesium.Color.WHITE;
-   let currentColor = Cesium.Color.YELLOW;
+    let currentColor = Cesium.Color.YELLOW;
 
-// 3D Tileset highlighting
-const highlighted = {
-  feature: undefined,
-  originalColor: new Cesium.Color(),
-};
+    // 3D Tileset highlighting
+    const highlighted = {
+      feature: undefined,
+      originalColor: new Cesium.Color(),
+    };
 
     // Color a feature yellow on hover.
-viewer.screenSpaceEventHandler.setInputAction(function onMouseMove(
-  movement
-) {
-  // If a feature was previously highlighted, undo the highlight
-  if (Cesium.defined(highlighted.feature)) {
-    highlighted.feature.color = highlighted.originalColor;
-    highlighted.feature = undefined;
-  }
-  // Pick a new feature
-  const pickedFeature = viewer.scene.pick(movement.endPosition);
-  // Highlight the feature if it's not already selected.
-  if (pickedFeature instanceof Cesium.Cesium3DTileFeature) {
-    highlighted.feature = pickedFeature;
-    Cesium.Color.clone(
-      pickedFeature.color,
-      highlighted.originalColor
-    );
-    pickedFeature.color = currentColor;
-  }
-},
-Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+    viewer.screenSpaceEventHandler.setInputAction(function onMouseMove(
+      movement
+    ) {
+      // If a feature was previously highlighted, undo the highlight
+      if (Cesium.defined(highlighted.feature)) {
+        highlighted.feature.color = highlighted.originalColor;
+        highlighted.feature = undefined;
+      }
+      // Pick a new feature
+      const pickedFeature = viewer.scene.pick(movement.endPosition);
+      // Highlight the feature if it's not already selected.
+      if (pickedFeature instanceof Cesium.Cesium3DTileFeature) {
+        highlighted.feature = pickedFeature;
+        Cesium.Color.clone(
+          pickedFeature.color,
+          highlighted.originalColor
+        );
+        pickedFeature.color = currentColor;
+      }
+    },
+      Cesium.ScreenSpaceEventType.MOUSE_MOVE);
   </script>
 </body>
+
 </html>

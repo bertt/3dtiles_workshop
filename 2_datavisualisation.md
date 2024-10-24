@@ -22,81 +22,65 @@ Or, if you are using Python:
 python -m http.server 8080
 ```
 
-Open a web browser and go to [http://localhost:8080](http://localhost:8080). Files in the working directory will now be displayed.
+Open a web browser and go to [http://localhost:8080](http://localhost:8080). You will see the Cesium 3D viewer.
 
 ## Cesium Viewer
 
 To load the 3D Tiles into a CesiumJS web environment, we will use the Cesium Viewer.
 
+Open index.html. This webpage will initialize Cesium and load the 3D Tiles we created. 
 
+The Cesium viewer also loads a background map from PDOK and a Digital Terrain Model (DTM).
 
-Open index.html in een teksteditor. In de code worden 3 tilesets geladen:
+Inspect the Cesium viewer on the DTB areas, trees, and buildings. What attributes are available per layer?
 
--  DTB Vlakken: ./dtb_vlakken/tileset.json
-
--  DTB puntent: ./dtb_punten/tileset.json
-
--  Andijk panden: ./andijk_panden/tileset.json
-
-Open een brower en ga naar [http://localhost:8080/index.html](http://localhost:8080/index.html). 3D Tiles worden nu getoond in de Cesium Viewer.
-
-De Cesium viewer bevat een aantal kaartlagen:
-
-- PDOK BRT achtergrondkaart;
-
-- 3D Basisvoorziening - Digitaal Terreinmodel (DTM)
-
-https://api.pdok.nl/kadaster/3d-basisvoorziening/ogc/v1_0/collections/digitaalterreinmodel
-
-Inspecteer de viewer op de DTB vlakken, bomen en panden. Welke attributen zijn er beschikbaar per laag?
-
-We zien dat de DTB vlakken soms verdwijnen onder het terrein, dit is eventueel op te lossen door de vlakken iets te verhogen
+We can see that the DTB polygons sometimes disappear under the terrain. This can be solved by slightly raising the polygons with the following JS code:
   
-  ```javascript
+```js
 var translation = new Cesium.Cartesian3(0, 0, 5); 
 var modelMatrix = Cesium.Matrix4.fromTranslation(translation);
 tilesetDtbVlakken.modelMatrix = modelMatrix;
  ```
 
-## Tileset stijlen aanpassen
+## Modify Tileset styles
 
-Styling kan worden toegepast op de tileset op twee manieren:
+Styling can be applied to the tileset in two ways:
 
-- tijdens het genereren van de tileset
+- during the generation of the tileset
 
-- via de index.html file
+- via the index.html file
 
-In deze oefening wordt de styling toegepast via de index.html file.
+In this exercise, the styling is applied via the index.html file.
 
-Zie voor een beschrijving van de 3D Tiles Styling language https://github.com/CesiumGS/3d-tiles/tree/main/specification/Styling
+For a description of the 3D Tiles Styling language, see the [Styling Documentation](https://github.com/CesiumGS/3d-tiles/tree/main/specification/Styling).
 
-Open index.html in een teksteditor. Voeg de volgende code toe aan de tileset van de DTB vlakken:
+Add the following code to the tileset of the DTB areas in index.html:
 
 ```javascript
-    tilesetDtbVlakken.style = new Cesium.Cesium3DTileStyle({
-      color: {
-        conditions: [
-        ["${feature['osmchr']} === 'Bitumen'", "color('#430719')"],
-        ["${feature['omschr']} === 'Steen bekleding'", "color('#740320')"],
-        ["${feature['omschr']} === 'Bomen en struiken'", "color('#008000')"],
-        ["${feature['omschr']} === 'Industrieterrein'", "color('#FFFF00')"]
-        // todo: add more conditions
-        ]
-      }
-    });
+tilesetDtbVlakken.style = new Cesium.Cesium3DTileStyle({
+  color: {
+    conditions: [
+      ["${feature['osmchr']} === 'Bitumen'", "color('#430719')"],
+      ["${feature['omschr']} === 'Steen bekleding'", "color('#740320')"],
+      ["${feature['omschr']} === 'Bomen en struiken'", "color('#008000')"],
+      ["${feature['omschr']} === 'Industrieterrein'", "color('#FFFF00')"]
+    ]
+  }
+);
 ```
 
-Bekijk het resultaat in de Cesium Viewer. De vlakken zijn nu gekleurd op basis van de omschrijving van de vlakken. 
+Inspect the result in the Cesium viewer. The polygons are now colored based on the description of the polygons.
 
-Experimenteer met de kleuren en voeg meer condities toe.
+Experiment with colors and add more conditions.
 
-## 3D modellen toevoegen
+## Adding 3D models
 
-Naast 3D Tiles kunnen we ook losse 3D modellen toevoegen aan de visualisatie.
+In addition to the 3D tiles, we can also add individual 3D models to the visualization.
 
-Kopieer het 3D model 'windturbine.glb' naar de werkdirectory.
+We have a 3D model called `windturbine.glb` in the working directory.
 
-Voeg de volgende code toe aan index.html en bekijk het resultaat in de browser:
+Add the following code to index.html and watch the result in the browser: 
+
 
 ```javascript
     const windturbine = viewer.entities.add({ 
@@ -107,53 +91,49 @@ Voeg de volgende code toe aan index.html en bekijk het resultaat in de browser:
     });
 ```
 
-Er wordt een windturbine met animatie getoond in de Cesium Viewer.
+An animated windturbine will be shown on the map.
 
 <img src = "windturbine.gif">
 
-## 3D Basisvoorziening
+## Buildings
 
-In de 3D Basis voorziening van PDOK zijn een aantal landelijke 3D Tilesets beschikbaar die we kunnen inladen in de Cesium Viewer.
+The 3D Basisvoorziening by PDOK contains a number of national 3D Tilesets that we can load into the Cesium Viewer.
 
-Zie https://api.pdok.nl/kadaster/3d-basisvoorziening/ogc/v1_0/collections/gebouwen voor een beschrijving van de 3D gebouwen 
-tileset. 
+See https://api.pdok.nl/kadaster/3d-basisvoorziening/ogc/v1_0/collections/gebouwen for a description of the 3D buildings tileset.
 
-Voeg deze tileset toe aan de Cesium Viewer en inspecteer de gebouwen.
+Add this tileset to the Cesium Viewer and inspect the buildings.
 
 ```javascript
 const tileset3DGebouwen = await Cesium.Cesium3DTileset.fromUrl(
   "https://api.pdok.nl/kadaster/3d-basisvoorziening/ogc/v1_0/collections/gebouwen/3dtiles"
-);  
-viewer.scene.primitives.add(tileset3DGebouwen);
+);
 ```
 
 ## QGIS
 
-In deze oefening gaan we de gemaakte 3D Tiles inladen in QGIS.
+In this exercise, we will load the 3D Tiles into QGIS.
 
-Open QGIS en ga naar de menu optie 'Layer' -> 'Data Source Manager' en selecteer 'Scene'.
+Open QGIS and head to the menu option 'Layer' -> 'Data Source Manager' and select 'Scene'.
 
-Voeg de DTB vlakken toe via 
+- Set the  'Source Type' to 'Service'
 
-- Zet 'Source Type' op 'Service'
-
-Maak een nieuwe connectie aan via knop 'New' -> 'New Cesium 3D Tiles Connection'
+Add a new connection with the button 'New' -> 'New Cesium 3D Tiles Connection'
 
 Name: DTB Vlakken
 
 URL: http://localhost:8080/dtb_vlakken/tileset.json
 
-Klik op Add, DTB vlakken worden getoond in QGIS.
+Click 'Add'.
 
-Vraag: Waarom zien we de gedefinieerde stylen niet in QGIS?
+Question: Why don't we see the defined styles in QGIS?
 
-Extra opgave: Voeg de Andijk panden toe aan QGIS.
+Extra assignment: Add the Andijk buildings to QGIS.
 
-Voor het bekijken in 3D in QGIS, ga naar View -> 3D Map Views ->  new 3D Map View
+For viewing in 3D in QGIS, head to View -> 3D Map Views -> new 3D Map View. 
+A new window should open with the 3D Tiles.
 
-Als het goed is opent er een nieuw venster met de 3D Tiles.
+What do you notice about the 3D View in QGIS?
 
-Wat valt er op aan de 3D View in QGIS?
 
 
 
