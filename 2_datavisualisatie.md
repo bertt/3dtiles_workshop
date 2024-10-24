@@ -1,6 +1,6 @@
 # 2. Data visualisatie
 
-In deze module gaan we aan de slag met het visualiseren van de 3D Tiles die we in de vorige module hebben gemaakt. We gaan de 3D Tiles inladen in een CesiumJS-webomgeving en de tileset stijlen aanpassen. Daarnaast voegen we 3D modellen toe aan de visualisatie.
+In deze module gaan we aan de slag met het visualiseren van de 3D Tiles die we in de vorige module hebben gemaakt. We gaan de 3D Tiles inladen in een CesiumJS webomgeving en de tileset stijlen aanpassen. Daarnaast voegen we 3D modellen toe aan de visualisatie.
 
 ## Server opzetten
 
@@ -14,6 +14,25 @@ Open de command line en navigeer naar werkdirectory. Start de server met het vol
 
 ```shell
 http-server
+Starting up http-server, serving ./
+
+http-server version: 14.1.1
+
+http-server settings:
+CORS: disabled
+Cache: 3600 seconds
+Connection Timeout: 120 seconds
+Directory Listings: visible
+AutoIndex: visible
+Serve GZIP Files: false
+Serve Brotli Files: false
+Default File Extension: none
+
+Available on:
+  http://192.168.178.60:8080
+  http://127.0.0.1:8080
+  http://172.24.32.1:8080
+Hit CTRL-C to stop the server
 ```
 
 Open een webbrowser en ga naar [http://localhost:8080](http://localhost:8080). Bestanden in de werkdirectory worden nu getoond.
@@ -22,15 +41,13 @@ Open een webbrowser en ga naar [http://localhost:8080](http://localhost:8080). B
 
 Voor het inladen van de 3D Tiles in een CesiumJS-webomgeving, maken we gebruik van de Cesium Viewer.
 
-Kopieer index.html naar de werkdirectory
+Kopieer bestand [index.html](./index.html) uit de 3D Tiles workshop repository naar de werkdirectory.
 
 Open index.html in een teksteditor. In de code worden 3 tilesets geladen:
 
 -  DTB Vlakken: ./dtb_vlakken/tileset.json
 
 -  DTB puntent: ./dtb_punten/tileset.json
-
--  Andijk panden: ./andijk_panden/tileset.json
 
 Open een brower en ga naar [http://localhost:8080/index.html](http://localhost:8080/index.html). 3D Tiles worden nu getoond in de Cesium Viewer.
 
@@ -44,13 +61,9 @@ https://api.pdok.nl/kadaster/3d-basisvoorziening/ogc/v1_0/collections/digitaalte
 
 Inspecteer de viewer op de DTB vlakken, bomen en panden. Welke attributen zijn er beschikbaar per laag?
 
-We zien dat de DTB vlakken soms verdwijnen onder het terrein, dit is eventueel op te lossen door de vlakken iets te verhogen
-  
-  ```javascript
-var translation = new Cesium.Cartesian3(0, 0, 5); 
-var modelMatrix = Cesium.Matrix4.fromTranslation(translation);
-tilesetDtbVlakken.modelMatrix = modelMatrix;
- ```
+Oefening: Voeg de Andijk 3D Bag panden toe aan de viewer
+
+Zie eventueel bestand [./resultaten/2_datavisualisatie.txt](./resultaten/1_datavisualisatie.txt) voor een uitwerking van deze opdracht.
 
 ## Tileset stijlen aanpassen
 
@@ -64,7 +77,8 @@ In deze oefening wordt de styling toegepast via de index.html file.
 
 Zie voor een beschrijving van de 3D Tiles Styling language https://github.com/CesiumGS/3d-tiles/tree/main/specification/Styling
 
-Open index.html in een teksteditor. Voeg de volgende code toe aan de tileset van de DTB vlakken:
+Open index.html in een teksteditor. Voeg de volgende code toe aan de tileset van de DTB vlakken 
+op de plek van '// todo: voeg hier code toe':
 
 ```javascript
     tilesetDtbVlakken.style = new Cesium.Cesium3DTileStyle({
@@ -82,13 +96,19 @@ Open index.html in een teksteditor. Voeg de volgende code toe aan de tileset van
 
 Bekijk het resultaat in de Cesium Viewer. De vlakken zijn nu gekleurd op basis van de omschrijving van de vlakken. 
 
-Experimenteer met de kleuren en voeg meer condities toe.
+Opdracht: maak features waar omschr === 'Meer' blauw.
 
 ## 3D modellen toevoegen
 
 Naast 3D Tiles kunnen we ook losse 3D modellen toevoegen aan de visualisatie.
 
-Kopieer het 3D model 'windturbine.glb' naar de werkdirectory.
+Kopieer het 3D model [windturbine.glb](./windturbine.glb) uit de 3D Tiles workshop repository naar de werkdirectory.
+
+Bekijk het model in 3D Viewer:
+
+<img src = "./images/windturbine.png">
+
+De glTF bevat ook een animatie voor de wieken.
 
 Voeg de volgende code toe aan index.html en bekijk het resultaat in de browser:
 
@@ -101,9 +121,9 @@ Voeg de volgende code toe aan index.html en bekijk het resultaat in de browser:
     });
 ```
 
-Er wordt een windturbine met animatie getoond in de Cesium Viewer.
+Laad de viewer, er wordt een windturbine met animatie getoond in de Cesium Viewer.
 
-<img src = "windturbine.gif">
+<img src = "./images/windturbine.gif">
 
 ## 3D Basisvoorziening
 
@@ -123,31 +143,32 @@ viewer.scene.primitives.add(tileset3DGebouwen);
 
 ## QGIS
 
-In deze oefening gaan we de gemaakte 3D Tiles inladen in QGIS.
+In deze oefening gaan we de gemaakte 3D Bag panden 3D Tiles inladen in QGIS.
 
 Open QGIS en ga naar de menu optie 'Layer' -> 'Data Source Manager' en selecteer 'Scene'.
 
-Voeg de DTB vlakken toe via 
+Voeg de 3D Bag panden toe via 
 
 - Zet 'Source Type' op 'Service'
 
 Maak een nieuwe connectie aan via knop 'New' -> 'New Cesium 3D Tiles Connection'
 
-Name: DTB Vlakken
+Name: panden
 
-URL: http://localhost:8080/dtb_vlakken/tileset.json
+URL: http://localhost:8080/andijk_panden/tileset.json
 
-Klik op Add, DTB vlakken worden getoond in QGIS.
+Klik op Add, 3D Bah panden worden getoond in QGIS.
 
-Vraag: Waarom zien we de gedefinieerde stylen niet in QGIS?
-
-Extra opgave: Voeg de Andijk panden toe aan QGIS.
+<img src = "./images/qgis_3dtiles_2d.png">
 
 Voor het bekijken in 3D in QGIS, ga naar View -> 3D Map Views ->  new 3D Map View
 
 Als het goed is opent er een nieuw venster met de 3D Tiles.
 
+<img src = "./images/qgis_3dtiles_panden.png">
+
 Wat valt er op aan de 3D View in QGIS?
+
 
 
 

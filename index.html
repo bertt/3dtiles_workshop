@@ -57,24 +57,19 @@
     const tilesetDtbVlakken = await Cesium.Cesium3DTileset.fromUrl(
       "./dtb_vlakken/tileset.json"
     );  
+
+    var translation = new Cesium.Cartesian3(0, 0, 5); 
+    var modelMatrix = Cesium.Matrix4.fromTranslation(translation);
+    tilesetDtbVlakken.modelMatrix = modelMatrix;
+
     viewer.scene.primitives.add(tilesetDtbVlakken);
-    
+
     const tilesetPunten = await Cesium.Cesium3DTileset.fromUrl(
       "./dtb_punten/tileset.json"
     );  
     viewer.scene.primitives.add(tilesetPunten);
 
-    // voeg de panden toe:
-    //const tilesetPanden = await Cesium.Cesium3DTileset.fromUrl(
-    //  "./resultaten//andijk_panden/tileset.json"
-    //);  
-    // viewer.scene.primitives.add(tilesetPanden);
-
-    const tileset3DGebouwen = await Cesium.Cesium3DTileset.fromUrl(
-     "https://api.pdok.nl/kadaster/3d-basisvoorziening/ogc/v1_0/collections/gebouwen/3dtiles"
-    );  
-    viewer.scene.primitives.add(tileset3DGebouwen);
-
+    // todo: voeg hier code toe
 
     viewer.scene.globe.depthTestAgainstTerrain = true;
     viewer.scene.globe.enableLighting = false;

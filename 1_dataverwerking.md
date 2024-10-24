@@ -235,7 +235,7 @@ i3dm.export --version
 i3dm.export 2.9.0
 ```
 
-- kopieer het boom model [tree.glb](./tree.glb) naar de werkdirectory;
+- kopieer het boom model [tree.glb](./tree.glb) uit de 3D Tiles workshop repository naar de werkdirectory;
 
 - bekijk het 3D model van de boom in '3D Viewer' of online https://gltf-viewer.donmccurdy.com/
 
