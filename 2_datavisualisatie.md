@@ -63,7 +63,7 @@ Inspecteer de viewer op de DTB vlakken, bomen en panden. Welke attributen zijn e
 
 Oefening: Voeg de Andijk 3D Bag panden toe aan de viewer
 
-Zie eventueel bestand [./resultaten/2_datavisualisatie.txt](./resultaten/1_datavisualisatie.txt) voor een uitwerking van deze opdracht.
+Zie eventueel bestand [./resultaten/2_datavisualisatie.txt](./resultaten/2_datavisualisatie.txt) voor een uitwerking van deze opdracht.
 
 ## Tileset stijlen aanpassen
 
