@@ -63,7 +63,7 @@ Inspecteer de viewer op de DTB vlakken, bomen en panden. Welke attributen zijn e
 
 Oefening: Voeg de Andijk 3D Bag panden toe aan de viewer
 
-Zie eventueel bestand [./resultaten/2_datavisualisatie.txt](./resultaten/1_datavisualisatie.txt) voor een uitwerking van deze opdracht.
+Zie eventueel bestand [./resultaten/2_datavisualisatie.txt](./resultaten/2_datavisualisatie.txt) voor een uitwerking van deze opdracht.
 
 ## Tileset stijlen aanpassen
 
@@ -143,11 +143,11 @@ viewer.scene.primitives.add(tileset3DGebouwen);
 
 ## QGIS
 
-In deze oefening gaan we de gemaakte 3D Bag panden 3D Tiles inladen in QGIS.
+In deze oefening gaan we de gemaakte 3D BAG panden 3D Tiles inladen in QGIS.
 
 Open QGIS en ga naar de menu optie 'Layer' -> 'Data Source Manager' en selecteer 'Scene'.
 
-Voeg de 3D Bag panden toe via 
+Voeg de 3D BAG panden toe via 
 
 - Zet 'Source Type' op 'Service'
 
@@ -159,7 +159,7 @@ URL: http://localhost:8080/andijk_panden/tileset.json
 
 <img src = "./images/qgis_tiled_scene_connection.png">
 
-Klik op Add, 3D Bah panden worden getoond in QGIS.
+Klik op Add, 3D BAG panden worden getoond in QGIS.
 
 <img src = "./images/qgis_3dtiles_2d.png">
 
