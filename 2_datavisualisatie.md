@@ -7,13 +7,13 @@ In deze module gaan we aan de slag met het visualiseren van de 3D Tiles die we i
 We beginnen met het installeren van een webserver om de 3D Tiles te serveren. We gebruiken hiervoor Node.JS tool 'http-server'.
 
 ```shell
-npm install -g http-server
+C:\workshop_3dtiles> npm install -g http-server
 ``` 
 
 Open de command line en navigeer naar werkdirectory. Start de server met het volgende commando:
 
 ```shell
-http-server
+C:\workshop_3dtiles> http-server
 Starting up http-server, serving ./
 
 http-server version: 14.1.1

@@ -32,7 +32,16 @@ Klik op de link 'Klik hier om dit kaartblad als Shapefile (.zip) te downloaden' 
 
 De directe link is: https://downloads.rijkswaterstaatdata.nl/dtb/geogegevens/shapefile/d15cz.zip
 
-- Pak het zip-bestand (rechtermuis -> extrac all) uit naar de werkdirectory
+Bekijk de inhoud van de zip file met GDAL command line tool 'ogrinfo':
+
+```shell
+C:\workshop_3dtiles> ogrinfo /vsizip/d15cz.zip
+INFO: Open of `/vsizip/d15cz.zip'
+      using driver `ESRI Shapefile' successful.
+1: d15cz_lin (3D Line String)
+2: d15cz_reg (3D Polygon)
+3: d15cz_sym (3D Point)
+```
 
 De zip bevat 3 shapefiles:
 
@@ -42,18 +51,16 @@ De zip bevat 3 shapefiles:
 
  Voor het laden van de data in PostGIS gebruiken we GDAL commandline tool ogr2ogr. 
 
-- Open een command prompt en navigeer naar de werkdirectory in de folder 'd15cz'.
-
 Voor het laden van de DTB vlakken in de database voer het volgende commando uit:
 
 ```shell
- ogr2ogr -f "PostgreSQL" PG:"host=localhost port=5439 user=postgres dbname=postgres password=postgres" d15cz_reg.shp -t_srs epsg:4979 -nln public.dtb_vlak_andijk -nlt MULTIPOLYGONZ
+ C:\workshop_3dtiles> ogr2ogr -f "PostgreSQL" PG:"host=localhost port=5439 user=postgres dbname=postgres password=postgres" /vsizip/d15cz.zip/d15cz_reg.shp -t_srs epsg:4979 -nln public.dtb_vlak_andijk -nlt MULTIPOLYGONZ
  ```
 
 Voor het laden van de DTB punten in de database voer het volgende commando uit:
 
 ```shell
-ogr2ogr -f "PostgreSQL" PG:"host=localhost port=5439 user=postgres dbname=postgres password=postgres" d15cz_sym.shp -t_srs epsg:4979 -nln public.dtb_punt_andijk -nlt POINTZ
+ogr2ogr -f "PostgreSQL" PG:"host=localhost port=5439 user=postgres dbname=postgres password=postgres" /vsizip/d15cz.zip/d15cz_sym.shp -t_srs epsg:4979 -nln public.dtb_punt_andijk -nlt POINTZ
 ```
 
 Controleer of de data goed geladen is in de database:
@@ -66,9 +73,9 @@ SELECT count(*) from public.dtb_vlak_andijk;
 Voorbeeld met psql client:
 
 ```shell
-psql -h localhost -p 5439 -U postgres -d postgres -c "SELECT count(*) from public.dtb_punt_andijk;SELECT count(*) from public.dtb_vlak_andijk;"
-            postgis_version
----------------------------------------
+C:\workshop_3dtiles> psql -h localhost -p 5439 -U postgres -d postgres -c "SELECT count(*) from public.dtb_punt_andijk;SELECT count(*) from public.dtb_vlak_andijk;"
+Password for user postgres:
+
  count
 -------
   7659
@@ -140,8 +147,8 @@ De volgende stappen laten zien hoe we Batched 3D Models kunnen maken van de DTB 
 Check de versie van pg2b3dm
 
 ```shell
-pg2b3dm --version
-Tool: pg2b3dm 2.17.0.0
+C:\workshop_3dtiles> pg2b3dm --version
+Tool: pg2b3dm 2.18.1.0
 ```
 
 - Voer het volgende commando uit
@@ -231,7 +238,7 @@ Voor het maken van Instanced 3D Models van de DTB punten gebruiken we i3dm.expor
 Check:
 
 ```shell
-i3dm.export --version
+C:\workshop_3dtiles> i3dm.export --version
 i3dm.export 2.9.0
 ```
 
@@ -244,7 +251,7 @@ i3dm.export 2.9.0
 - Voer het volgende commando uit
 
 ```shell
-i3dm.export -c "Host=localhost;Username=postgres;Password=postgres;Database=postgres;Port=5439" -t public.v_dtb_punt_andijk -o ./dtb_punten --use_i3dm true
+C:\workshop_3dtiles> i3dm.export -c "Host=localhost;Username=postgres;Password=postgres;Database=postgres;Port=5439" -t public.v_dtb_punt_andijk -o ./dtb_punten --use_i3dm true
 Tool: I3dm.export
 Version: 2.9.0.0
 Exporting instances from public.v_dtb_punt_andijk...
@@ -293,7 +300,7 @@ Voor installatie van deze tool is Node.js vereist.
 - Open een command prompt en installeer de 3D Tiles Validator en controleer de versie.
 
 ```shell
-npm install -g 3d-tiles-validator
+C:\workshop_3dtiles> npm install -g 3d-tiles-validator
 3d-tiles-validator --version
 0.5.0
 ```
@@ -304,7 +311,7 @@ Voor de vlakken:
 
 
 ```shell
-3d-tiles-validator --tilesetFile ./dtb_vlakken/tileset.json
+C:\workshop_3dtiles> 3d-tiles-validator --tilesetFile ./dtb_vlakken/tileset.json
 Validating tileset ./dtb_vlakken/tileset.json
 Validation result:
 {
@@ -320,7 +327,7 @@ Er zijn geen errors, warnings of informatie meldingen. De 3D tileset is valide.
 Voor de punten:
   
 ```shell
-3d-tiles-validator --tilesetFile ./dtb_punten/tileset.json
+C:\workshop_3dtiles> 3d-tiles-validator --tilesetFile ./dtb_punten/tileset.json
 Validating tileset ./dtb_punten/tileset.json
 Validation result:
 {
@@ -344,7 +351,7 @@ Voor het comprimeren van de DTB vlakken voer het volgende commanda uit:
 Controleer voor het comprimeren de benodigde opslagruimte voor folder 'dtb_vlakken'
 
 ```shell
-docker run -v c:\workshop_3dtiles\dtb_vlakken\content:/tiles -it geodan/compressor5000
+C:\workshop_3dtiles> docker run -v c:\workshop_3dtiles\dtb_vlakken\content:/tiles -it geodan/compressor5000
 ```
 
 Controleer na het comprimeren opnieuw de benodigde opslagruimte voor folder 'dtb_vlakken'
