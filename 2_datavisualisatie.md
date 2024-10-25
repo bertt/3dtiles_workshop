@@ -163,6 +163,8 @@ Klik op Add, 3D BAG panden worden getoond in QGIS.
 
 <img src = "./images/qgis_3dtiles_2d.png">
 
+Vraag: Waarom bestaan alle panden uit driehoeken?
+
 Voor het bekijken in 3D in QGIS, ga naar View -> 3D Map Views ->  new 3D Map View
 
 Als het goed is opent er een nieuw venster met de 3D Tiles.
