@@ -88,8 +88,6 @@ Password for user postgres:
 (1 row)
 ```
 
-Na het importeren kunnen de file d15cz.zip en alle databestanden in de werk directory opgeruimd worden.
-
 Vraag de vlakken op in QGIS:
 
 <img src = "./images/qgis_vlakken.png">
