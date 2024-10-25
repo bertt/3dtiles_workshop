@@ -146,6 +146,11 @@ Check de versie van pg2b3dm
 
 ```shell
 C:\workshop_3dtiles> pg2b3dm --version
+```
+
+Resultaat:
+
+```
 Tool: pg2b3dm 2.18.1.0
 ```
 
@@ -153,6 +158,11 @@ Tool: pg2b3dm 2.18.1.0
 
 ```
 C:\workshop_3dtiles>  pg2b3dm -U postgres -h localhost -p 5439 -d postgres -t public.dtb_vlak_andijk -a dtb_id,omschr,datum --use_implicit_tiling false -o ./dtb_vlakken -c wkb_geometry --create_gltf false
+```
+
+Resultaat:
+
+```
 Tool: pg2b3dm 2.18.1.0
 Options: -U postgres -h localhost -p 5439 -d postgres -t public.dtb_vlak_andijk -a dtb_id,omschr,datum --use_implicit_tiling false -o ./dtb_vlakken -c wkb_geometry --create_gltf false
 Password for user postgres:
@@ -250,6 +260,11 @@ i3dm.export 2.9.0
 
 ```shell
 C:\workshop_3dtiles> i3dm.export -c "Host=localhost;Username=postgres;Password=postgres;Database=postgres;Port=5439" -t public.v_dtb_punt_andijk -o ./dtb_punten --use_i3dm true
+```
+
+Resultaat:
+
+```
 Tool: I3dm.export
 Version: 2.9.0.0
 Exporting instances from public.v_dtb_punt_andijk...
@@ -326,6 +341,11 @@ Voor de punten:
   
 ```shell
 C:\workshop_3dtiles> 3d-tiles-validator --tilesetFile ./dtb_punten/tileset.json
+```
+
+Resultaat:
+
+```
 Validating tileset ./dtb_punten/tileset.json
 Validation result:
 {
@@ -367,14 +387,3 @@ Comprimeer de 3D tileset met de 3D Tiles Compressor.
 Zie eventueel bestand [./resultaten/1_dataverwerking.txt](./resultaten/1_dataverwerking.txt) voor een uitwerking van deze opdracht.
 
 Ga door naar [2_datavisualisatie.md](2_datavisualisatie.md)
-
-
-
-
-
-
-
-
-
-
-
