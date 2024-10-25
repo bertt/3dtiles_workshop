@@ -60,7 +60,7 @@ Voor het laden van de DTB vlakken in de database voer het volgende commando uit:
 Voor het laden van de DTB punten in de database voer het volgende commando uit:
 
 ```shell
-ogr2ogr -f "PostgreSQL" PG:"host=localhost port=5439 user=postgres dbname=postgres password=postgres" /vsizip/d15cz.zip/d15cz_sym.shp -t_srs epsg:4979 -nln public.dtb_punt_andijk -nlt POINTZ
+ C:\workshop_3dtiles> ogr2ogr -f "PostgreSQL" PG:"host=localhost port=5439 user=postgres dbname=postgres password=postgres" /vsizip/d15cz.zip/d15cz_sym.shp -t_srs epsg:4979 -nln public.dtb_punt_andijk -nlt POINTZ
 ```
 
 Controleer of de data goed geladen is in de database:
