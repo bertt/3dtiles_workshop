@@ -27,6 +27,10 @@
     p {
         font-size: 18px;
     }
+
+    ol, ul, li {
+        font-size: 20px;
+    }
 </style>
 
 <body>
@@ -42,26 +46,31 @@
 
             <!-- Introductie slide -->
             <section>
-                <h2>Even voorstellen</h2>
+                <h3>Even voorstellen</h3>
                 <div class="container">
                     <div class="col">
+                        <img src="https://placehold.co/400" alt="Spreker 1" style="border-radius: 50%; max-width: 300px">
                         <h5>Spreker 1</h5>
-                        <p>Functie: 3D GIS Specialist</p>
-                        <p>Organisatie: [Organisatie]</p>
-                        <p>Email: [Email]</p>
+                        <p>
+                            Functie: 3D GIS Specialist<br>
+                            Organisatie: [Organisatie]<br>
+                            Email: [Email]
+                        </p>
                     </div>
                     <div class="col">
+                        <img src="https://placehold.co/400" alt="Spreker 2" style="border-radius: 50%; max-width: 300px">
                         <h5>Spreker 2</h5>
-                        <p>Functie: Digital Twin Expert</p>
-                        <p>Organisatie: [Organisatie]</p>
-                        <p>Email: [Email]</p>
-                    </div>
+                        <p>
+                            Functie: 3D GIS Specialist<br>
+                            Organisatie: [Organisatie]<br>
+                            Email: [Email]
+                        </p>
                 </div>
             </section>
 
             <!-- Programma slide -->
             <section>
-                <h2>Programma</h2>
+                <h3>Programma</h3>
                 <ol>
                     <li>Introductie 3D Tiles</li>
                     <li>Deel 1: Dataverwerking tot 3D Tiles
@@ -85,9 +94,9 @@
 
             <!-- 3D Tiles: een OGC standaard -->
             <section>
-                <h2>3D Tiles: een OGC standaard</h2>
-                <div class="two-columns">
-                    <div>
+                <h3>3D Tiles: een OGC standaard</h3>
+                <div class="container">
+                    <div class="col">
                         <ul>
                             <li>Open standaard voor het visualiseren van grote 3D datasets</li>
                             <li>Ontwikkeld door Cesium en gestandaardiseerd door OGC</li>
@@ -102,7 +111,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div>
+                    <div class="col">
                         <img src="images/3dtiles_ecosysteem.png" alt="3D Tiles Ecosysteem">
                     </div>
                 </div>
@@ -113,7 +122,7 @@
 
             <!-- Waarom zijn 3D Tiles nuttig? -->
             <section>
-                <h2>Waarom zijn 3D Tiles nuttig?</h2>
+                <h3>Waarom zijn 3D Tiles nuttig?</h3>
                 <ul>
                     <li>Optimalisatie voor grote datasets
                         <ul>
@@ -143,7 +152,7 @@
 
             <!-- Doel van vandaag + vereisten -->
             <section>
-                <h2>Doel van vandaag</h2>
+                <h3>Doel van vandaag</h3>
                 <p>Na het voltooien van deze workshop:</p>
                 <ul>
                     <li>Is er kennis van de 3D Tiles-standaard</li>
@@ -165,7 +174,7 @@
 
             <!-- Introductie Digital Twins -->
             <section>
-                <h2>Digital Twins</h2>
+                <h3>Digital Twins</h3>
                 <div class="two-columns">
                     <div>
                         <ul>
@@ -184,7 +193,7 @@
 
             <!-- Database opzetten -->
             <section>
-                <h2>Database opzetten met Docker</h2>
+                <h3>Database opzetten met Docker</h3>
                 <pre><code class="language-bash">docker run -d -e POSTGRES_PASSWORD=postgres -d -p 5439:5432 postgis/postgis</code></pre>
                 <p>Connectie instellingen:</p>
                 <ul>
@@ -207,7 +216,7 @@
 
             <!-- Deel 1: Dataverwerking - Introductie -->
             <section>
-                <h2>Deel 1: Dataverwerking tot 3D Tiles</h2>
+                <h3>Deel 1: Dataverwerking tot 3D Tiles</h3>
                 <p>In dit deel gaan we:</p>
                 <ol>
                     <li>DTB data downloaden en importeren</li>
@@ -221,7 +230,7 @@
 
             <!-- Data downloaden en importeren -->
             <section>
-                <h2>Data downloaden en importeren</h2>
+                <h3>Data downloaden en importeren</h3>
                 <div class="two-columns">
                     <div>
                         <ol>
@@ -248,7 +257,7 @@
 
             <!-- Data importeren in PostgreSQL -->
             <section>
-                <h2>Data importeren in PostgreSQL</h2>
+                <h3>Data importeren in PostgreSQL</h3>
                 <p>Voor het laden van de DTB vlakken:</p>
                 <pre><code class="language-bash">ogr2ogr -f "PostgreSQL" PG:"host=localhost port=5439 user=postgres dbname=postgres password=postgres" /vsizip/d15cz.zip/d15cz_reg.shp -t_srs epsg:4979 -nln public.dtb_vlak_andijk -nlt MULTIPOLYGONZ</code></pre>
 
@@ -262,7 +271,7 @@ SELECT count(*) from public.dtb_vlak_andijk;</code></pre>
 
             <!-- Data voorbereiden -->
             <section>
-                <h2>Data voorbereiden</h2>
+                <h3>Data voorbereiden</h3>
                 <p>Maak ruimtelijke indexen aan:</p>
                 <pre><code class="language-sql">CREATE INDEX ON public.dtb_vlak_andijk USING gist(st_centroid(st_envelope(wkb_geometry)));
 CREATE INDEX ON public.dtb_punt_andijk USING GIST (wkb_geometry);</code></pre>
@@ -283,7 +292,7 @@ WHERE omschr = 'Boom';</code></pre>
 
             <!-- QGIS visualisatie -->
             <section>
-                <h2>QGIS visualisatie</h2>
+                <h3>QGIS visualisatie</h3>
                 <div class="two-columns">
                     <div>
                         <p>DTB vlakken in QGIS:</p>
@@ -298,7 +307,7 @@ WHERE omschr = 'Boom';</code></pre>
 
             <!-- 3D Tiles maken van DTB vlakken -->
             <section>
-                <h2>3D Tiles maken van DTB vlakken</h2>
+                <h3>3D Tiles maken van DTB vlakken</h3>
                 <ol class="small-text">
                     <li>Download <a href="https://github.com/Geodan/pg2b3dm/releases" target="_blank">pg2b3dm</a> (voor
                         Windows kies pg2b3dm-win-x64.zip)</li>
@@ -314,7 +323,7 @@ WHERE omschr = 'Boom';</code></pre>
 
             <!-- 3D Tiles maken van DTB punten -->
             <section>
-                <h2>3D Tiles maken van DTB punten</h2>
+                <h3>3D Tiles maken van DTB punten</h3>
                 <ol class="small-text">
                     <li>Download <a href="https://github.com/Geodan/i3dm.export/releases"
                             target="_blank">i3dm.export</a></li>
@@ -338,7 +347,7 @@ WHERE omschr = 'Boom';</code></pre>
 
             <!-- Valideren tilesets -->
             <section>
-                <h2>Valideren tilesets</h2>
+                <h3>Valideren tilesets</h3>
                 <p>Installeer de 3D Tiles Validator:</p>
                 <pre><code class="language-bash">npm install -g 3d-tiles-validator</code></pre>
 
@@ -355,7 +364,7 @@ WHERE omschr = 'Boom';</code></pre>
 
             <!-- Deel 2: Datavisualisatie - Introductie -->
             <section>
-                <h2>Deel 2: Datavisualisatie in 3D</h2>
+                <h3>Deel 2: Datavisualisatie in 3D</h3>
                 <p>In dit deel gaan we:</p>
                 <ol>
                     <li>Een webserver opzetten</li>
@@ -369,7 +378,7 @@ WHERE omschr = 'Boom';</code></pre>
 
             <!-- Server opzetten -->
             <section>
-                <h2>Server opzetten</h2>
+                <h3>Server opzetten</h3>
                 <p>Installeer http-server:</p>
                 <pre><code class="language-bash">npm install -g http-server</code></pre>
 
@@ -382,7 +391,7 @@ WHERE omschr = 'Boom';</code></pre>
 
             <!-- Cesium Viewer -->
             <section>
-                <h2>Cesium Viewer</h2>
+                <h3>Cesium Viewer</h3>
                 <p>Kopieer bestand index.html uit de 3D Tiles workshop repository naar de werkdirectory.</p>
                 <p>In de code worden 3 tilesets geladen:</p>
                 <ul>
@@ -400,7 +409,7 @@ WHERE omschr = 'Boom';</code></pre>
 
             <!-- Tileset stijlen aanpassen -->
             <section>
-                <h2>Tileset stijlen aanpassen</h2>
+                <h3>Tileset stijlen aanpassen</h3>
                 <p>Styling kan worden toegepast op twee manieren:</p>
                 <ul>
                     <li>Tijdens het genereren van de tileset</li>
@@ -423,7 +432,7 @@ WHERE omschr = 'Boom';</code></pre>
 
             <!-- 3D modellen toevoegen -->
             <section>
-                <h2>3D modellen toevoegen</h2>
+                <h3>3D modellen toevoegen</h3>
                 <div class="two-columns">
                     <div>
                         <p>Kopieer het 3D model windturbine.glb naar de werkdirectory.</p>
@@ -444,7 +453,7 @@ WHERE omschr = 'Boom';</code></pre>
 
             <!-- 3D Basisvoorziening -->
             <section>
-                <h2>3D Basisvoorziening</h2>
+                <h3>3D Basisvoorziening</h3>
                 <p>In de 3D Basis voorziening van PDOK zijn landelijke 3D Tilesets beschikbaar.</p>
                 <p>Voeg de 3D gebouwen tileset toe aan de Cesium Viewer:</p>
                 <pre><code class="language-javascript">const tileset3DGebouwen = await Cesium.Cesium3DTileset.fromUrl(
@@ -455,7 +464,7 @@ viewer.scene.primitives.add(tileset3DGebouwen);</code></pre>
 
             <!-- QGIS 3D Tiles -->
             <section>
-                <h2>QGIS 3D Tiles</h2>
+                <h3>QGIS 3D Tiles</h3>
                 <div class="two-columns">
                     <div>
                         <ol>
@@ -474,7 +483,7 @@ viewer.scene.primitives.add(tileset3DGebouwen);</code></pre>
 
             <!-- QGIS 3D Tiles visualisatie -->
             <section>
-                <h2>QGIS 3D Tiles visualisatie</h2>
+                <h3>QGIS 3D Tiles visualisatie</h3>
                 <div class="two-columns">
                     <div>
                         <p>2D weergave in QGIS:</p>
@@ -491,7 +500,7 @@ viewer.scene.primitives.add(tileset3DGebouwen);</code></pre>
 
             <!-- Afsluiting -->
             <section>
-                <h2>Afsluiting</h2>
+                <h3>Afsluiting</h3>
                 <h5>Wat hebben we geleerd?</h5>
                 <ul>
                     <li>Kennis van de 3D Tiles-standaard</li>
@@ -504,7 +513,7 @@ viewer.scene.primitives.add(tileset3DGebouwen);</code></pre>
 
             <!-- Bronnen en links -->
             <section>
-                <h2>Bronnen en links</h2>
+                <h3>Bronnen en links</h3>
                 <ul class="small-text">
                     <li><a href="https://github.com/CesiumGS/3d-tiles" target="_blank">3D Tiles specificatie</a></li>
                     <li><a href="https://github.com/CesiumGS/3d-tiles/blob/main/3d-tiles-reference-card.pdf"
