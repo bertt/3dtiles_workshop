@@ -1,0 +1,39 @@
+.container {
+    display: flex;
+}
+
+.col {
+    flex: 1;
+}
+
+p {
+    font-size: 18px;
+}
+
+ol,
+ul,
+li {
+    font-size: 20px;
+}
+
+img {
+    border-radius: 10px;
+}
+
+.center {
+    text-align: center;
+}
+
+pre.code-wrapper {
+    font-size: 0.35em;
+}
+
+.wrap {
+    text-wrap: wrap !important;
+}
+
+.reveal .slide-number {
+    font-size: 20px;
+    width: 100%;
+    background: none;
+}

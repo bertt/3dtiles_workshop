@@ -13,24 +13,12 @@
 
     <!-- Theme used for syntax highlighted code -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/highlight/monokai.css">
+    <!-- Custom style -->
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <style>
-    .container {
-        display: flex;
-    }
 
-    .col {
-        flex: 1;
-    }
-
-    p {
-        font-size: 18px;
-    }
-
-    ol, ul, li {
-        font-size: 20px;
-    }
 </style>
 
 <body>
@@ -49,7 +37,8 @@
                 <h3>Even voorstellen</h3>
                 <div class="container">
                     <div class="col">
-                        <img src="https://placehold.co/400" alt="Spreker 1" style="border-radius: 50%; max-width: 300px">
+                        <img src="https://placehold.co/400" alt="Spreker 1"
+                            style="border-radius: 50%; max-width: 300px">
                         <h5>Spreker 1</h5>
                         <p>
                             Functie: 3D GIS Specialist<br>
@@ -58,13 +47,39 @@
                         </p>
                     </div>
                     <div class="col">
-                        <img src="https://placehold.co/400" alt="Spreker 2" style="border-radius: 50%; max-width: 300px">
+                        <img src="https://placehold.co/400" alt="Spreker 2"
+                            style="border-radius: 50%; max-width: 300px">
                         <h5>Spreker 2</h5>
                         <p>
                             Functie: 3D GIS Specialist<br>
                             Organisatie: [Organisatie]<br>
                             Email: [Email]
                         </p>
+                    </div>
+            </section>
+
+            <!-- Doelen en benodigdheden -->
+            <section>
+                <div class="container">
+                    <div class="col">
+                        <h5>Na deze workshop</h5>
+                        <ul>
+                            <li>Heb je kennis van de 3D Tiles-standaard</li>
+                            <li>Kun je 3D-tilesets maken uit 2D data</li>
+                            <li>Kun je een 3D-tileset inladen in een CesiumJS-webomgeving</li>
+                            <li>Zijn de mogelijkheden voor datavisualisatie met CesiumJS bekend</li>
+                        </ul>
+                    </div>
+                    <div class="col">
+                        <h5>Benodigdheden</h5>
+                        <ul>
+                            <li>Laptop met internetverbinding</li>
+                            <li>Docker</li>
+                            <li>QGIS (met GDAL commandline tools)</li>
+                            <li>Database management tool (pgAdmin of DBeaver)</li>
+                            <li>Node.JS</li>
+                        </ul>
+                    </div>
                 </div>
             </section>
 
@@ -98,7 +113,7 @@
                 <div class="container">
                     <div class="col">
                         <ul>
-                            <li>Open standaard voor het visualiseren van grote 3D datasets</li>
+                            <li>Open standaard voor het visualiseren van (grote hoeveelheden) 3D geodata op het web</li>
                             <li>Ontwikkeld door Cesium en gestandaardiseerd door OGC</li>
                             <li>Hiërarchische datastructuur (spatial tiling)</li>
                             <li>Ondersteunt verschillende formaten:
@@ -150,43 +165,31 @@
                 </ul>
             </section>
 
-            <!-- Doel van vandaag + vereisten -->
-            <section>
-                <h3>Doel van vandaag</h3>
-                <p>Na het voltooien van deze workshop:</p>
-                <ul>
-                    <li>Is er kennis van de 3D Tiles-standaard</li>
-                    <li>Is er inzicht in de software en technieken die nodig zijn voor het maken van 3D-tilesets</li>
-                    <li>Kan een 3D-tileset worden geladen in een CesiumJS-webomgeving</li>
-                    <li>Zijn de mogelijkheden voor datavisualisatie met CesiumJS bekend</li>
-                </ul>
-                <div class="fragment">
-                    <h5>Benodigdheden</h5>
-                    <ul>
-                        <li>Laptop met internetverbinding</li>
-                        <li>Docker</li>
-                        <li>QGIS (met GDAL commandline tools)</li>
-                        <li>Database management tool (pgAdmin of DBeaver)</li>
-                        <li>Node.JS</li>
-                    </ul>
-                </div>
-            </section>
-
             <!-- Introductie Digital Twins -->
             <section>
-                <h3>Digital Twins</h3>
-                <div class="two-columns">
-                    <div>
+                <h3>Aan de slag!</h3>
+                <div class="container">
+                    <div class="col">
                         <ul>
-                            <li>Digitale kopie van de fysieke werkelijkheid</li>
-                            <li>Brengt data uit verschillende bronnen samen</li>
-                            <li>In deze workshop: digital twin van de fysieke leefomgeving</li>
-                            <li>Focus op de 3D component</li>
                             <li>Casus: Proefpolderdijk bij Andijk</li>
+                            <li>
+                                Data:
+                                <ul>
+                                    <li>Digitaal Topografisch Bestand (DTB) voor het terrein en bomen</li>
+                                    <li>De BAG voor gebouwen</li>
+                                </ul>
+                            </li>
+                            <li>
+                                Toevoegingen
+                                <ul>
+                                    <li>Windturbine 3D model (geanimeerd)</li>
+                                    <li>Boom 3D model</li>
+                                    <li>3D Basisvoorziening van PDOK</li>
+                            </li>
                         </ul>
                     </div>
-                    <div>
-                        <img src="images/3dtiles_ecosysteem.png" alt="3D Tiles Ecosysteem">
+                    <div class="col">
+                        <img src="images/windturbine.gif" alt="Het eindresultaat van de digital twin van Andijk">
                     </div>
                 </div>
             </section>
@@ -194,22 +197,22 @@
             <!-- Database opzetten -->
             <section>
                 <h3>Database opzetten met Docker</h3>
-                <pre><code class="language-bash">docker run -d -e POSTGRES_PASSWORD=postgres -d -p 5439:5432 postgis/postgis</code></pre>
-                <p>Connectie instellingen:</p>
-                <ul>
-                    <li>Host: localhost</li>
-                    <li>Port: 5439</li>
-                    <li>Username: postgres</li>
-                    <li>Password: postgres</li>
-                </ul>
-                <div class="two-columns">
-                    <div>
-                        <p>DBeaver connectie:</p>
-                        <img src="images/dbeaver_connection.png" alt="DBeaver Connection">
+                <pre><code class="language-bash center">docker run -d -e POSTGRES_PASSWORD=postgres -d -p 5439:5432 postgis/postgis</code></pre>
+                <div class="container">
+                    <div class="col">
+                        <p>Connectie instellingen:</p>
+                        <ul>
+                            <li>Host: localhost</li>
+                            <li>Port: 5439</li>
+                            <li>Username: postgres</li>
+                            <li>Password: postgres</li>
+                        </ul>
                     </div>
-                    <div>
-                        <p>QGIS connectie:</p>
-                        <img src="images/qgis_connection.png" alt="QGIS Connection">
+                    <div class="col">
+                        <div>
+                            <p>DBeaver connectie:</p>
+                            <img src="images/dbeaver_connection.png" alt="DBeaver Connection">
+                        </div>
                     </div>
                 </div>
             </section>
@@ -259,14 +262,17 @@
             <section>
                 <h3>Data importeren in PostgreSQL</h3>
                 <p>Voor het laden van de DTB vlakken:</p>
-                <pre><code class="language-bash">ogr2ogr -f "PostgreSQL" PG:"host=localhost port=5439 user=postgres dbname=postgres password=postgres" /vsizip/d15cz.zip/d15cz_reg.shp -t_srs epsg:4979 -nln public.dtb_vlak_andijk -nlt MULTIPOLYGONZ</code></pre>
-
+                <pre><code class="language-bash wrap">ogr2ogr -f "PostgreSQL" PG:"host=localhost port=5439 user=postgres dbname=postgres password=postgres" /vsizip/d15cz.zip/d15cz_reg.shp -t_srs epsg:4979 -nln public.dtb_vlak_andijk -nlt MULTIPOLYGONZ</code></pre>
                 <p>Voor het laden van de DTB punten:</p>
-                <pre><code class="language-bash">ogr2ogr -f "PostgreSQL" PG:"host=localhost port=5439 user=postgres dbname=postgres password=postgres" /vsizip/d15cz.zip/d15cz_sym.shp -t_srs epsg:4979 -nln public.dtb_punt_andijk -nlt POINTZ</code></pre>
+                <pre><code class="language-bash wrap">ogr2ogr -f "PostgreSQL" PG:"host=localhost port=5439 user=postgres dbname=postgres password=postgres" /vsizip/d15cz.zip/d15cz_sym.shp -t_srs epsg:4979 -nln public.dtb_punt_andijk -nlt POINTZ</code></pre>
 
                 <p>Controleer of de data goed geladen is:</p>
-                <pre><code class="language-sql">SELECT count(*) from public.dtb_punt_andijk;
-SELECT count(*) from public.dtb_vlak_andijk;</code></pre>
+                <pre>
+                    <code class="language-sql">
+                        SELECT count(*) from public.dtb_punt_andijk;
+                        SELECT count(*) from public.dtb_vlak_andijk;
+                    </code>
+                </pre>
             </section>
 
             <!-- Data voorbereiden -->
@@ -536,15 +542,33 @@ viewer.scene.primitives.add(tileset3DGebouwen);</code></pre>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/notes/notes.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/markdown/markdown.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/highlight/highlight.js"></script>
+    <script src="plugins/copycode/copycode.js"></script>
     <script>
-        // More info about initialization & config:
-        // - https://revealjs.com/initialization/
-        // - https://revealjs.com/config/
         Reveal.initialize({
             hash: true,
-            slideNumber: true,
-            // Learn about plugins: https://revealjs.com/plugins/
-            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+            slideNumber: 'c/t',
+            copycode: {
+                button: "always",
+                display: "text",
+                text: {
+                    copy: "Copy",
+                    copied: "Copied!",
+                },
+                plaintextonly: true,
+                timeout: 1000,
+                style: {
+                    copybg: "#347CAE",
+                    copiedbg: "green",
+                    copycolor: "black",
+                    copiedcolor: "white",
+                    copyborder: "",
+                    copiedborder: "",
+                    scale: 0.6,
+                    offset: 0,
+                    radius: 0
+                },
+            },
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes, CopyCode]
         });
     </script>
 </body>
