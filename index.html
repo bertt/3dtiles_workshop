@@ -71,9 +71,8 @@
                         <ul>
                             <li>Laptop met internetverbinding</li>
                             <li>Docker</li>
-                            <li>QGIS (met GDAL commandline tools)</li>
-                            <li>Database management tool (pgAdmin of DBeaver)</li>
-                            <li>Node.JS</li>
+                            <li>QGIS (optioneel)</li>
+                            <li>Database management tool (pgAdmin of DBeaver) (optioneel)</li>
                         </ul>
                     </div>
                 </div>
@@ -194,7 +193,8 @@
             <section>
                 <h3>Workspace opzetten met Docker</h3>
                 <p class="left m-0">Run het volgende command (start de docker services in
-                    <code>docker-compose.yml</code>):</p>
+                    <code>docker-compose.yml</code>):
+                </p>
                 <pre><code class="language-bash center">docker compose up -d</code></pre>
                 <div class="container">
                     <div class="col left mr-3">
@@ -297,7 +297,7 @@ services:
             </section>
 
             <!-- Deel 1: Dataverwerking - Introductie -->
-            <section>
+            <section class="center">
                 <h3>Deel 1: Dataverwerking tot 3D Tiles</h3>
                 <div class="left">
                     <p>In dit deel gaan we:</p>
@@ -448,12 +448,14 @@ WHERE omschr = 'Boom';
                 <h3>3D Tiles maken van DTB punten</h3>
                 <p>We gaan nu de tool <code>i3dm.export</code> gebruiken om 3D Tiles te maken van de DTB punten. We
                     kunnen op elk punt een 3D-model (bijvoorbeeld van een boom) renderen. Dit doen we door
-                    <code>i3dm.export</code> ook een GLB-bestand mee te geven.</p>
+                    <code>i3dm.export</code> ook een GLB-bestand mee te geven.
+                </p>
                 <div class="container">
                     <div class="col left mr-3">
                         <ol class="small-text">
                             <li>Check of <code>i3dm.export</code> geïnstalleerd is met
-                                <code>i3dm.export --version</code></li>
+                                <code>i3dm.export --version</code>
+                            </li>
                             <li>Gebruik <code>i3dm.export --help</code> om de opties van de tool te weergeven</li>
                             <li>Plaats het bestand <code>tree.glb</code> in de <code>./container</code> directory op je
                                 host machine.</li>
@@ -475,13 +477,17 @@ WHERE omschr = 'Boom';
                 <div class="container">
                     <div class="col left mr-3">
                         <h7>Valideren</h7>
-                        <p>Valideer de tilesets met de <a href="https://classic.yarnpkg.com/en/package/3d-tiles-validator">3d-tiles-validator</a> (in de Docker container):</p>
+                        <p>Valideer de tilesets met de <a
+                                href="https://classic.yarnpkg.com/en/package/3d-tiles-validator">3d-tiles-validator</a>
+                            (in de Docker container):</p>
                         <pre><code class="language-bash wrap">3d-tiles-validator --tilesetFile ./output/dtb_vlakken/tileset.json</code></pre>
                         <pre><code class="language-bash wrap">3d-tiles-validator --tilesetFile ./output/dtb_punten/tileset.json</code></pre>
                     </div>
                     <div class="col left">
                         <h7>Comprimeren</h7>
-                        <p>Voor het comprimeren gebruiken we de tool <a href="https://github.com/Geodan/compressor5000">compressor5000</a>, die beschikbaar is als docker image. Run deze tool dus op je host machine.</p>
+                        <p>Voor het comprimeren gebruiken we de tool <a
+                                href="https://github.com/Geodan/compressor5000">compressor5000</a>, die beschikbaar is
+                            als docker image. Run deze tool dus op je host machine.</p>
                         <p>Voor Windows-gebruikers (vul bij ABS_PATH het absolute pad in naar je deze repository):</p>
                         <pre><code class="language-bash wrap">docker run -v [ABS_PATH]\container\output\dtb_vlakken\content:/tiles -it geodan/compressor5000</code></pre>
                         <p>Voor Linux-gebruikers (run dit command in de repository root:</p>
@@ -510,11 +516,14 @@ WHERE omschr = 'Boom';
             <section>
                 <h3>Server opzetten</h3>
 
-                <p>Er is een npm http server geïnstalleerd in de docker container. Die serveert alle files uit de <code>/workspace</code> folder. De server draait standaard op poort 8080, die wordt gemapt naar je host poort 8080.</p>
+                <p>Er is een npm http server geïnstalleerd in de docker container. Die serveert alle files uit de
+                    <code>/workspace</code> folder. De server draait standaard op poort 8080, die wordt gemapt naar je
+                    host poort 8080.</p>
                 <p>Start de server:</p>
                 <pre><code class="language-bash">http-server</code></pre>
 
-                <p>Open een webbrowser en ga naar <a href="http://localhost:8080" target="_blank">http://localhost:8080</a></p>
+                <p>Open een webbrowser en ga naar <a href="http://localhost:8080"
+                        target="_blank">http://localhost:8080</a></p>
 
                 <p>Je ziet nu als het goed is de directory structuur van <code>/workspace</code>.</p>
                 <img src="images/http-server.png" alt="HTTP Server result">
@@ -526,7 +535,9 @@ WHERE omschr = 'Boom';
                 <p>We gaan nu de CesiumJS Viewer gebruiken om de 3D Tiles te bekijken.</p>
                 <div class="container">
                     <div class="col left mr-3">
-                        <p>Kopieer bestand `cesium-viewer.html` uit de 3D Tiles workshop repository naar `./container`. Deze HTML pagina bevat Javascript code die met behulp van de CesiumJS library 3D data inlaadt.</p>
+                        <p>Kopieer bestand `cesium-viewer.html` uit de 3D Tiles workshop repository naar `./container`.
+                            Deze HTML pagina bevat Javascript code die met behulp van de CesiumJS library 3D data
+                            inlaadt.</p>
                         <p>In de code worden 2 tilesets geladen:</p>
                         <ul>
                             <li>DTB Vlakken: ./output/dtb_vlakken/tileset.json</li>
@@ -566,16 +577,16 @@ WHERE omschr = 'Boom';
     ]
   }
 });</code></pre>
-                <p>Opdracht: maak features waar omschr === 'Meer' blauw.</p>
+                <p class="alert notice">Opdracht: maak features waar omschr === 'Meer' blauw.</p>
             </section>
 
             <!-- 3D modellen toevoegen -->
             <section>
                 <h3>3D modellen toevoegen</h3>
-                <div class="two-columns">
-                    <div>
-                        <p>Kopieer het 3D model windturbine.glb naar de werkdirectory.</p>
-                        <p>Voeg de volgende code toe aan index.html:</p>
+                <div class="container">
+                    <div class="col left mr-3">
+                        <p>Kopieer het 3D model <code>windturbine.glb</code> naar de werkdirectory.</p>
+                        <p>Voeg de volgende code toe aan <code>cesium-viewer.html</code></p>
                         <pre><code class="language-javascript">const windturbine = viewer.entities.add({ 
   position: Cesium.Cartesian3.fromDegrees(5.193486,52.754867), 
   model: { 
@@ -583,7 +594,7 @@ WHERE omschr = 'Boom';
   }, 
 });</code></pre>
                     </div>
-                    <div>
+                    <div class="col">
                         <img src="images/windturbine.png" alt="Windturbine">
                         <img src="images/windturbine.gif" alt="Windturbine Animated">
                     </div>
@@ -599,6 +610,20 @@ WHERE omschr = 'Boom';
   "https://api.pdok.nl/kadaster/3d-basisvoorziening/ogc/v1_0/collections/gebouwen/3dtiles"
 );  
 viewer.scene.primitives.add(tileset3DGebouwen);</code></pre>
+            </section>
+
+            <!-- Optionele opdracht: maak 3D Tiles van panden in Andijk -->
+            <section class="center">
+                <h3>Optionele opdracht: maak 3D Tiles van panden in Andijk</h3>
+                <p>Gebruik <a href="https://3dbag.nl/en/download">BAG data (.gpkg)</a> om 3D Tiles te maken van de panden in Andijk.</p>
+                
+                <p>Stappen:</p>
+                <ol>
+                    <li>Download de BAG data van Andijk</li>
+                    <li>Importeer de data in Postgres</li>
+                    <li>Maak 3D Tiles van de panden</li>
+                    <li>Voeg de tileset toe aan de Cesium Viewer</li>
+                </ol>
             </section>
 
             <!-- QGIS 3D Tiles -->
@@ -638,20 +663,20 @@ viewer.scene.primitives.add(tileset3DGebouwen);</code></pre>
             </section>
 
             <!-- Afsluiting -->
-            <section>
+            <section class="center">
                 <h3>Afsluiting</h3>
-                <h5>Wat hebben we geleerd?</h5>
+                <p><b>Wat hebben we geleerd?</b>
                 <ul>
                     <li>Kennis van de 3D Tiles-standaard</li>
                     <li>Inzicht in de software en technieken voor het maken van 3D-tilesets</li>
                     <li>Een 3D-tileset laden in een CesiumJS-webomgeving</li>
                     <li>Mogelijkheden voor datavisualisatie met CesiumJS</li>
                 </ul>
-                <h5>Vragen?</h5>
+                </p>
             </section>
 
             <!-- Bronnen en links -->
-            <section>
+            <section class="center">
                 <h3>Bronnen en links</h3>
                 <ul class="small-text">
                     <li><a href="https://github.com/CesiumGS/3d-tiles" target="_blank">3D Tiles specificatie</a></li>
