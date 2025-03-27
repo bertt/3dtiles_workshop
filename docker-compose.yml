@@ -8,6 +8,8 @@ services:
       - "5439:5432"
     networks:
       - my_network
+    volumes:
+      - postgis_data:/var/lib/postgresql/data
 
   workspace:
     build:
@@ -26,3 +28,7 @@ services:
 networks:
   my_network:
     driver: bridge
+
+volumes:
+  postgis_data:
+    driver: local

@@ -256,7 +256,7 @@
                         <li>Wachtwoord: <code>postgres</code></li>
                     </ul>
                 </div>
-                <p class="alert notice">Let op: als je vanuit de workspace container verbindt met de database, gebruik dan <code>postgis</code> als host.</p> 
+                <p class="alert notice"><b>Let op:</b> als je vanuit de workspace container verbindt met de database, gebruik dan <code>postgis</code> als host.</p> 
             </section>
 
             <!-- Shell verbinding maken met de workspace container -->
@@ -275,7 +275,7 @@
                             <p>Run <code>ls -la</code> om te checken wat er in de <code>/workspace</code> directory staat.</p>
                         </li>
                     </ol>
-                    <p class="alert notice">Tip: Gebruik het commando <code>exit</code> of Ctrl + D om de verbinding met de container te verbreken.</p> 
+                    <p class="alert notice"><b>Tip:</b> Gebruik het commando <code>exit</code> of Ctrl + D om de verbinding met de container te verbreken.</p> 
 
                 </div>
             </section>
@@ -316,7 +316,7 @@
                             <li>d15cz_reg.shp (DTB vlakken)</li>
                             <li>d15cz_sym.shp (DTB punten)</li>
                         </ul>
-                        <p class="alert notice">Good to know: de <code>/vsizip/</code> prefix voor de file path in ogrinfo zorgt ervoor dat je ZIPs kunt inspecteren.</p> 
+                        <p class="alert notice"><b>Good to know:</b> de <code>/vsizip/</code> prefix voor de file path in ogrinfo zorgt ervoor dat je ZIPs kunt inspecteren.</p> 
                     </div>
                     <div class="col">
                         <img src="images/andijk.png" alt="Andijk">
@@ -348,7 +348,7 @@
                     </div>
                 </div>
                 <div class="alert notice">
-                    <p class="m-0">Good to know: </p>
+                    <p class="m-0"><b>Good to know:</b> </p>
                     <ul>
                         <li>Merk op dat we <code>postgis</code> gebruiken als host en niet <code>localhost</code>, omdat we vanuit de container werken.</li>
                         <li>de <code>-nln</code> optie in ogr2ogr zorgt ervoor dat er eerst een tabel voor de data wordt aangemaakt.</li>
@@ -361,68 +361,63 @@
             <!-- Data voorbereiden -->
             <section>
                 <h3>Data voorbereiden</h3>
+                <p>Nu gaan we de data voorbereiden voor de omzetting naar 3D Tiles.</p>
                 <p>Maak ruimtelijke indexen aan:</p>
                 <pre><code class="language-sql">CREATE INDEX ON public.dtb_vlak_andijk USING gist(st_centroid(st_envelope(wkb_geometry)));
-CREATE INDEX ON public.dtb_punt_andijk USING GIST (wkb_geometry);</code></pre>
+CREATE INDEX ON public.dtb_punt_andijk USING gist(wkb_geometry);</code></pre>
 
-                <p>Maak een database view voor de punten (bomen):</p>
-                <pre><code class="language-sql">CREATE or replace view public.v_dtb_punt_andijk AS
+                        <p>Maak een database view voor de punten (bomen):</p>
+                        <pre><code class="language-sql">CREATE or replace view public.v_dtb_punt_andijk AS
 SELECT
-RANDOM()*360 AS rotation,
-(RANDOM()*1.5)+0.5 AS scale,
-json_build_array(json_build_object('dtb id',dtb_id),
- json_build_object('omschrijving',omschr),
- json_build_object('datum',datum)) AS tags,
-'tree.glb' AS model,
-wkb_geometry AS geom
+    RANDOM()*360 AS rotation,
+    (RANDOM()*1.5)+0.5 AS scale,
+    json_build_array(json_build_object('dtb id',dtb_id),
+    json_build_object('omschrijving',omschr),
+    json_build_object('datum',datum)) AS tags,
+    'tree.glb' AS model,
+    wkb_geometry AS geom
 FROM public.dtb_punt_andijk
-WHERE omschr = 'Boom';</code></pre>
-            </section>
-
-            <!-- QGIS visualisatie -->
-            <section>
-                <h3>QGIS visualisatie</h3>
-                <div class="two-columns">
-                    <div>
-                        <p>DTB vlakken in QGIS:</p>
-                        <img src="images/qgis_vlakken.png" alt="QGIS Vlakken">
-                    </div>
-                    <div>
-                        <p>DTB punten (bomen) in QGIS:</p>
-                        <img src="images/qgis_trees.png" alt="QGIS Trees">
-                    </div>
-                </div>
+WHERE omschr = 'Boom';
+                        </code></pre>
+                <p class="alert notice"><b>Good to know:</b> we geven de bomen een random rotation en scale, zodat er wat variatie in zit. Merk ook op dat we 'tree.glb' als string toevoegen, hiermee koppelen we later het 3D model voor de boom.</p>
             </section>
 
             <!-- 3D Tiles maken van DTB vlakken -->
             <section>
                 <h3>3D Tiles maken van DTB vlakken</h3>
-                <ol class="small-text">
-                    <li>Download <a href="https://github.com/Geodan/pg2b3dm/releases" target="_blank">pg2b3dm</a> (voor
-                        Windows kies pg2b3dm-win-x64.zip)</li>
-                    <li>Pak het zip-bestand uit en kopieer de executable naar de werkdirectory</li>
-                    <li>Check de versie:</li>
-                </ol>
-                <pre><code class="language-bash">pg2b3dm --version</code></pre>
-                <p class="small-text">Voer het volgende commando uit:</p>
-                <pre><code class="language-bash">pg2b3dm -U postgres -h localhost -p 5439 -d postgres -t public.dtb_vlak_andijk -a dtb_id,omschr,datum --use_implicit_tiling false -o ./dtb_vlakken -c wkb_geometry --create_gltf false</code></pre>
-                <p class="small-text">Resultaat: een tileset.json bestand en een directory 'content' met de 3D tiles in
-                    b3dm formaat.</p>
+                <p>We gaan nu de tool <code>pg2b3dm</code> gebruiken om 3D Tiles te maken van de DTB vlakken.</p>
+                <div class="container">
+                    <div class="col mr-3">
+                        <ol class="small-text">
+                            <li>Check of <code>pg2b3dm</code> geïnstalleerd is met <code>pg2b3dm --version</code></li>
+                            <li>Gebruik <code>pg2b3dm --help</code> om de opties van de tool te weergeven</li>
+                            <li>Voer het volgende commando uit:</li>
+                        </ol>
+                        <pre><code class="language-bash wrap">pg2b3dm -U postgres -h postgis -p 5432 -d postgres -t public.dtb_vlak_andijk -a dtb_id,omschr,datum --use_implicit_tiling false -o ./output/dtb_vlakken -c wkb_geometry --create_gltf false</code></pre>
+                    </div>
+                    <div class="col left">
+                        <p class="small-text">Resultaat: een tileset.json bestand en een directory 'content' met de 3D tiles in
+                            b3dm formaat.</p>
+                        <img src="images/output_pg2b3dm.png" alt="b3dm Tileset">
+                    </div>
+                </div>
             </section>
 
             <!-- 3D Tiles maken van DTB punten -->
             <section>
                 <h3>3D Tiles maken van DTB punten</h3>
-                <ol class="small-text">
-                    <li>Download <a href="https://github.com/Geodan/i3dm.export/releases"
-                            target="_blank">i3dm.export</a></li>
-                    <li>Unzip het bestand en kopieer i3dm.export.exe naar de werkdirectory</li>
-                    <li>Kopieer het boom model tree.glb naar de werkdirectory</li>
-                    <li>Check de versie:</li>
-                </ol>
-                <pre><code class="language-bash">i3dm.export --version</code></pre>
-                <p class="small-text">Voer het volgende commando uit:</p>
-                <pre><code class="language-bash">i3dm.export -c "Host=localhost;Username=postgres;Password=postgres;Database=postgres;Port=5439" -t public.v_dtb_punt_andijk -o ./dtb_punten --use_i3dm true</code></pre>
+                <p>
+                    <ol class="small-text">
+                        <li>Download <a href="https://github.com/Geodan/i3dm.export/releases"
+                                target="_blank">i3dm.export</a></li>
+                        <li>Unzip het bestand en kopieer i3dm.export.exe naar de werkdirectory</li>
+                        <li>Kopieer het boom model tree.glb naar de werkdirectory</li>
+                        <li>Check de versie:</li>
+                    </ol>
+                    <pre><code class="language-bash">i3dm.export --version</code></pre>
+                    <p class="small-text">Voer het volgende commando uit:</p>
+                    <pre><code class="language-bash wrap">i3dm.export -c "Host=localhost;Username=postgres;Password=postgres;Database=postgres;Port=5439" -t public.v_dtb_punt_andijk -o ./dtb_punten --use_i3dm true</code></pre>
+                </p>
                 <div class="two-columns">
                     <div>
                         <p class="small-text">Resultaat: een tileset.json bestand, een directory 'content' met de 3D

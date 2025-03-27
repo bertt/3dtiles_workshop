@@ -6,7 +6,13 @@ RUN apk add --no-cache \
     nodejs \
     npm \
     postgresql-client \
-    curl
+    curl \
+    libc6-compat \
+    gcompat
+
+# Install pg2b3dm
+RUN wget https://github.com/Geodan/pg2b3dm/releases/download/v2.18.1/pg2b3dm-linux-x64.zip -P /home
+RUN unzip /home/pg2b3dm-linux-x64.zip -d /usr/local/bin
 
 # Create the /workspace directory
 RUN mkdir -p /workspace
