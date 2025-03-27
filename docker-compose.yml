@@ -24,6 +24,8 @@ services:
       - ./container:/workspace
     networks:
       - my_network
+    ports:
+      - "8080:8080"
 
 networks:
   my_network:
