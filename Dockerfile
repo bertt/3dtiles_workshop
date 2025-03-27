@@ -14,6 +14,9 @@ RUN apk add --no-cache \
 RUN wget https://github.com/Geodan/pg2b3dm/releases/download/v2.18.1/pg2b3dm-linux-x64.zip -P /home
 RUN unzip /home/pg2b3dm-linux-x64.zip -d /usr/local/bin
 
+RUN wget https://github.com/Geodan/i3dm.export/releases/download/v2.11.0/i3dm.export-linux-x64.zip -O /home/i3dm.zip
+RUN unzip /home/i3dm.zip -d /usr/local/bin
+
 # Create the /workspace directory
 RUN mkdir -p /workspace
 
