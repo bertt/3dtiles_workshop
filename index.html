@@ -193,7 +193,8 @@
             <!-- Workspace opzetten -->
             <section>
                 <h3>Workspace opzetten met Docker</h3>
-                <p class="left m-0">Run het volgende command (start de docker services in <code>docker-compose.yml</code>):</p>
+                <p class="left m-0">Run het volgende command (start de docker services in
+                    <code>docker-compose.yml</code>):</p>
                 <pre><code class="language-bash center">docker compose up -d</code></pre>
                 <div class="container">
                     <div class="col left mr-3">
@@ -229,15 +230,19 @@
                         <p>Toelichting <code>postgis</code> service:</p>
                         <ul>
                             <li><code>build: context: .</code> laat ./Dockerfile opbouwen als image</li>
-                            <li><code>volumes:- ./container:/workspace</code> maakt een volume binding tussen <code>./container</code> (op de host) en <code>/workspace</code> (in de container)
+                            <li><code>volumes:- ./container:/workspace</code> maakt een volume binding tussen
+                                <code>./container</code> (op de host) en <code>/workspace</code> (in de container)
                             </li>
                         </ul>
                         <p>Toelichting <code>workspace</code> service:</p>
                         <ul>
                             <li><code>image: postgis/postgis</code> definieert de Docker image om te gebruiken</li>
-                            <li><code>ports: - "5439:5432"</code> mapt poort 5439 van de host naar poort 5432 van de container</li>
-                            <li><code>environment: [...]</code> hier stellen we environment variables in zodat we makkelijk kunnen verbinden met de database via <code>psql</code></code></li>
-                            <li><code>networks: - my_network</code> maakt de database container toegankelijk voor de andere containers</li>
+                            <li><code>ports: - "5439:5432"</code> mapt poort 5439 van de host naar poort 5432 van de
+                                container</li>
+                            <li><code>environment: [...]</code> hier stellen we environment variables in zodat we
+                                makkelijk kunnen verbinden met de database via <code>psql</code></code></li>
+                            <li><code>networks: - my_network</code> maakt de database container toegankelijk voor de
+                                andere containers</li>
                         </ul>
                     </div>
                 </div>
@@ -256,7 +261,8 @@
                         <li>Wachtwoord: <code>postgres</code></li>
                     </ul>
                 </div>
-                <p class="alert notice"><b>Let op:</b> als je vanuit de workspace container verbindt met de database, gebruik dan <code>postgis</code> als host.</p> 
+                <p class="alert notice"><b>Let op:</b> als je vanuit de workspace container verbindt met de database,
+                    gebruik dan <code>postgis</code> als host.</p>
             </section>
 
             <!-- Shell verbinding maken met de workspace container -->
@@ -265,17 +271,23 @@
                 <div>
                     <ol>
                         <li>
-                            <p>Gebruik het volgende commando om een shell verbinding te maken met de workspace container:</p>
+                            <p>Gebruik het volgende commando om een shell verbinding te maken met de workspace
+                                container:</p>
                             <pre><code class="language-bash">docker exec -it workspace bash</code></pre>
                         </li>
                         <li>
-                            <p>Als het goed is kom je in de directory <code>/workspace</code> terecht. Deze map is via een volume mapping direct verbonden met de <code>./container</code> map op je lokale machine.</code> Alle bestanden die je in <code>./container</code> zet zijn ook beschikbaar in <code>/workspace</code>, en andersom.</code></p>
+                            <p>Als het goed is kom je in de directory <code>/workspace</code> terecht. Deze map is via
+                                een volume mapping direct verbonden met de <code>./container</code> map op je lokale
+                                machine.</code> Alle bestanden die je in <code>./container</code> zet zijn ook
+                                beschikbaar in <code>/workspace</code>, en andersom.</code></p>
                         </li>
                         <li>
-                            <p>Run <code>ls -la</code> om te checken wat er in de <code>/workspace</code> directory staat.</p>
+                            <p>Run <code>ls -la</code> om te checken wat er in de <code>/workspace</code> directory
+                                staat.</p>
                         </li>
                     </ol>
-                    <p class="alert notice"><b>Tip:</b> Gebruik het commando <code>exit</code> of Ctrl + D om de verbinding met de container te verbreken.</p> 
+                    <p class="alert notice"><b>Tip:</b> Gebruik het commando <code>exit</code> of Ctrl + D om de
+                        verbinding met de container te verbreken.</p>
 
                 </div>
             </section>
@@ -316,7 +328,8 @@
                             <li>d15cz_reg.shp (DTB vlakken)</li>
                             <li>d15cz_sym.shp (DTB punten)</li>
                         </ul>
-                        <p class="alert notice"><b>Good to know:</b> de <code>/vsizip/</code> prefix voor de file path in ogrinfo zorgt ervoor dat je ZIPs kunt inspecteren.</p> 
+                        <p class="alert notice"><b>Good to know:</b> de <code>/vsizip/</code> prefix voor de file path
+                            in ogrinfo zorgt ervoor dat je ZIPs kunt inspecteren.</p>
                     </div>
                     <div class="col">
                         <img src="images/andijk.png" alt="Andijk">
@@ -327,7 +340,8 @@
             <!-- Data importeren in PostgreSQL -->
             <section>
                 <h3>Data importeren in PostgreSQL</h3>
-                <p>Nu gaan we de DTB data inladen in de database. Run de volgende commands vanuit de shell container.</p>
+                <p>Nu gaan we de DTB data inladen in de database. Run de volgende commands vanuit de shell container.
+                </p>
                 <div class="container">
                     <div class="col left mr-3">
                         <p>Voor het laden van de DTB vlakken:</p>
@@ -350,9 +364,12 @@
                 <div class="alert notice">
                     <p class="m-0"><b>Good to know:</b> </p>
                     <ul>
-                        <li>Merk op dat we <code>postgis</code> gebruiken als host en niet <code>localhost</code>, omdat we vanuit de container werken.</li>
-                        <li>de <code>-nln</code> optie in ogr2ogr zorgt ervoor dat er eerst een tabel voor de data wordt aangemaakt.</li>
-                        <li>de <code>-nlt</code> optie zorgt ervoor dat de geometrie correct wordt ingeladen (als MULTIPOLYGONZ).</li>
+                        <li>Merk op dat we <code>postgis</code> gebruiken als host en niet <code>localhost</code>, omdat
+                            we vanuit de container werken.</li>
+                        <li>de <code>-nln</code> optie in ogr2ogr zorgt ervoor dat er eerst een tabel voor de data wordt
+                            aangemaakt.</li>
+                        <li>de <code>-nlt</code> optie zorgt ervoor dat de geometrie correct wordt ingeladen (als
+                            MULTIPOLYGONZ).</li>
                     </ul>
                 </div>
 
@@ -366,8 +383,8 @@
                 <pre><code class="language-sql">CREATE INDEX ON public.dtb_vlak_andijk USING gist(st_centroid(st_envelope(wkb_geometry)));
 CREATE INDEX ON public.dtb_punt_andijk USING gist(wkb_geometry);</code></pre>
 
-                        <p>Maak een database view voor de punten (bomen):</p>
-                        <pre><code class="language-sql">CREATE or replace view public.v_dtb_punt_andijk AS
+                <p>Maak een database view voor de punten (bomen):</p>
+                <pre><code class="language-sql">CREATE or replace view public.v_dtb_punt_andijk AS
 SELECT
     RANDOM()*360 AS rotation,
     (RANDOM()*1.5)+0.5 AS scale,
@@ -379,7 +396,9 @@ SELECT
 FROM public.dtb_punt_andijk
 WHERE omschr = 'Boom';
                         </code></pre>
-                <p class="alert notice"><b>Good to know:</b> we geven de bomen een random rotation en scale, zodat er wat variatie in zit. Merk ook op dat we 'tree.glb' als string toevoegen, hiermee koppelen we later het 3D model voor de boom.</p>
+                <p class="alert notice"><b>Good to know:</b> we geven de bomen een random rotation en scale, zodat er
+                    wat variatie in zit. Merk ook op dat we 'tree.glb' als string toevoegen, hiermee koppelen we later
+                    het 3D model voor de boom.</p>
             </section>
 
             <!-- 3D Tiles maken van DTB vlakken -->
@@ -396,7 +415,8 @@ WHERE omschr = 'Boom';
                         <pre><code class="language-bash wrap">pg2b3dm -U postgres -h postgis -p 5432 -d postgres -t public.dtb_vlak_andijk -a dtb_id,omschr,datum --use_implicit_tiling false -o ./output/dtb_vlakken -c wkb_geometry --create_gltf false</code></pre>
                     </div>
                     <div class="col left">
-                        <p class="small-text">Resultaat: een tileset.json bestand en een directory 'content' met de 3D tiles in
+                        <p class="small-text">Resultaat: een tileset.json bestand en een directory 'content' met de 3D
+                            tiles in
                             b3dm formaat.</p>
                         <img src="images/output_pg2b3dm.png" alt="b3dm Tileset">
                     </div>
@@ -406,24 +426,24 @@ WHERE omschr = 'Boom';
             <!-- 3D Tiles maken van DTB punten -->
             <section>
                 <h3>3D Tiles maken van DTB punten</h3>
-                <p>
-                    <ol class="small-text">
-                        <li>Download <a href="https://github.com/Geodan/i3dm.export/releases"
-                                target="_blank">i3dm.export</a></li>
-                        <li>Unzip het bestand en kopieer i3dm.export.exe naar de werkdirectory</li>
-                        <li>Kopieer het boom model tree.glb naar de werkdirectory</li>
-                        <li>Check de versie:</li>
-                    </ol>
-                    <pre><code class="language-bash">i3dm.export --version</code></pre>
-                    <p class="small-text">Voer het volgende commando uit:</p>
-                    <pre><code class="language-bash wrap">i3dm.export -c "Host=localhost;Username=postgres;Password=postgres;Database=postgres;Port=5439" -t public.v_dtb_punt_andijk -o ./dtb_punten --use_i3dm true</code></pre>
-                </p>
-                <div class="two-columns">
-                    <div>
+                <p>We gaan nu de tool <code>i3dm.export</code> gebruiken om 3D Tiles te maken van de DTB punten. We
+                    kunnen op elk punt een 3D-model (bijvoorbeeld van een boom) renderen. Dit doen we door
+                    <code>i3dm.export</code> ook een GLB-bestand mee te geven.</p>
+                <div class="container">
+                    <div class="col left mr-3">
+                        <ol class="small-text">
+                            <li>Check of <code>i3dm.export</code> geïnstalleerd is met
+                                <code>i3dm.export --version</code></li>
+                            <li>Gebruik <code>i3dm.export --help</code> om de opties van de tool te weergeven</li>
+                            <li>Plaats het bestand <code>tree.glb</code> in de <code>./container</code> directory op je
+                                host machine.</li>
+                            <li>Voer het volgende commando uit:</li>
+                        </ol>
+                        <pre><code class="language-bash wrap">i3dm.export -c "Host=postgis;Username=postgres;Password=postgres;Database=postgres;Port=5432" -t public.v_dtb_punt_andijk -o ./output/dtb_punten --use_i3dm true</code></pre>
+                    </div>
+                    <div class="col">
                         <p class="small-text">Resultaat: een tileset.json bestand, een directory 'content' met de 3D
                             tiles in i3dm formaat, en een subtree folder.</p>
-                    </div>
-                    <div>
                         <img src="images/tree_model.png" alt="Tree Model">
                     </div>
                 </div>
@@ -431,19 +451,25 @@ WHERE omschr = 'Boom';
 
             <!-- Valideren tilesets -->
             <section>
-                <h3>Valideren tilesets</h3>
-                <p>Installeer de 3D Tiles Validator:</p>
-                <pre><code class="language-bash">npm install -g 3d-tiles-validator</code></pre>
-
-                <p>Valideer de tilesets:</p>
-                <pre><code class="language-bash">3d-tiles-validator --tilesetFile ./dtb_vlakken/tileset.json
-3d-tiles-validator --tilesetFile ./dtb_punten/tileset.json</code></pre>
-
-                <p>Comprimeer de tilesets voor betere performance:</p>
-                <pre><code class="language-bash">docker run -v c:\workshop_3dtiles\dtb_vlakken\content:/tiles -it geodan/compressor5000</code></pre>
-
-                <p class="small-text">Vraag: Hoeveel keer is de dataset kleiner geworden?</p>
-                <p class="small-text">Vraag: Waarom comprimeren we alleen de vlakken en niet de punten?</p>
+                <h3>Tilesets valideren en comprimeren</h3>
+                <div class="container">
+                    <div class="col left mr-3">
+                        <h7>Valideren</h7>
+                        <p>Valideer de tilesets met de <a href="https://classic.yarnpkg.com/en/package/3d-tiles-validator">3d-tiles-validator</a> (in de Docker container):</p>
+                        <pre><code class="language-bash wrap">3d-tiles-validator --tilesetFile ./output/dtb_vlakken/tileset.json</code></pre>
+                        <pre><code class="language-bash wrap">3d-tiles-validator --tilesetFile ./output/dtb_punten/tileset.json</code></pre>
+                    </div>
+                    <div class="col left">
+                        <h7>Comprimeren</h7>
+                        <p>Voor het comprimeren gebruiken we de tool <a href="">compressor5000</a>, die beschikbaar is als docker image. Run deze tool dus op je host machine.</p>
+                        <p>Voor Windows-gebruikers (vul bij ABS_PATH het absolute pad in naar je deze repository):</p>
+                        <pre><code class="language-bash wrap">docker run -v [ABS_PATH]\container\output\dtb_vlakken\content:/tiles -it geodan/compressor5000</code></pre>
+                        <p>Voor Linux-gebruikers (run dit command in de repository root:</p>
+                        <pre><code class="language-bash wrap">docker run -v $(pwd)/container/output/dtb_vlakken/content:/tiles -it geodan/compressor5000</code></pre>
+                        <p class="alert notice">Vraag: Hoeveel keer is de dataset kleiner geworden?</p>
+                        <p class="alert notice">Vraag: Waarom comprimeren we alleen de vlakken en niet de punten?</p>
+                    </div>
+                </div>
             </section>
 
             <!-- Deel 2: Datavisualisatie - Introductie -->
