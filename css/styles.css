@@ -74,3 +74,16 @@ pre.code-wrapper {
 .reveal .code-wrapper code.no-whitespace {
     white-space: normal;
 }
+
+.flex {
+    display: flex;
+}
+
+.flex-center {
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-col {
+    flex-direction: column;
+}

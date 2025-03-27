@@ -36,16 +36,16 @@
             <section class="center">
                 <h3>Even voorstellen</h3>
                 <div class="container">
-                    <div class="col">
-                        <img src="images/kamielverhelst.jpg" class="speaker" alt="Spreker 1">
+                    <div class="col flex flex-center flex-col" style="height: 300px">
+                        <!-- <img src="images/kamielverhelst.jpg" class="speaker" alt="Spreker 1"> -->
                         <h5>Kamiel Verhelst</h5>
                         <p>
                             GIS/Web developer<br>
                             <a href="mailto:kamiel@spatiality.nl">kamiel@spatiality.nl</a>
                         </p>
                     </div>
-                    <div class="col">
-                        <img src="https://placehold.co/400" class="speaker" alt="Spreker 2">
+                    <div class="col flex flex-center flex-col">
+                        <!-- <img src="https://placehold.co/400" class="speaker" alt="Spreker 2"> -->
                         <h5>Bert Temme</h5>
                         <p>
                             Researcher<br>
@@ -200,30 +200,34 @@
                     <div class="col left mr-3">
                         <p>De Docker Compose file:</p>
                         <pre><code class="language-yaml">
-    services:
+services:
     postgis:
-        image: postgis/postgis
-        container_name: postgis
-        environment:
-            POSTGRES_PASSWORD: postgres
-        ports:
-            - "5439:5432"
-        networks:
-            - my_network
+    image: postgis/postgis
+    container_name: postgis
+    environment:
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5439:5432"
+    networks:
+      - my_network
+    volumes:
+      - postgis_data:/var/lib/postgresql/data
 
-    workspace:
-        build:
-            context: .
-        container_name: workspace
-        environment:
-            - PGHOST=postgis
-            - PGPORT=5432
-            - PGUSER=postgres
-            - PGPASSWORD=postgres
-        volumes:
-            - ./container:/workspace
-        networks:
-            - my_network
+  workspace:
+    build:
+      context: .
+    container_name: workspace
+    ports:
+      - "8080:8080"
+    environment:
+      - PGHOST=postgis
+      - PGPORT=5432
+      - PGUSER=postgres
+      - PGPASSWORD=postgres
+    volumes:
+      - ./container:/workspace
+    networks:
+      - my_network
                         </code></pre>
                     </div>
                     <div class="col left">
@@ -401,6 +405,22 @@ WHERE omschr = 'Boom';
                     het 3D model voor de boom.</p>
             </section>
 
+            <!-- Data bekijken -->
+            <section>
+                <h3>Data bekijken</h3>
+                <p>Gebruik een GIS programma of database client om de data te bekijken.</p>
+                <div class="container">
+                    <div class="col mr-3">
+                        <p>DTB punten (bomen)</p>
+                        <img src="images/qgis_trees.png" alt="DTB Punten in QGIS">
+                    </div>
+                    <div class="col">
+                        <p>DTB vlakken</p>
+                        <img src="images/qgis_vlakken.png" alt="DTB Vlakken in QGIS">
+                    </div>
+                </div>
+            </section>
+
             <!-- 3D Tiles maken van DTB vlakken -->
             <section>
                 <h3>3D Tiles maken van DTB vlakken</h3>
@@ -461,7 +481,7 @@ WHERE omschr = 'Boom';
                     </div>
                     <div class="col left">
                         <h7>Comprimeren</h7>
-                        <p>Voor het comprimeren gebruiken we de tool <a href="">compressor5000</a>, die beschikbaar is als docker image. Run deze tool dus op je host machine.</p>
+                        <p>Voor het comprimeren gebruiken we de tool <a href="https://github.com/Geodan/compressor5000">compressor5000</a>, die beschikbaar is als docker image. Run deze tool dus op je host machine.</p>
                         <p>Voor Windows-gebruikers (vul bij ABS_PATH het absolute pad in naar je deze repository):</p>
                         <pre><code class="language-bash wrap">docker run -v [ABS_PATH]\container\output\dtb_vlakken\content:/tiles -it geodan/compressor5000</code></pre>
                         <p>Voor Linux-gebruikers (run dit command in de repository root:</p>
@@ -473,7 +493,7 @@ WHERE omschr = 'Boom';
             </section>
 
             <!-- Deel 2: Datavisualisatie - Introductie -->
-            <section>
+            <section class="center">
                 <h3>Deel 2: Datavisualisatie in 3D</h3>
                 <p>In dit deel gaan we:</p>
                 <ol>
@@ -489,32 +509,41 @@ WHERE omschr = 'Boom';
             <!-- Server opzetten -->
             <section>
                 <h3>Server opzetten</h3>
-                <p>Installeer http-server:</p>
-                <pre><code class="language-bash">npm install -g http-server</code></pre>
 
+                <p>Er is een npm http server geïnstalleerd in de docker container. Die serveert alle files uit de <code>/workspace</code> folder. De server draait standaard op poort 8080, die wordt gemapt naar je host poort 8080.</p>
                 <p>Start de server:</p>
                 <pre><code class="language-bash">http-server</code></pre>
 
-                <p>Open een webbrowser en ga naar <a href="http://localhost:8080"
-                        target="_blank">http://localhost:8080</a></p>
+                <p>Open een webbrowser en ga naar <a href="http://localhost:8080" target="_blank">http://localhost:8080</a></p>
+
+                <p>Je ziet nu als het goed is de directory structuur van <code>/workspace</code>.</p>
+                <img src="images/http-server.png" alt="HTTP Server result">
             </section>
 
             <!-- Cesium Viewer -->
             <section>
-                <h3>Cesium Viewer</h3>
-                <p>Kopieer bestand index.html uit de 3D Tiles workshop repository naar de werkdirectory.</p>
-                <p>In de code worden 3 tilesets geladen:</p>
-                <ul>
-                    <li>DTB Vlakken: ./dtb_vlakken/tileset.json</li>
-                    <li>DTB punten: ./dtb_punten/tileset.json</li>
-                </ul>
-                <p>Open een browser en ga naar <a href="http://localhost:8080/cesium-viewer.html"
-                        target="_blank">http://localhost:8080/cesium-viewer.html</a></p>
-                <p>De Cesium viewer bevat een aantal kaartlagen:</p>
-                <ul>
-                    <li>PDOK BRT achtergrondkaart</li>
-                    <li>3D Basisvoorziening - Digitaal Terreinmodel (DTM)</li>
-                </ul>
+                <h3>3D Tiles bekijken in een CesiumJS Viewer</h3>
+                <p>We gaan nu de CesiumJS Viewer gebruiken om de 3D Tiles te bekijken.</p>
+                <div class="container">
+                    <div class="col left mr-3">
+                        <p>Kopieer bestand `cesium-viewer.html` uit de 3D Tiles workshop repository naar `./container`. Deze HTML pagina bevat Javascript code die met behulp van de CesiumJS library 3D data inlaadt.</p>
+                        <p>In de code worden 2 tilesets geladen:</p>
+                        <ul>
+                            <li>DTB Vlakken: ./output/dtb_vlakken/tileset.json</li>
+                            <li>DTB punten: ./output/dtb_punten/tileset.json</li>
+                        </ul>
+                        <p>Open een browser en ga naar <a href="http://localhost:8080/cesium-viewer.html"
+                                target="_blank">http://localhost:8080/cesium-viewer.html</a></p>
+                    </div>
+                    <div class="col">
+                        <p>De Cesium viewer bevat een aantal kaartlagen:</p>
+                        <ul>
+                            <li>PDOK BRT achtergrondkaart</li>
+                            <li>3D Basisvoorziening - Digitaal Terreinmodel (DTM)</li>
+                        </ul>
+                        <img src="images/cesium-viewer-open.png" alt="Cesium Viewer">
+                    </div>
+                </div>
             </section>
 
             <!-- Tileset stijlen aanpassen -->

@@ -10,8 +10,8 @@ RUN apk add --no-cache \
     libc6-compat \
     gcompat
 
-# Install 3d-tiles-validator
-RUN npm install -g 3d-tiles-validator
+# Install npm packages
+RUN npm install -g 3d-tiles-validator http-server
 
 # Install pg2b3dm
 RUN wget https://github.com/Geodan/pg2b3dm/releases/download/v2.18.1/pg2b3dm-linux-x64.zip -P /home

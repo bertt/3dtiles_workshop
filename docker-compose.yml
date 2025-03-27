@@ -4,6 +4,7 @@ services:
     container_name: postgis
     environment:
       POSTGRES_PASSWORD: postgres
+      PROJ_NETWORK: ON
     ports:
       - "5439:5432"
     networks:
@@ -15,11 +16,14 @@ services:
     build:
       context: .
     container_name: workspace
+    ports:
+      - "8080:8080"
     environment:
       - PGHOST=postgis
       - PGPORT=5432
       - PGUSER=postgres
       - PGPASSWORD=postgres
+      - PROJ_NETWORK=ON
     volumes:
       - ./container:/workspace
     networks:
