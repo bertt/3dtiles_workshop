@@ -1,5 +1,5 @@
 # SLIDES
-(https://spatiality-nl.github.io/3dtiles_workshop/)[https://spatiality-nl.github.io/3dtiles_workshop/]
+https://spatiality-nl.github.io/3dtiles_workshop/
 
 # Introductie 
 
