@@ -364,6 +364,8 @@ services:
                     <ul>
                         <li>Merk op dat we <code>postgis</code> gebruiken als host en niet <code>localhost</code>, omdat
                             we vanuit de container werken.</li>
+                        <li>Merk op dat we de interne database poort <code>5432</code> gebruiken en niet externe poort <code>5439</code>, omdat
+                            we vanuit de container werken.</li>
                         <li>de <code>-nln</code> optie in ogr2ogr zorgt ervoor dat er eerst een tabel voor de data wordt
                             aangemaakt.</li>
                         <li>de <code>-nlt</code> optie zorgt ervoor dat de geometrie correct wordt ingeladen (als
