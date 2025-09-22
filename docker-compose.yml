@@ -1,0 +1,38 @@
+services:
+  postgis:
+    image: postgis/postgis
+    container_name: postgis
+    environment:
+      POSTGRES_PASSWORD: postgres
+      PROJ_NETWORK: ON
+    ports:
+      - "5439:5432"
+    networks:
+      - my_network
+    volumes:
+      - postgis_data:/var/lib/postgresql/data
+
+  workspace:
+    build:
+      context: .
+    container_name: workspace
+    ports:
+      - "8080:8080"
+    environment:
+      - PGHOST=postgis
+      - PGPORT=5432
+      - PGUSER=postgres
+      - PGPASSWORD=postgres
+      - PROJ_NETWORK=ON
+    volumes:
+      - ./container:/workspace
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge
+
+volumes:
+  postgis_data:
+    driver: local

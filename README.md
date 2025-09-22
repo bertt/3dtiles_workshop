@@ -1,3 +1,6 @@
+# SLIDES
+https://spatiality-nl.github.io/3dtiles_workshop/
+
 # Introductie 
 
 Digital Twins brengen data uit verschillende bronnen waarheidsgetrouw samen in een digitale kopie van de fysieke werkelijkheid. Het begrip digital twin is zeer breed. In deze workshop richten we ons op digital twins van de fysieke leefomgeving. Hierin wordt een realistisch beeld gegeven van een gebied of regio, waarbij ruimtelijke data overzichtelijk weergegeven wordt en gebruikt kan worden voor vele toepassingen. Een dergelijke digital twin kan niet zonder de 3D component. De meeste data is echter niet direct als 3D beschikbaar. Daarom moet de data vaak eerst verwerkt worden. Deze verwerkingsstappen kunnen flink uiteenlopen afhankelijk van het type brondata. 
