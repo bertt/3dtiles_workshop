@@ -300,7 +300,7 @@ services:
                         <li>Data voorbereiden in PostgreSQL</li>
                         <li>3D Tiles maken van DTB vlakken (b3dm)</li>
                         <li>3D Tiles maken van DTB punten (i3dm)</li>
-                        <li>Tilesets valideren en comprimeren</li>
+                        <li>Tilesets valideren</li>
                     </ol>
                     <p>We gebruiken het Digitaal Topografisch Bestand (DTB) van Rijkswaterstaat als brondata.</p>
                 </div>
@@ -469,7 +469,7 @@ WHERE omschr = 'Boom';
 
             <!-- Valideren tilesets -->
             <section>
-                <h3>Tilesets valideren en comprimeren</h3>
+                <h3>Tilesets valideren</h3>
                 <div class="container">
                     <div class="col left mr-3">
                         <h7>Valideren</h7>
@@ -478,18 +478,6 @@ WHERE omschr = 'Boom';
                             (in de Docker container):</p>
                         <pre><code class="language-bash wrap">3d-tiles-validator --tilesetFile ./output/dtb_vlakken/tileset.json</code></pre>
                         <pre><code class="language-bash wrap">3d-tiles-validator --tilesetFile ./output/dtb_punten/tileset.json</code></pre>
-                    </div>
-                    <div class="col left">
-                        <h7>Comprimeren</h7>
-                        <p>Voor het comprimeren gebruiken we de tool <a
-                                href="https://github.com/Geodan/compressor5000">compressor5000</a>, die beschikbaar is
-                            als docker image. Run deze tool dus op je host machine.</p>
-                        <p>Voor Windows-gebruikers (vul bij ABS_PATH het absolute pad in naar je deze repository):</p>
-                        <pre><code class="language-bash wrap">docker run -v [ABS_PATH]\container\output\dtb_vlakken\content:/tiles -it geodan/compressor5000</code></pre>
-                        <p>Voor Linux-gebruikers (run dit command in de repository root:</p>
-                        <pre><code class="language-bash wrap">docker run -v $(pwd)/container/output/dtb_vlakken/content:/tiles -it geodan/compressor5000</code></pre>
-                        <p class="alert notice">Vraag: Hoeveel keer is de dataset kleiner geworden?</p>
-                        <p class="alert notice">Vraag: Waarom comprimeren we alleen de vlakken en niet de punten?</p>
                     </div>
                 </div>
             </section>
