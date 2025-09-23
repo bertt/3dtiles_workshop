@@ -345,7 +345,7 @@ services:
                 <div class="container">
                     <div class="col left mr-3">
                         <p>Voor het laden van de DTB vlakken:</p>
-                        <pre><code class="language-bash wrap">ogr2ogr -f "PostgreSQL" PG:"host=postgis port=5432 user=postgres dbname=postgres password=postgres" /vsizip/data/dtb/d15cz.zip/d15cz_reg.shp -t_srs epsg:4979 -nln public.dtb_vlak_andijk -nlt MULTIPOLYGONZ</code></pre>
+                        <pre><code class="language-bash wrap">ogr2ogr -f "PostgreSQL" PG:"host=postgis port=5432 user=postgres dbname=postgres password=postgres" /vsizip/data/dtb/d15cz.zip/d15cz_reg.shp -nln public.dtb_vlak_andijk -nlt MULTIPOLYGONZ</code></pre>
                         <p>Voor het laden van de DTB punten:</p>
                         <pre><code class="language-bash wrap">ogr2ogr -f "PostgreSQL" PG:"host=postgis port=5432 user=postgres dbname=postgres password=postgres" /vsizip/data/dtb/d15cz.zip/d15cz_sym.shp -t_srs epsg:4979 -nln public.dtb_punt_andijk -nlt POINTZ</code></pre>
                     </div>
