@@ -63,7 +63,7 @@
                         <ul>
                             <li>Laptop met internetverbinding</li>
                             <li>Docker</li>
-                            <li>QGIS</li>
+                            <li>QGIS 3.40</li>
                             <li>Database management tool (pgAdmin of DBeaver)</li>
                         </ul>
                     </div>
@@ -303,7 +303,9 @@ services:
                         <li>Tilesets valideren</li>
                     </ol>
                     <p>We gebruiken het Digitaal Topografisch Bestand (DTB) van Rijkswaterstaat als brondata.</p>
+                    <p class="alert notice"><b>Tip:</b> Zie folder 'resultaten' voor al aangemaakte tilesets</p>
                 </div>
+
             </section>
 
             <!-- Data downloaden en importeren -->
@@ -472,12 +474,14 @@ WHERE omschr = 'Boom';
                 <h3>Tilesets valideren</h3>
                 <div class="container">
                     <div class="col left mr-3">
-                        <h7>Valideren</h7>
                         <p>Valideer de tilesets met de <a
                                 href="https://classic.yarnpkg.com/en/package/3d-tiles-validator">3d-tiles-validator</a>
                             (in de Docker container):</p>
                         <pre><code class="language-bash wrap">3d-tiles-validator --tilesetFile ./output/dtb_vlakken/tileset.json</code></pre>
                         <pre><code class="language-bash wrap">3d-tiles-validator --tilesetFile ./output/dtb_punten/tileset.json</code></pre>
+                    <p class="alert notice"><b>Tip:</b>Bij valideren van dtb_punten verschijnen 'info' meldingen. Reden is dat model 'tree.glb' niet helemaal
+                        voldoet aan de glTF specificatie. Voor nu negeren we deze waarschuwing.</b></p>
+                     </p>
                     </div>
                 </div>
             </section>
@@ -547,9 +551,11 @@ WHERE omschr = 'Boom';
                 <p>Styling kan worden toegepast op twee manieren:</p>
                 <ul>
                     <li>Tijdens het genereren van de tileset</li>
-                    <li>Via de index.html file</li>
+                    <li>Tijdens het visualiseren in de client</li>
                 </ul>
-                <p>Voeg de volgende code toe aan de tileset van de DTB vlakken:</p>
+                <p>Voeg de volgende code toe aan de tileset van de DTB vlakken voor het aanpassen van de style tijdens visualisatie:</p>
+                <p class="alert notice"><b>Tip:</b> Voeg code toe onder regel '// todo: voeg hier code toe'</p>
+
                 <pre><code class="language-javascript">tilesetDtbVlakken.style = new Cesium.Cesium3DTileStyle({
   color: {
     conditions: [
@@ -594,6 +600,9 @@ WHERE omschr = 'Boom';
   "https://api.pdok.nl/kadaster/3d-basisvoorziening/ogc/v1_0/collections/gebouwen/3dtiles"
 );  
 viewer.scene.primitives.add(tileset3DGebouwen);</code></pre>
+
+            <p class="alert notice"><b>Tip:</b> Voor 3D LoD2.2 gebouwen gebruik https://data.3dbag.nl/v20250903/cesium3dtiles/lod22/tileset.json</p>
+
             </section>
 
             <!-- Optionele opdracht: maak 3D Tiles van panden in Andijk -->
@@ -620,7 +629,7 @@ viewer.scene.primitives.add(tileset3DGebouwen);</code></pre>
                             <li>Zet 'Source Type' op 'Service'</li>
                             <li>Maak een nieuwe connectie aan via 'New' -> 'New Cesium 3D Tiles Connection'</li>
                             <li>Name: panden</li>
-                            <li>URL: http://localhost:8080/andijk_panden/tileset.json</li>
+                            <li>URL: http://localhost:8080/output/andijk_panden/tileset.json</li>
                         </ol>
                     </div>
                     <div>
@@ -638,13 +647,21 @@ viewer.scene.primitives.add(tileset3DGebouwen);</code></pre>
                         <img src="images/qgis_3dtiles_2d.png" alt="QGIS 3D Tiles 2D">
                         <p class="small-text">Vraag: Waarom bestaan alle panden uit driehoeken?</p>
                     </div>
+                </div>
+            </section>
+
+            <section>
+                <h3>QGIS 3D Tiles visualisatie</h3>
+                <div class="two-columns">
                     <div>
-                        <p>3D weergave in QGIS:</p>
+                        <p>3D weergave in QGIS (via Views -> 3D Map Views -> Create new 3D Map View)</p>
                         <img src="images/qgis_3dtiles_panden.png" alt="QGIS 3D Tiles Panden">
                         <p class="small-text">Wat valt er op aan de 3D View in QGIS?</p>
                     </div>
                 </div>
             </section>
+
+
 
             <!-- Cleanup na de workshop -->
             <section>
@@ -664,7 +681,7 @@ viewer.scene.primitives.add(tileset3DGebouwen);</code></pre>
                 <ul>
                     <li>Kennis van de 3D Tiles-standaard</li>
                     <li>Inzicht in de software en technieken voor het maken van 3D-tilesets</li>
-                    <li>Een 3D-tileset laden in een CesiumJS-webomgeving</li>
+                    <li>Een 3D-tileset laden in een webomgeving en in QGIS</li>
                     <li>Mogelijkheden voor datavisualisatie met CesiumJS</li>
                 </ul>
                 </p>
