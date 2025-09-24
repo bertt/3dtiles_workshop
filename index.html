@@ -336,11 +336,11 @@
             <section>
                 <h3>Data voorbereiden</h3>
                 <p>Nu gaan we de data voorbereiden voor de omzetting naar 3D Tiles.</p>
-                <p>Maak ruimtelijke indexen aan:</p>
+                <p>Maak ruimtelijke indexen aan in een database client:</p>
                 <pre><code class="language-sql">CREATE INDEX ON public.dtb_vlak_andijk USING gist(st_centroid(st_envelope(wkb_geometry)));
 CREATE INDEX ON public.dtb_punt_andijk USING gist(wkb_geometry);</code></pre>
 
-                <p>Maak een database view voor de punten (bomen):</p>
+                <p>Maak een database view voor de punten (bomen) in een database client:</p>
                 <pre><code class="language-sql">CREATE or replace view public.v_dtb_punt_andijk AS
 SELECT
     RANDOM()*360 AS rotation,
