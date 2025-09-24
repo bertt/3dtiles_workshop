@@ -184,64 +184,24 @@
             <!-- Workspace opzetten -->
             <section>
                 <h3>Workspace opzetten met Docker</h3>
-                <p class="left m-0">Run het volgende command (start de docker services in
-                    <code>docker-compose.yml</code>):
+                <p class="left m-0">Voor het opzetten van de workspace run het volgende commando vanuit de
+                    directory waar het bestanden <code>docker-compose.yml</code> en <code>Dockerfile</code> staan:</p>
                 </p>
-                <pre><code class="language-bash center">docker compose up -d</code></pre>
-                <div class="container">
-                    <div class="col left mr-3">
-                        <p>De Docker Compose file:</p>
-                        <pre><code class="language-yaml">
-services:
-    postgis:
-    image: postgis/postgis
-    container_name: postgis
-    environment:
-      POSTGRES_PASSWORD: postgres
-    ports:
-      - "5439:5432"
-    networks:
-      - my_network
-    volumes:
-      - postgis_data:/var/lib/postgresql/data
+                <pre><code class="language-bash">docker compose up -d</code></pre>
+                <p class="left m-0">
+                    Er worden 2 containers gestart:
+                    <ul>
+                        <li><code>postgis</code>: een PostgreSQL database met PostGIS extensie</li>
+                        <li><code>workspace</code>: een Ubuntu container met daarin alle benodigde tools geïnstalleerd</li>
+                    </ul> 
+                </p>
 
-  workspace:
-    build:
-      context: .
-    container_name: workspace
-    ports:
-      - "8080:8080"
-    environment:
-      - PGHOST=postgis
-      - PGPORT=5432
-      - PGUSER=postgres
-      - PGPASSWORD=postgres
-    volumes:
-      - ./container:/workspace
-    networks:
-      - my_network
-                        </code></pre>
-                    </div>
-                    <div class="col left">
-                        <p>Toelichting <code>postgis</code> service:</p>
-                        <ul>
-                            <li><code>build: context: .</code> laat ./Dockerfile opbouwen als image</li>
-                            <li><code>volumes:- ./container:/workspace</code> maakt een volume binding tussen
-                                <code>./container</code> (op de host) en <code>/workspace</code> (in de container)
-                            </li>
-                        </ul>
-                        <p>Toelichting <code>workspace</code> service:</p>
-                        <ul>
-                            <li><code>image: postgis/postgis</code> definieert de Docker image om te gebruiken</li>
-                            <li><code>ports: - "5439:5432"</code> mapt poort 5439 van de host naar poort 5432 van de
-                                container</li>
-                            <li><code>environment: [...]</code> hier stellen we environment variables in zodat we
-                                makkelijk kunnen verbinden met de database via <code>psql</code></code></li>
-                            <li><code>networks: - my_network</code> maakt de database container toegankelijk voor de
-                                andere containers</li>
-                        </ul>
-                    </div>
-                </div>
+                <p class="left m-0">De twee containers draaien in een apart netwerk en kunnen met elkaar communiceren. De database is vanaf de host machine 
+                    bereikbaar via poort <code>5439</code>
+                </p>
+
+                <p class="alert notice"><b>Tip:</b> Gebruik het commando <code>docker compose down</code> om de containers
+                    te stoppen en te verwijderen.</p>
             </section>
 
             <!-- Verbinden met de database -->
