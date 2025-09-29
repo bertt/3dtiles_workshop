@@ -591,6 +591,26 @@ viewer.scene.primitives.add(tileset3DGebouwen);</code></pre>
                 </ol>
             </section>
 
+            <!-- Optionele opdracht 2: voeg IFC model toe -->
+            <section class="center">
+                <h3>Optionele opdracht: Voeg IFC model toe</h3>
+                <p class="left m-0">IFC model: <a href = "https://github.com/Geonovum/temp_geobim/blob/main/data/Kievitsweg_R25_ILS%20Spaces%2020250815_LoGeoRef.ifc">https://github.com/Geonovum/temp_geobim/blob/main/data/Kievitsweg_R25_ILS%20Spaces%2020250815_LoGeoRef.ifc</a></p>
+                <p class="left m-0">Exporteer naar GLB in : <a href = "https://3dviewer.net/">https://3dviewer.net/</a></p>
+                <p class="left m-0">Plaats GLB in container</p>
+                <p class="left m-0">Voeg toe aan Cesium Viewer (zoek een handige lokatie):</p>
+                <pre><code class="language-javascript">
+                viewer.entities.add({ 
+                    position: Cesium.Cartesian3.fromDegrees(5.194139,52.753524), 
+                    model: { 
+                    uri: "model.glb",
+                        heightReference: Cesium.HeightReference.CLAMP_TO_GROUND         
+                    }, 
+                });
+                </code></pre>
+                <p class="alert notice"><b>Tip:</b> Gebruik HeightReference.CLAMP_TO_GROUND om het model op het terrein te plaatsen.</p>
+                <p class="alert notice"><b>Vraag:</b> Wat zijn de beperkingen van deze aanpak?</p>
+            </section>
+
             <!-- QGIS 3D Tiles -->
             <section>
                 <h3>QGIS 3D Tiles</h3>
