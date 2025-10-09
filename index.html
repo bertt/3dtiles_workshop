@@ -28,7 +28,7 @@
             <section class="center">
                 <h3>Geef je data diepte:<br> van 2D naar 3D met OS tools</h3>
                 <p>
-                    Workshop 3D Tiles &middot; 7 oktober 2025 - Geonovum in Amersfoort
+                    &middot; Workshop 3D Tiles &middot; 
                 </p>
             </section>
 
@@ -64,7 +64,7 @@
                             <li>Laptop met internetverbinding</li>
                             <li>Docker</li>
                             <li>QGIS 3.40 of hoger</li>
-                            <li>Database management tool (pgAdmin of DBeaver)</li>
+                            <li>DBeaver</li>
                         </ul>
                     </div>
                 </div>
@@ -183,17 +183,22 @@
 
             <section>
                 <h3>Docker omgeving</h3>
+
+                <p class="alert notice"><b>Let op:</b> Controleer dat Docker is geïnstalleerd en draait voordat je verder gaat.</p>
+
+                <pre><code class="language-bash">docker ps</code></pre>
+                <img src="images/docker_ps.png" alt="Docker ps Result">
+
                 <p class="left m-0">Om de Docker omgeving op te starten zijn er twee bestanden nodig: <a href= "docker-compose.yml">docker-compose.yml</a> en 
                     <a href="Dockerfile">Dockerfile</a>. Deze bestanden staan in de repository van de workshop.</p>
 
                 <p class="left m-0">Kopieer deze bestanden naar een lege directory op je lokale machine, bijvoorbeeld <code>c:\3dtiles-workshop</code>. Een makkelijke
                     manier om dit te doen is click rechtermuis op de link en kies 'Save link as...'</p>
+                <p class="alert notice"><b>Tip:</b> Een alternatieve manier om de twee bestanden op te halen is de gehele repository te clonen via 'git clone'</p>
 
                 <p class="left m-0">Open een terminal (cmd, PowerShell of Git Bash) en ga naar de directory waar je de bestanden hebt opgeslagen</p>
 
-                <p class="alert notice"><b>Let op:</b> Zorg dat Docker is geïnstalleerd (via 'docker ps') en draait voordat je verder gaat.</p>
 
-                <p class="alert notice"><b>Tip:</b> Een alternatieve manier om de twee bestanden op te halen is de gehele repository te clonen via 'git clone'</p>
             </section>
 
             <!-- Workspace opzetten -->
@@ -203,6 +208,7 @@
                     directory waar de bestanden <code>docker-compose.yml</code> en <code>Dockerfile</code> staan:</p>
                 </p>
                 <pre><code class="language-bash">docker compose up -d</code></pre>
+                <img src="images/dockercomposeup.png" alt="Docker Compose Up Result"> 
                 <p class="left m-0">
                     Er worden 2 containers gestart:
                     <ul>
@@ -219,28 +225,70 @@
                     te stoppen en te verwijderen.</p>
             </section>
 
+            <section>
+                <h3>Docker containers</h3>
+                 <div class="mermaid">
+                %%{init: {'flowchart': {'htmlLabels': true}}}%%
+graph TD
+    subgraph my_network["Docker Network: my_network (bridge)"]
+        A["PostGIS Container<br/>Image: postgis/postgis<br/>Ports: 5439→5432"]
+        B["Workspace Container<br/>Build: ./Dockerfile (GDAL Alpine)<br/>Ports: 8080→8080"]
+        A --- B
+    end
+
+    V["Volume: postgis_data<br/>Mount: /var/lib/postgresql/data"]
+    V --- A
+
+    subgraph Tools["Installed Tools in Workspace"]
+        T1["GDAL (base image)"]
+        T2["pg2b3dm"]
+        T3["i3dm.export"]
+        T4["3d-tiles-validator"]
+        T5["http-server"]
+        T6["PostgreSQL client (psql)"]
+        B --> T1 & T2 & T3 & T4 & T5 & T6
+    end
+
+    classDef db fill:#FFD166,stroke:#333,stroke-width:2px,color:#000;
+    classDef app fill:#06D6A0,stroke:#333,stroke-width:2px,color:#000;
+    classDef vol fill:#118AB2,stroke:#333,stroke-width:2px,color:#fff;
+    classDef tool fill:#073B4C,stroke:#333,stroke-width:1px,color:#fff;
+
+    class A db;
+    class B app;
+    class V vol;
+    class T1,T2,T3,T4,T5,T6 tool;
+</div>
+            </section>
+
             <!-- Verbinden met de database -->
             <section>
-                <h3>Verbinden met de database</h3>
+                <h3>QGIS connectie met database</h3>
                 <div class="left">
-                    <p>Gebruik pgAdmin, DBeaver of QGIS om verbinding te maken met de PostGIS database:</p>
-                    <ul>
-                        <li>Host: <code>localhost</code></li>
-                        <li>Poort: <code>5439</code></li>
-                        <li>Database: <code>postgres</code></li>
-                        <li>Gebruikersnaam: <code>postgres</code></li>
-                        <li>Wachtwoord: <code>postgres</code></li>
-                    </ul>
+                    <p>Gebruik username: <code>postgres</code> | password: <code>postgres</code></p>
                 </div>
-                <p class="alert notice"><b>Let op:</b> als je vanuit de workspace container verbindt met de database,
-                    gebruik dan <code>postgis</code> als host.</p>
-                <p class="left">Voorbeeld connectie met database maken in QGIS:</p>
-                <img src="images/qgis_db_connection.png" alt="QGIS Database Connectie" width="600" height="300">
+                <div style="display: flex; align-items: flex-start;">
+                    <img src="images/qgis_new_connection.png" alt="QGIS Database new Connectie"  style="margin-right: 10px;" >
+                    <img src="images/qgis_db_connection.png" alt="QGIS Database Connectie">
+                </div>
+            </section>
+
+            <section>
+                <h3>DBeaver connectie met database</h3>
+                <div class="left">
+                    <p>Gebruik username: <code>postgres</code> | password: <code>postgres</code></p>
+                </div>
+                <p class="left">Kies 'PostgreSQL' als database type.</p>
+
+                <div style="display: flex; align-items: flex-start;">
+                    <img src="images/dbeaver_new_connection.png" alt="QGIS Database new Connectie"  style="margin-right: 10px;" >
+                    <img src="images/dbeaver_connection.png" alt="QGIS Database Connectie">
+                </div>
             </section>
 
             <!-- Shell verbinding maken met de workspace container -->
             <section>
-                <h3>Shell verbinding maken met de workspace container</h3>
+                <h3>Verbinding maken met workspace</h3>
                 <div>
                     <ol>
                         <li>
@@ -248,15 +296,12 @@
                                 container:</p>
                             <pre><code class="language-bash">docker exec -it workspace bash</code></pre>
                         </li>
+                        <img src="images/docker_workspace.png" alt="Docker Exec Result">
                         <li>
-                            <p>Als het goed is kom je in de directory <code>/workspace</code> terecht. Deze map is via
+                            <p>Je komt nu in directory <code>/workspace</code> terecht. Deze map is via
                                 een volume mapping direct verbonden met de <code>./container</code> map op je lokale
                                 machine.</code> Alle bestanden die je in <code>./container</code> zet zijn ook
                                 beschikbaar in <code>/workspace</code>, en andersom.</code></p>
-                        </li>
-                        <li>
-                            <p>Run <code>ls -la</code> om te checken wat er in de <code>/workspace</code> directory
-                                staat.</p>
                         </li>
                     </ol>
                     <p class="alert notice"><b>Tip:</b> Gebruik het commando <code>exit</code> of Ctrl + D om de
@@ -293,10 +338,10 @@
                                     href="https://geoweb.rijkswaterstaat.nl/ModuleViewer/?app=1c8c833022c04e63a0f74533c19a6a27"
                                     target="_blank">RWS DTB Bladindeling viewer</a> het Andijk kaartblad (DTB kaartblad
                                 d15cz)</li>
-                            <li>Download de data (d15cz.zip) en plaats de ZIP in <code>./container/data/dtb</code></li>
+                            <li>Download de data (d15cz.zip) en plaats de ZIP in <code>./container</code> folder.</li>
                             <li>Bekijk de inhoud met GDAL (vanuit je container shell):</li>
                         </ol>
-                        <pre><code class="language-bash">ogrinfo /vsizip/data/dtb/d15cz.zip</code></pre>
+                        <pre><code class="language-bash">ogrinfo /vsizip/d15cz.zip</code></pre>
                         <p>De zip bevat 3 shapefiles:</p>
                         <ul>
                             <li>d15cz_lin.shp (DTB lijnen)</li>
@@ -322,40 +367,31 @@
                 <div class="container">
                     <div class="col left mr-3">
                         <p>Voor het laden van de DTB vlakken:</p>
-                        <pre><code class="language-bash wrap">ogr2ogr -f "PostgreSQL" PG:"host=postgis port=5432 user=postgres dbname=postgres password=postgres" /vsizip/data/dtb/d15cz.zip/d15cz_reg.shp -nln public.dtb_vlak_andijk -nlt MULTIPOLYGONZ</code></pre>
+                        <pre><code class="language-bash wrap">ogr2ogr -f "PostgreSQL" PG: /vsizip/d15cz.zip/d15cz_reg.shp -nln public.dtb_vlak_andijk -nlt MULTIPOLYGONZ</code></pre>
                         <p>Voor het laden van de DTB punten:</p>
-                        <pre><code class="language-bash wrap">ogr2ogr -f "PostgreSQL" PG:"host=postgis port=5432 user=postgres dbname=postgres password=postgres" /vsizip/data/dtb/d15cz.zip/d15cz_sym.shp -t_srs epsg:4979 -nln public.dtb_punt_andijk -nlt POINTZ</code></pre>
+                        <pre><code class="language-bash wrap">ogr2ogr -f "PostgreSQL" PG: /vsizip/d15cz.zip/d15cz_sym.shp -nln public.dtb_punt_andijk -nlt POINTZ</code></pre>
                     </div>
                     <div class="col">
                         <p>Controleer of de data goed geladen is:</p>
+                        <pre><code class="language-bash wrap">psql -c "SELECT count(*) from public.dtb_vlak_andijk;"</code></pre>
                         <pre><code class="language-bash wrap">psql -c "SELECT count(*) from public.dtb_punt_andijk;"</code></pre>
                     </div>
                 </div>
-                <div class="alert notice">
-                    <p class="m-0"><b>Good to know:</b> </p>
-                    <ul>
-                        <li>Merk op dat we <code>postgis</code> gebruiken als host en niet <code>localhost</code>, omdat
-                            we vanuit de container werken.</li>
-                        <li>Merk op dat we de interne database poort <code>5432</code> gebruiken en niet externe poort <code>5439</code>, omdat
-                            we vanuit de container werken.</li>
-                        <li>de <code>-nln</code> optie in ogr2ogr zorgt ervoor dat er eerst een tabel voor de data wordt
-                            aangemaakt.</li>
-                        <li>de <code>-nlt</code> optie zorgt ervoor dat de geometrie correct wordt ingeladen (als
-                            MULTIPOLYGONZ).</li>
-                    </ul>
-                </div>
-
             </section>
 
             <!-- Data voorbereiden -->
             <section>
-                <h3>Data voorbereiden</h3>
-                <p>Nu gaan we de data voorbereiden voor de omzetting naar 3D Tiles.</p>
-                <p>Maak ruimtelijke indexen aan in een database client:</p>
+                <h3>Ruimtelijke indexen aanmaken</h3>
+                <p>Maak ruimtelijke indexen aan in DBeaver:</p>
+                <p>In DBeaver ga naar menu <code>SQL Editor</code> &gt; <code>New SQL Script</code></p>
+                <img src="images/dbeaver_open_sql_script.png" alt="DBeaver New SQL Script">
                 <pre><code class="language-sql">CREATE INDEX ON public.dtb_vlak_andijk USING gist(st_centroid(st_envelope(wkb_geometry)));
 CREATE INDEX ON public.dtb_punt_andijk USING gist(wkb_geometry);</code></pre>
+            </section>
 
-                <p>Maak een database view voor de punten (bomen) in een database client:</p>
+            <section>
+                <h3>Database view voor DTB punten</h3>
+                <p>Maak een database view voor de punten (bomen) in DBeaver:</p>
                 <pre><code class="language-sql">CREATE or replace view public.v_dtb_punt_andijk AS
 SELECT
     RANDOM()*360 AS rotation,
@@ -364,7 +400,7 @@ SELECT
     json_build_object('omschrijving',omschr),
     json_build_object('datum',datum)) AS tags,
     'tree.glb' AS model,
-    wkb_geometry AS geom
+    st_transform(wkb_geometry, 4979) AS geom
 FROM public.dtb_punt_andijk
 WHERE omschr = 'Boom';
                         </code></pre>
@@ -376,14 +412,14 @@ WHERE omschr = 'Boom';
             <!-- Data bekijken -->
             <section>
                 <h3>Data bekijken</h3>
-                <p>Gebruik een GIS programma of database client om de data te bekijken.</p>
+                <p>Gebruik QGIS om de data te bekijken.</p>
                 <div class="container">
                     <div class="col mr-3">
-                        <p>DTB punten (bomen)</p>
+                        <p>public.dtb_punt_andijk (bomen)</p>
                         <img src="images/qgis_trees.png" alt="DTB Punten in QGIS">
                     </div>
                     <div class="col">
-                        <p>DTB vlakken</p>
+                        <p>public.dtb_vlak_andijk</p>
                         <img src="images/qgis_vlakken.png" alt="DTB Vlakken in QGIS">
                     </div>
                 </div>
@@ -392,14 +428,9 @@ WHERE omschr = 'Boom';
             <!-- 3D Tiles maken van DTB vlakken -->
             <section>
                 <h3>3D Tiles maken van DTB vlakken</h3>
-                <p>We gaan nu de tool <code>pg2b3dm</code> gebruiken om 3D Tiles te maken van de DTB vlakken.</p>
+                <p>Maak 3D Tiles van de DTB vlakken.</p>
                 <div class="container">
                     <div class="col mr-3">
-                        <ol class="small-text">
-                            <li>Check of <code>pg2b3dm</code> geïnstalleerd is met <code>pg2b3dm --version</code></li>
-                            <li>Gebruik <code>pg2b3dm --help</code> om de opties van de tool te weergeven</li>
-                            <li>Voer het volgende commando uit:</li>
-                        </ol>
                         <pre><code class="language-bash wrap">pg2b3dm -U postgres -h postgis -p 5432 -d postgres -t public.dtb_vlak_andijk -a dtb_id,omschr,datum --use_implicit_tiling false -o ./output/dtb_vlakken -c wkb_geometry --create_gltf false</code></pre>
                     </div>
                     <div class="col left">
@@ -414,21 +445,11 @@ WHERE omschr = 'Boom';
             <!-- 3D Tiles maken van DTB punten -->
             <section>
                 <h3>3D Tiles maken van DTB punten</h3>
-                <p>We gaan nu de tool <code>i3dm.export</code> gebruiken om 3D Tiles te maken van de DTB punten. We
-                    kunnen op elk punt een 3D-model (bijvoorbeeld van een boom) renderen. Dit doen we door
-                    <code>i3dm.export</code> ook een GLB-bestand mee te geven.
+                <p>Maak 3D Tiles te maken van de DTB punten. We
+                    kunnen op elk punt een 3D-model (bijvoorbeeld van een 3D boom model) tekenen.
                 </p>
                 <div class="container">
                     <div class="col left mr-3">
-                        <ol class="small-text">
-                            <li>Check of <code>i3dm.export</code> geïnstalleerd is met
-                                <code>i3dm.export --version</code>
-                            </li>
-                            <li>Gebruik <code>i3dm.export --help</code> om de opties van de tool te weergeven</li>
-                            <li>Plaats het bestand <a href="tree.glb">tree.glb</a> in de <code>./container</code> directory op je
-                                host machine.</li>
-                            <li>Voer het volgende commando uit:</li>
-                        </ol>
                         <pre><code class="language-bash wrap">i3dm.export -c "Host=postgis;Username=postgres;Password=postgres;Database=postgres;Port=5432" -t public.v_dtb_punt_andijk -o ./output/dtb_punten --use_i3dm true</code></pre>
                     </div>
                     <div class="col">
@@ -474,9 +495,8 @@ WHERE omschr = 'Boom';
             <section>
                 <h3>Server opzetten</h3>
 
-                <p>Er is een npm http server geïnstalleerd in de docker container. Die serveert alle files uit de
-                    <code>/workspace</code> folder. De server draait standaard op poort 8080, die wordt gemapt naar je
-                    host poort 8080.</p>
+                <p>Er is een webserver geïnstalleerd in de docker container. De webserver serveert alle files uit de
+                    <code>/workspace</code> folder. De server draait standaard op poort 8080.</p>
                 <p>Start de server:</p>
                 <pre><code class="language-bash">http-server</code></pre>
 
@@ -539,7 +559,7 @@ WHERE omschr = 'Boom';
     ]
   }
 });</code></pre>
-                <p class="alert notice">Opdracht: maak features waar omschr === 'Meer' blauw.</p>
+                <p class="alert notice">Opdracht: maak features waar omschr === 'Meer' blauw (code #0000FF).</p>
             </section>
 
             <!-- 3D modellen toevoegen -->
@@ -579,25 +599,50 @@ viewer.scene.primitives.add(tileset3DGebouwen);</code></pre>
 
             <!-- Optionele opdracht: maak 3D Tiles van panden in Andijk -->
             <section class="center">
-                <h3>Optionele opdracht: maak 3D Tiles van panden in Andijk</h3>
-                <p>Gebruik <a href="https://3dbag.nl/en/download">BAG data (.gpkg)</a> om 3D Tiles te maken van de panden in Andijk.</p>
+                <h3>Maak 3D Tiles van panden in Andijk</h3>
+                <p>Ga naar site <a href="https://3dbag.nl/en/download">https://3dbag.nl/en/download</a> en klik op knop 'Pick a tile'.
+                    Selecteer het kaartblad waar Andijk in ligt (kaartblad 8-512-888) en download de BAG data (GeoPackage formaat).</p>
+                <p>Volg dezelfde stappen als bij DTB vlakken om 3D Tiles te genereren:</p>
                 
                 <p>Stappen:</p>
                 <ol>
-                    <li>Download de BAG data van Andijk</li>
-                    <li>Importeer de data in Postgres</li>
+                    <li>Kopieer bestand 8-512-888.gpkg naar de container folder</li>
+                    <li>Importeer de data in PostgreSQL</li>
                     <li>Maak 3D Tiles van de panden</li>
                     <li>Voeg de tileset toe aan de Cesium Viewer</li>
                 </ol>
+                <p class="alert notice"><b>Tip:</b> De volgende slide bevat de uitwerkingen van deze stappen.</p>
+            </section>
+
+            <section>
+                <h3>Uitwerking 3D Tiles van panden in Andijk maken</h3>
+
+                <p class="left">1. Laden van de BAG data in PostgreSQL:</p>
+                <pre><code class="language-bash wrap">ogr2ogr -f "PostgreSQL" PG: 8-512-888.gpkg lod22_3d -nln public.bag3d -nlt MULTIPOLYGONZ</code></pre>
+                <p class="left">2. Aanmaken ruimtelijke index in DBeaver:</p>
+                <pre><code class="language-sql">CREATE INDEX ON public.bag3d USING gist(st_centroid(st_envelope(geom)));</code></pre>
+                <p class="left">3. 3D Tiles genereren:</p>
+                <pre><code class="language-bash wrap">pg2b3dm -U postgres -h postgis -p 5432 -d postgres -t public.bag3d -a labels --use_implicit_tiling false -o ./output/bag3d -c geom --create_gltf false</code></pre>
+                <p class="left">4. Toevoegen aan Cesium Viewer:</p>
+                <pre><code class="language-javascript">
+                const tilesetBag3dVlakken = await Cesium.Cesium3DTileset.fromUrl("./output/bag3d/tileset.json");
+                viewer.scene.primitives.add(tilesetBag3dVlakken);
+                </code></pre>
+
             </section>
 
             <!-- Optionele opdracht 2: voeg IFC model toe -->
             <section class="center">
-                <h3>Optionele opdracht: Voeg IFC model toe</h3>
-                <p class="left m-0">IFC model (download raw): <a href = "https://github.com/Geonovum/temp_geobim/blob/main/data/Kievitsweg_R25_ILS%20Spaces%2020250815_LoGeoRef.ifc">https://github.com/Geonovum/temp_geobim/blob/main/data/Kievitsweg_R25_ILS%20Spaces%2020250815_LoGeoRef.ifc</a></p>
-                <p class="left m-0">Exporteer naar GLB in : <a href = "https://3dviewer.net/">https://3dviewer.net/</a></p>
-                <p class="left m-0">Plaats GLB in container</p>
-                <p class="left m-0">Voeg toe aan Cesium Viewer (zoek een handige lokatie):</p>
+                <h3>Conversie IFC naar GLB</h3>
+                <p class="left m-0">Ga naar site <a href = "https://3dviewer.net/#model=https://geonovum.github.io/temp_geobim/data/Kievitsweg_R25_ILS%20Spaces%2020250815_LoGeoRef.ifc">https://3dviewer.net/#model=https://geonovum.github.io/temp_geobim/data/Kievitsweg_R25_ILS%20Spaces%2020250815_LoGeoRef.ifc</a>
+                en klik op know 'Export'. Kies export naar GLB.
+                <img src="images/3dviewer_export.png" alt="IFC to GLB conversion">
+                </p>
+            </section>
+            <section>
+                <h3>Voeg IFC model toe</h3>
+                <p class="left m-0">Plaats model.glb in container folder</p>
+                <p class="left m-0">Voeg toe aan Cesium Viewer:</p>
                 <pre><code class="language-javascript">
                 viewer.entities.add({ 
                     position: Cesium.Cartesian3.fromDegrees(5.194139,52.753524), 
@@ -608,7 +653,8 @@ viewer.scene.primitives.add(tileset3DGebouwen);</code></pre>
                 });
                 </code></pre>
                 <p class="alert notice"><b>Tip:</b> Gebruik HeightReference.CLAMP_TO_GROUND om het model op het terrein te plaatsen.</p>
-                <p class="alert notice"><b>Tip:</b> Element 'IfcSite' in de IFC file kan worden gebruikt om de locatie van het model te definiëren.</p>
+                <p class="alert notice"><b>Tip:</b> Het IFC model wordt geplaatst in de buurt van de windturbine</p>
+                <p class="alert notice"><b>Tip:</b> Element 'IfcSite' in de IFC file kan worden gebruikt om de juiste locatie van het model te definiëren.</p>
                 <p class="alert notice"><b>Vraag:</b> Wat zijn de beperkingen van deze aanpak?</p>
             </section>
 
@@ -705,6 +751,7 @@ viewer.scene.primitives.add(tileset3DGebouwen);</code></pre>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/notes/notes.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/markdown/markdown.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/highlight/highlight.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <script src="plugins/copycode/copycode.js"></script>
     <script>
         Reveal.initialize({
@@ -719,6 +766,7 @@ viewer.scene.primitives.add(tileset3DGebouwen);</code></pre>
             },
             plugins: [RevealMarkdown, RevealHighlight, RevealNotes, CopyCode]
         });
+        mermaid.initialize({ startOnLoad:true });
     </script>
 </body>
 
