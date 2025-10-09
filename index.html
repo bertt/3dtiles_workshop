@@ -700,17 +700,17 @@ viewer.scene.primitives.add(tileset3DGebouwen);</code></pre>
                 </div>
             </section>
 
-
-
             <!-- Cleanup na de workshop -->
             <section>
                 <h3>Cleanup na de workshop</h3>
                 <p>Voer de volgende commando's uit om de Docker containers te stoppen en te verwijderen:</p>
                 <pre><code class="language-bash">docker compose down</code></pre>
                 <!-- Delete dangling docker images -->
-                <p>Optioneel: je kunt de gemaakte docker images verwijderen met het volgende commando:</p>
+                <p>Verwijder docker images:</p>
                 <pre><code class="language-bash">docker rmi 3dtiles_workshop-workspace</code></pre>
-                <pre><code class="language-bash">docke rmi postgis/postgis</code></pre>
+                <pre><code class="language-bash">docker rmi postgis/postgis</code></pre>
+                <p>Verwijder database data:</p>
+                <pre><code class="language-bash">docker volume rm 3dtiles_workshop_postgis_data</code></pre>
             </section>
 
             <!-- Afsluiting -->
