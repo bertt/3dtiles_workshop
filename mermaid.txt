@@ -1,0 +1,31 @@
+
+                %%{init: {'flowchart': {'htmlLabels': true}}}%%
+graph TD
+    subgraph my_network["Docker Network: my_network (bridge)"]
+        A["PostGIS Container<br/>Image: postgis/postgis<br/>Ports: 5439→5432"]
+        B["Workspace Container<br/>Build: ./Dockerfile (GDAL Alpine)<br/>Ports: 8080→8080"]
+        A --- B
+    end
+
+    V["Volume: postgis_data<br/>Mount: /var/lib/postgresql/data"]
+    V --- A
+
+    subgraph Tools["Installed Tools in Workspace"]
+        T1["GDAL (base image)"]
+        T2["pg2b3dm"]
+        T3["i3dm.export"]
+        T4["3d-tiles-validator"]
+        T5["http-server"]
+        T6["PostgreSQL client (psql)"]
+        B --> T1 & T2 & T3 & T4 & T5 & T6
+    end
+
+    classDef db fill:#FFD166,stroke:#333,stroke-width:2px,color:#000;
+    classDef app fill:#06D6A0,stroke:#333,stroke-width:2px,color:#000;
+    classDef vol fill:#118AB2,stroke:#333,stroke-width:2px,color:#fff;
+    classDef tool fill:#073B4C,stroke:#333,stroke-width:1px,color:#fff;
+
+    class A db;
+    class B app;
+    class V vol;
+    class T1,T2,T3,T4,T5,T6 tool;

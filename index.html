@@ -214,38 +214,7 @@
 
             <section>
                 <h3>Docker containers</h3>
-                 <div class="mermaid">
-                %%{init: {'flowchart': {'htmlLabels': true}}}%%
-graph TD
-    subgraph my_network["Docker Network: my_network (bridge)"]
-        A["PostGIS Container<br/>Image: postgis/postgis<br/>Ports: 5439→5432"]
-        B["Workspace Container<br/>Build: ./Dockerfile (GDAL Alpine)<br/>Ports: 8080→8080"]
-        A --- B
-    end
-
-    V["Volume: postgis_data<br/>Mount: /var/lib/postgresql/data"]
-    V --- A
-
-    subgraph Tools["Installed Tools in Workspace"]
-        T1["GDAL (base image)"]
-        T2["pg2b3dm"]
-        T3["i3dm.export"]
-        T4["3d-tiles-validator"]
-        T5["http-server"]
-        T6["PostgreSQL client (psql)"]
-        B --> T1 & T2 & T3 & T4 & T5 & T6
-    end
-
-    classDef db fill:#FFD166,stroke:#333,stroke-width:2px,color:#000;
-    classDef app fill:#06D6A0,stroke:#333,stroke-width:2px,color:#000;
-    classDef vol fill:#118AB2,stroke:#333,stroke-width:2px,color:#fff;
-    classDef tool fill:#073B4C,stroke:#333,stroke-width:1px,color:#fff;
-
-    class A db;
-    class B app;
-    class V vol;
-    class T1,T2,T3,T4,T5,T6 tool;
-</div>
+                <img src="images/docker_containers.png" alt="Docker Containers">
             </section>
 
             <!-- Verbinden met de database -->
@@ -369,11 +338,14 @@ graph TD
             <!-- Data voorbereiden -->
             <section>
                 <h3>Ruimtelijke indexen aanmaken</h3>
-                <p>Maak ruimtelijke indexen aan in DBeaver:</p>
-                <p>In DBeaver ga naar menu <code>SQL Editor</code> &gt; <code>New SQL Script</code></p>
+                <p class="left">Maak ruimtelijke indexen aan in DBeaver:</p>
+                <p class="left">In DBeaver ga naar menu <code>SQL Editor</code> &gt; <code>New SQL Script</code></p>
                 <img src="images/dbeaver_open_sql_script.png" alt="DBeaver New SQL Script">
-                <pre><code class="language-sql">CREATE INDEX ON public.dtb_vlak_andijk USING gist(st_centroid(st_envelope(wkb_geometry)));
-CREATE INDEX ON public.dtb_punt_andijk USING gist(wkb_geometry);</code></pre>
+                <p class="left">Index voor DTB vlakken:</p>
+                <pre><code class="language-sql">CREATE INDEX ON public.dtb_vlak_andijk USING gist(st_centroid(st_envelope(wkb_geometry)));</code></pre>
+
+                <p class="left">Index voor DTB punten:</p>
+                <pre><code class="language-sql">CREATE INDEX ON public.dtb_punt_andijk USING gist(wkb_geometry);</code></pre>
             </section>
 
             <section>
@@ -734,11 +706,10 @@ viewer.scene.primitives.add(tileset3DGebouwen);</code></pre>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/notes/notes.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/markdown/markdown.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/highlight/highlight.js"></script>
-     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/plugin/highlight/highlight.js"></script>
     <script src="plugins/copycode/copycode.js"></script>
     <script>
         Reveal.initialize({
@@ -753,8 +724,7 @@ viewer.scene.primitives.add(tileset3DGebouwen);</code></pre>
             },
             plugins: [RevealMarkdown, RevealHighlight, RevealNotes, CopyCode]
         });
-        mermaid.initialize({ startOnLoad:true });
-    </script>
+</script>
 </body>
 
 </html>
