@@ -1,6 +1,0 @@
-voeg de panden toe:
-
-const tilesetPanden = await Cesium.Cesium3DTileset.fromUrl(
-    "./andijk_panden/tileset.json"
-);  
-viewer.scene.primitives.add(tilesetPanden);
