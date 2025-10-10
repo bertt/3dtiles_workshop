@@ -404,9 +404,9 @@ WHERE omschr = 'Boom';
             <!-- 3D Tiles maken van DTB punten -->
             <section>
                 <h3>3D Tiles maken van DTB punten</h3>
-                <p>Maak 3D Tiles te maken van de DTB punten. We
-                    kunnen op elk punt een 3D-model (bijvoorbeeld van een 3D boom model) tekenen.
+                <p>Maak 3D Tiles te maken van de DTB punten. We kunnen op elk punt een 3D-model (bijvoorbeeld van een 3D boom model) tekenen.
                 </p>
+                <p class="left">Kopieer <a href= "./client/tree.glb">tree.glb</a> naar de container directory.</p>
                 <div class="container">
                     <div class="col left mr-3">
                         <pre><code class="language-bash wrap">i3dm.export -c "Host=postgis;Username=postgres;Password=postgres;Database=postgres;Port=5432" -t public.v_dtb_punt_andijk -o ./output/dtb_punten --use_i3dm true</code></pre>
@@ -466,8 +466,8 @@ WHERE omschr = 'Boom';
                 <p>We gaan nu de CesiumJS Viewer gebruiken om de 3D Tiles te bekijken.</p>
                 <div class="container">
                     <div class="col left mr-3">
-                        <p>In de container folder staat <code>index.html</code>.
-                            Deze HTML pagina bevat Javascript code die met behulp van de CesiumJS library 3D data
+                        <p>Kopieer <a href="./client/index.html" download="index.html">index.html</a> naar de container folder.
+                            Deze index.html pagina bevat Javascript code die met behulp van de CesiumJS library 3D data
                             inlaadt.</p>
                         <p>In de code worden 4 tilesets geladen:</p>
                         <ul>
@@ -520,6 +520,7 @@ WHERE omschr = 'Boom';
                 <h3>3D modellen toevoegen</h3>
                 <div class="container">
                     <div class="col left mr-3">
+                        <p>Kopieer <a href="./client/windturbine.glb" download="windturbine.glb">windturbine.glb</a> naar de container directory.</p>
                         <p>Voeg de volgende code toe aan <code>index.html</code></p>
                         <pre><code class="language-javascript">const windturbine = viewer.entities.add({ 
   position: Cesium.Cartesian3.fromDegrees(5.193486,52.754867), 
