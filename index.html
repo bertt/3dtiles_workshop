@@ -185,9 +185,8 @@
 
                 <p class="left m-0">Open een terminal (cmd, PowerShell of Git Bash) en ga naar de directory waar je de bestanden hebt opgeslagen</p>
 
-
+                <p class="alert notice"><b>Tip: </b>Voor ARM64 gebruik <a href= "docker-compose-arm64.yml">docker-compose-arm64.yml</a> en <a href= "Dockerfile-arm64">Dockerfile-arm64</a></p>
             </section>
-
             <!-- Workspace opzetten -->
             <section>
                 <h3>Workspace opzetten met Docker</h3>
@@ -207,6 +206,9 @@
                 <p class="left m-0">De twee containers draaien in een apart netwerk en kunnen met elkaar communiceren. De database is vanaf de host machine 
                     bereikbaar via poort <code>5439</code>, de workspace container is bereikbaar via poort <code>8080</code> (voor de webserver die we later gaan gebruiken).
                 </p>
+
+                <p class="alert notice"><b>Tip:</b>Voor ARM64 gebruik:</p>
+                <pre><code class="language-bash">docker compose -f docker-compose-arm64.yml up -d </code></pre>
 
                 <p class="alert notice"><b>Tip:</b> Gebruik het commando <code>docker compose down</code> om de containers
                     te stoppen en te verwijderen.</p>
