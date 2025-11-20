@@ -719,16 +719,19 @@ viewer.scene.primitives.add(tileset3DGebouwen);</code></pre>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/dist/reveal.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/plugin/notes/notes.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/plugin/markdown/markdown.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/plugin/highlight/highlight.js"></script>
     <script src="plugins/copycode/copycode.js"></script>
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true, theme: 'dark' });
-    </script>
     <script>
+        mermaid.initialize({ 
+            startOnLoad: false, 
+            theme: 'dark',
+            securityLevel: 'loose'
+        });
+        
         Reveal.initialize({
             center: false,
             hash: true,
@@ -741,6 +744,26 @@ viewer.scene.primitives.add(tileset3DGebouwen);</code></pre>
             },
             plugins: [RevealMarkdown, RevealHighlight, RevealNotes, CopyCode]
         });
+
+        Reveal.on('ready', () => {
+            renderMermaid();
+        });
+
+        Reveal.on('slidechanged', () => {
+            renderMermaid();
+        });
+
+        function renderMermaid() {
+            const mermaidDivs = document.querySelectorAll('.mermaid:not([data-processed])');
+            mermaidDivs.forEach((div, index) => {
+                const graphCode = div.textContent;
+                const id = 'mermaid-' + Date.now() + '-' + index;
+                mermaid.render(id, graphCode).then(result => {
+                    div.innerHTML = result.svg;
+                    div.setAttribute('data-processed', 'true');
+                });
+            });
+        }
 </script>
 </body>
 
