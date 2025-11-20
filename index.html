@@ -80,6 +80,23 @@
                 </ol>
             </section>
 
+            <!-- Workshop workflow -->
+            <section class="center">
+                <h3>Workshop workflow</h3>
+                <div class="mermaid">
+%%{init: {'flowchart': {'htmlLabels': true}}}%%
+graph LR
+    A[Data importeren] --> B[Data voorbereiden]
+    B --> C[Tiles genereren]
+    C --> D[Valideren]
+    D --> E[Serveren]
+    E --> F[Visualiseren]
+
+    classDef step fill:#06D6A0,stroke:#333,stroke-width:2px,color:#000;
+    class A,B,C,D,E,F step;
+                </div>
+            </section>
+
             <!-- 3D Tiles: een OGC standaard -->
             <section>
                 <h3>3D Tiles: een OGC standaard</h3>
@@ -623,7 +640,7 @@ viewer.scene.primitives.add(tileset3DGebouwen);</code></pre>
                             <li>Zet 'Source Type' op 'Service'</li>
                             <li>Maak een nieuwe connectie aan via 'New' -> 'New Cesium 3D Tiles Connection'</li>
                             <li>Name: panden</li>
-                            <li>URL: http://localhost:8080/output/andijk_panden/tileset.json</li>
+                            <li>URL: http://localhost:8080/output/bag3d/tileset.json</li>
                         </ol>
                     </div>
                     <div>
@@ -707,6 +724,10 @@ viewer.scene.primitives.add(tileset3DGebouwen);</code></pre>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/plugin/markdown/markdown.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.2.1/plugin/highlight/highlight.js"></script>
     <script src="plugins/copycode/copycode.js"></script>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+    </script>
     <script>
         Reveal.initialize({
             center: false,
