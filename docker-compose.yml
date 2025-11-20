@@ -1,6 +1,6 @@
 services:
   postgis:
-    image: postgis/postgis
+    image: postgis/postgis:17-3.5-alpine
     container_name: postgis
     environment:
       POSTGRES_PASSWORD: postgres
