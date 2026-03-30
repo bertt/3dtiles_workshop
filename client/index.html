@@ -58,26 +58,17 @@
     viewer.scene.terrainProvider = terrainProvider;
     viewer.scene.globe.depthTestAgainstTerrain = true;
 
-    const tilesetDtbVlakken = await Cesium.Cesium3DTileset.fromUrl(
-      "./output/dtb_vlakken/tileset.json"
+    const tilesetPanden = await Cesium.Cesium3DTileset.fromUrl(
+      "./output/panden/tileset.json"
     );
 
-    var translation = new Cesium.Cartesian3(0, 0, 1);
-    var modelMatrix = Cesium.Matrix4.fromTranslation(translation);
-    tilesetDtbVlakken.modelMatrix = modelMatrix;
-
-    viewer.scene.primitives.add(tilesetDtbVlakken);
-
-    const tilesetPunten = await Cesium.Cesium3DTileset.fromUrl(
-      "./output/dtb_punten/tileset.json"
-    );
-    viewer.scene.primitives.add(tilesetPunten);
+    viewer.scene.primitives.add(tilesetPanden);
 
     // todo: voeg hier code toe
  
     viewer.scene.globe.enableLighting = false;
     viewer.scene.highDynamicRange = false;
-    viewer.zoomTo(tilesetDtbVlakken, new Cesium.HeadingPitchRange(0, -0.5, 0));
+    viewer.zoomTo(tilesetPanden, new Cesium.HeadingPitchRange(0, -0.5, 0));
 
     const normalColor = Cesium.Color.WHITE;
     let currentColor = Cesium.Color.YELLOW;

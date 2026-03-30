@@ -1,24 +1,29 @@
 # Use the GDAL Alpine-based image as the base image
 FROM ghcr.io/osgeo/gdal:alpine-small-latest
 
-# Install dependencies: nodejs, psql, and curl
 RUN apk add --no-cache \
-    nodejs \
-    npm \
     postgresql-client \
     curl \
     libc6-compat \
-    gcompat
+    gcompat \
+    python3 \
+    make \
+    g++ \
+    icu-libs
+
+# Install Node 20 (ARM64 musl build)
+RUN curl -fsSL https://unofficial-builds.nodejs.org/download/release/v20.11.1/node-v20.11.1-linux-arm64-musl.tar.gz \
+    | tar -xz -C /usr/local --strip-components=1
 
 # Install npm packages
 RUN npm install -g 3d-tiles-validator http-server
 
 # Install pg2b3dm
-RUN wget https://github.com/Geodan/pg2b3dm/releases/download/v2.18.1/pg2b3dm-linux-arm64.zip -P /home
+RUN wget https://github.com/Geodan/pg2b3dm/releases/download/v2.27.0/pg2b3dm-linux-arm64.zip -P /home
 RUN unzip /home/pg2b3dm-linux-arm64.zip -d /usr/local/bin
 
 # Install i3dm.export
-RUN wget https://github.com/Geodan/i3dm.export/releases/download/v2.11.0/i3dm.export-linux-arm64.zip -P /home
+RUN wget https://github.com/Geodan/i3dm.export/releases/download/v2.18.1/i3dm.export-linux-arm64.zip -P /home
 RUN unzip /home/i3dm.export-linux-arm64.zip -d /usr/local/bin
 
 # Create the /workspace directory

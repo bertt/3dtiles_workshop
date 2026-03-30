@@ -50,7 +50,6 @@
                             <li>Laptop met internetverbinding</li>
                             <li>Docker</li>
                             <li>QGIS 3.40 of hoger</li>
-                            <li>DBeaver</li>
                         </ul>
                     </div>
                 </div>
@@ -61,11 +60,13 @@
                 <h3>Programma</h3>
                 <ol>
                     <li>Introductie 3D Tiles</li>
-                    <li>Deel 1: Dataverwerking tot 3D Tiles
+                    <li>3D Bag Panden omzetten naar 3D Tiles 
                         <ul>
                             <li>Data downloaden en importeren</li>
                             <li>Data voorbereiden</li>
                             <li>3D Tiles maken</li>
+                            <li>3D Tiles valideren</li>
+                            <li>3D Tiles visualiseren</li>
                         </ul>
                     </li>
                     <li>Deel 2: Datavisualisatie in 3D
@@ -165,7 +166,6 @@ graph LR
                             <li>
                                 Data:
                                 <ul>
-                                    <li>Digitaal Topografisch Bestand (DTB) voor het terrein en bomen</li>
                                     <li>De BAG voor gebouwen</li>
                                 </ul>
                             </li>
@@ -248,19 +248,6 @@ graph LR
                 </div>
             </section>
 
-            <section>
-                <h3>DBeaver connectie met database</h3>
-                <div class="left">
-                    <p>Gebruik username: <code>postgres</code> | password: <code>postgres</code></p>
-                </div>
-                <p class="left">Kies 'PostgreSQL' als database type.</p>
-
-                <div style="display: flex; align-items: flex-start;">
-                    <img src="images/dbeaver_new_connection.png" alt="QGIS Database new Connectie"  style="margin-right: 10px;" >
-                    <img src="images/dbeaver_connection.png" alt="QGIS Database Connectie">
-                </div>
-            </section>
-
             <!-- Shell verbinding maken met de workspace container -->
             <section>
                 <h3>Verbinding maken met workspace</h3>
@@ -285,19 +272,16 @@ graph LR
                 </div>
             </section>
 
-            <!-- Deel 1: Dataverwerking - Introductie -->
             <section class="center">
-                <h3>Deel 1: Dataverwerking tot 3D Tiles</h3>
+                <h3>3D Bag Panden van 3D Tiles</h3>
                 <div class="left">
                     <p>In dit deel gaan we:</p>
                     <ol>
-                        <li>DTB data downloaden en importeren</li>
-                        <li>Data voorbereiden in PostgreSQL</li>
-                        <li>3D Tiles maken van DTB vlakken (b3dm)</li>
-                        <li>3D Tiles maken van DTB punten (i3dm)</li>
-                        <li>Tilesets valideren</li>
+                        <li>3D Bag panden downloaden en importeren</li>
+                        <li>3D Tiles maken van 3D Bag panden</li>
+                        <li>Tileset valideren</li>
+                        <li>Tileset visualiseren</li>
                     </ol>
-                    <p>We gebruiken het Digitaal Topografisch Bestand (DTB) van Rijkswaterstaat als brondata.</p>
                     <p class="alert notice"><b>Tip:</b> Zie folder 'resultaten' voor al aangemaakte tilesets</p>
                 </div>
 
@@ -305,26 +289,27 @@ graph LR
 
             <!-- Data downloaden en importeren -->
             <section>
-                <h3>Data downloaden en importeren</h3>
+                <h3>3D Bag downloaden en importeren</h3>
                 <div class="container">
                     <div class="col left">
                         <ol>
-                            <li>Zoek via de <a
-                                    href="https://geoweb.rijkswaterstaat.nl/ModuleViewer/?app=1c8c833022c04e63a0f74533c19a6a27"
-                                    target="_blank">RWS DTB Bladindeling viewer</a> het Andijk kaartblad (DTB kaartblad
-                                d15cz)</li>
-                            <li>Download de data (d15cz.zip) en plaats de ZIP in <code>./container</code> folder.</li>
+                            <li>Ga naar site <a href="https://3dbag.nl/en/download">https://3dbag.nl/en/download</a> en klik op knop 'Pick a tile'.
+                    Selecteer het kaartblad waar Andijk in ligt (kaartblad 8-512-888), Click 'Confirm Selection' en download de BAG data (GeoPackage formaat).</p>
+                            </li>
+                            <li>Download de data (8-512-888.gpkg) en plaats in <code>./container</code> folder.</li>
                             <li>Bekijk de inhoud met GDAL (vanuit je container shell):</li>
                         </ol>
-                        <pre><code class="language-bash">ogrinfo /vsizip/d15cz.zip</code></pre>
-                        <p>De zip bevat 3 shapefiles:</p>
+                        <pre><code class="language-bash">ogrinfo 8-512-888.gpkg</code></pre>
+                        <p>De GeoPackage bevat 7 lagen, we gebuiken nu alleen lod22_3d:</p>
                         <ul>
-                            <li>d15cz_lin.shp (DTB lijnen)</li>
-                            <li>d15cz_reg.shp (DTB vlakken)</li>
-                            <li>d15cz_sym.shp (DTB punten)</li>
+                            <li>lod12_3d (3D Multi Polygon)</li>
+                            <li>lod12_2d (Polygon)</li>
+                            <li>lod13_3d (3D Multi Polygon)</li>
+                            <li>lod13_2d (Polygon)</li>
+                            <li>lod22_3d (3D Multi Polygon)</li>
+                            <li>lod22_2d (Polygon)</li>
+                            <li>pand (Polygon)</li>
                         </ul>
-                        <p class="alert notice"><b>Good to know:</b> de <code>/vsizip/</code> prefix voor de file path
-                            in ogrinfo zorgt ervoor dat je ZIPs kunt inspecteren.</p>
                         <p class="alert notice">Vraag: wat is de projectie van de bestanden?</p>
 
                     </div>
@@ -337,103 +322,32 @@ graph LR
             <!-- Data importeren in PostgreSQL -->
             <section>
                 <h3>Data importeren in PostgreSQL</h3>
-                <p>Nu gaan we de DTB data inladen in de database. Run de volgende commands vanuit de shell container.
+                <p align="left">Nu gaan we de 3D Bag inladen in de database. Run de volgende commando's vanuit de shell container.
                 </p>
-                <div class="container">
-                    <div class="col left mr-3">
-                        <p>Voor het laden van de DTB vlakken:</p>
-                        <pre><code class="language-bash wrap">ogr2ogr -f "PostgreSQL" PG: /vsizip/d15cz.zip/d15cz_reg.shp -nln public.dtb_vlak_andijk -nlt MULTIPOLYGONZ</code></pre>
-                        <p>Voor het laden van de DTB punten:</p>
-                        <pre><code class="language-bash wrap">ogr2ogr -f "PostgreSQL" PG: /vsizip/d15cz.zip/d15cz_sym.shp -nln public.dtb_punt_andijk -nlt POINTZ</code></pre>
+                    <div class="col">
+                        <pre><code class="language-bash wrap">ogr2ogr -f "PostgreSQL" PG: 8-512-888.gpkg lod22_3d -nln public.panden_andijk -nlt MULTIPOLYGONZ</code></pre>
                     </div>
                     <div class="col">
-                        <p>Controleer of de data goed geladen is:</p>
-                        <pre><code class="language-bash wrap">psql -c "SELECT count(*) from public.dtb_vlak_andijk;"</code></pre>
-                        <pre><code class="language-bash wrap">psql -c "SELECT count(*) from public.dtb_punt_andijk;"</code></pre>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Data voorbereiden -->
-            <section>
-                <h3>Ruimtelijke indexen aanmaken</h3>
-                <p class="left">Maak ruimtelijke indexen aan in DBeaver:</p>
-                <p class="left">In DBeaver ga naar menu <code>SQL Editor</code> &gt; <code>New SQL Script</code></p>
-                <img src="images/dbeaver_open_sql_script.png" alt="DBeaver New SQL Script">
-                <p class="left">Index voor DTB vlakken:</p>
-                <pre><code class="language-sql">CREATE INDEX ON public.dtb_vlak_andijk USING gist(st_centroid(st_envelope(wkb_geometry)));</code></pre>
-
-                <p class="left">Index voor DTB punten:</p>
-                <pre><code class="language-sql">CREATE INDEX ON public.dtb_punt_andijk USING gist(wkb_geometry);</code></pre>
-            </section>
-
-            <section>
-                <h3>Database view voor DTB punten</h3>
-                <p>Maak een database view voor de punten (bomen) in DBeaver:</p>
-                <pre><code class="language-sql">CREATE or replace view public.v_dtb_punt_andijk AS
-SELECT
-    RANDOM()*360 AS rotation,
-    (RANDOM()*1.5)+0.5 AS scale,
-    json_build_array(json_build_object('dtb id',dtb_id),
-    json_build_object('omschrijving',omschr),
-    json_build_object('datum',datum)) AS tags,
-    'tree.glb' AS model,
-    st_transform(wkb_geometry, 4979) AS geom
-FROM public.dtb_punt_andijk
-WHERE omschr = 'Boom';
-                        </code></pre>
-                <p class="alert notice"><b>Good to know:</b> we geven de bomen een random rotation en scale, zodat er
-                    wat variatie in zit. Merk ook op dat we 'tree.glb' als string toevoegen, hiermee koppelen we later
-                    het 3D model voor de boom.</p>
-            </section>
-
-            <!-- Data bekijken -->
-            <section>
-                <h3>Data bekijken</h3>
-                <p>Gebruik QGIS om de data te bekijken.</p>
-                <div class="container">
-                    <div class="col mr-3">
-                        <p>public.dtb_punt_andijk (bomen)</p>
-                        <img src="images/qgis_trees.png" alt="DTB Punten in QGIS">
+                        <p align="left">Maak spatial index aan::</p>
+                        <pre><code class="language-bash wrap">psql -c "CREATE INDEX ON public.panden_andijk USING gist(st_centroid(st_envelope(geom)));" </code></pre>
                     </div>
                     <div class="col">
-                        <p>public.dtb_vlak_andijk</p>
-                        <img src="images/qgis_vlakken.png" alt="DTB Vlakken in QGIS">
+                        <p align="left">Controleer of de data goed geladen is (990 panden):</p>
+                        <pre><code class="language-bash wrap">psql -c "SELECT count(*) from public.panden_andijk;"</code></pre>
                     </div>
-                </div>
             </section>
 
-            <!-- 3D Tiles maken van DTB vlakken -->
+            <!-- 3D Tiles maken van 3D Bag panden -->
             <section>
-                <h3>3D Tiles maken van DTB vlakken</h3>
-                <p>Maak 3D Tiles van de DTB vlakken.</p>
+                <h3>3D Tiles maken van 3D Bag Panden</h3>
                 <div class="container">
                     <div class="col mr-3">
-                        <pre><code class="language-bash wrap">pg2b3dm -U postgres -h postgis -p 5432 -d postgres -t public.dtb_vlak_andijk -a dtb_id,omschr,datum --use_implicit_tiling false -o ./output/dtb_vlakken -c wkb_geometry --create_gltf false</code></pre>
+                        <pre><code class="language-bash wrap">pg2b3dm --connection "Host=postgis" -t public.panden_andijk -a identificatie -o ./output/panden -c geom --create_gltf false</code></pre>
                     </div>
                     <div class="col left">
                         <p class="small-text">Resultaat: een tileset.json bestand en een directory 'content' met de 3D
-                            tiles in
-                            b3dm formaat.</p>
+                            tiles in b3dm formaat.</p>
                         <img src="images/output_pg2b3dm.png" alt="b3dm Tileset">
-                    </div>
-                </div>
-            </section>
-
-            <!-- 3D Tiles maken van DTB punten -->
-            <section>
-                <h3>3D Tiles maken van DTB punten</h3>
-                <p>Maak 3D Tiles te maken van de DTB punten. We kunnen op elk punt een 3D-model (bijvoorbeeld van een 3D boom model) tekenen.
-                </p>
-                <p class="left">Kopieer <a href= "./client/tree.glb">tree.glb</a> naar de container directory.</p>
-                <div class="container">
-                    <div class="col left mr-3">
-                        <pre><code class="language-bash wrap">i3dm.export -c "Host=postgis;Username=postgres;Password=postgres;Database=postgres;Port=5432" -t public.v_dtb_punt_andijk -o ./output/dtb_punten --use_i3dm true</code></pre>
-                    </div>
-                    <div class="col">
-                        <p class="small-text">Resultaat: een tileset.json bestand, een directory 'content' met de 3D
-                            tiles in i3dm formaat, en een subtree folder.</p>
-                        <img src="images/tree_model.png" alt="Tree Model">
                     </div>
                 </div>
             </section>
@@ -441,19 +355,60 @@ WHERE omschr = 'Boom';
             <!-- Valideren tilesets -->
             <section>
                 <h3>Tilesets valideren</h3>
-                <div class="container">
-                    <div class="col left mr-3">
-                        <p>Valideer de tilesets met de <a
+                    <div>
+                        <p align="left">Valideer de tileset met de <a
                                 href="https://classic.yarnpkg.com/en/package/3d-tiles-validator">3d-tiles-validator</a>
                             (in de Docker container):</p>
-                        <pre><code class="language-bash wrap">3d-tiles-validator --tilesetFile ./output/dtb_vlakken/tileset.json</code></pre>
-                        <pre><code class="language-bash wrap">3d-tiles-validator --tilesetFile ./output/dtb_punten/tileset.json</code></pre>
-                    <p class="alert notice"><b>Tip:</b>Bij valideren van dtb_punten verschijnen 'info' meldingen. Reden is dat model 'tree.glb' niet helemaal
-                        voldoet aan de glTF specificatie. Voor nu negeren we deze waarschuwing.</b></p>
-                     </p>
+                        <pre><code class="language-bash wrap">3d-tiles-validator --tilesetFile ./output/panden/tileset.json</code></pre>
+                    </div>
+                    
+                    <div>
+                        <p class="small-text" align="left">Resultaat: een validatie rapport in de terminal. Er mogen geen errors zijn, warnings kunnen worden genegeerd.</p>
+                        <p align="left"><code>Validating tileset ./output/panden/tileset.json
+                        Validation result:
+                        {
+                        "date": "2026-03-30T13:47:10.266Z",
+                        "numErrors": 0,
+                        "numWarnings": 0,
+                        "numInfos": 0
+                        }</code></p>
+                    </div>
+            </section>
+
+            <!-- Visualiseren tilesets -->
+            <section>
+                <h3>Tilesets visualiseren - webserver opzetten</h3>
+
+                <p align="left">Er is een webserver geïnstalleerd in de docker container. De webserver serveert alle files uit de
+                    <code>/workspace</code> folder. De server draait standaard op poort 8080.</p>
+                <p align="left">Start de server:</p>
+                <pre><code class="language-bash">http-server</code></pre>
+            </section>
+
+                        <!-- Cesium Viewer -->
+            <section>
+                <h3>3D Tiles bekijken in een CesiumJS Viewer</h3>
+                <p>We gaan nu de CesiumJS Viewer gebruiken om de 3D Tiles te bekijken.</p>
+                <div class="container">
+                    <div class="col left mr-3">
+                        <p>Kopieer <a href="./client/index.html" download="index.html">index.html</a> naar de container folder.
+                            Deze index.html pagina bevat Javascript code die met behulp van de CesiumJS library 3D data
+                            inlaadt.</p>
+                        <p>In de code worden 4 tilesets geladen:</p>
+                        <ul>
+                            <li>PDOK achtergrondkaart (grijs)</li>
+                            <li>PDOK quantized mesh terrein model</li>
+                            <li>3D Bag panden</li>
+                        </ul>
+                        <p>Open een browser en ga naar <a href="http://localhost:8080"
+                                target="_blank">http://localhost:8080</a></p>
+                    </div>
+                    <div class="col">
+                        <img src="images/cesium-viewer-open.png" alt="Cesium Viewer">
                     </div>
                 </div>
             </section>
+
 
             <!-- Deel 2: Datavisualisatie - Introductie -->
             <section class="center">
@@ -469,45 +424,6 @@ WHERE omschr = 'Boom';
                 </ol>
             </section>
 
-            <!-- Server opzetten -->
-            <section>
-                <h3>Server opzetten</h3>
-
-                <p>Er is een webserver geïnstalleerd in de docker container. De webserver serveert alle files uit de
-                    <code>/workspace</code> folder. De server draait standaard op poort 8080.</p>
-                <p>Start de server:</p>
-                <pre><code class="language-bash">http-server</code></pre>
-            </section>
-
-            <!-- Cesium Viewer -->
-            <section>
-                <h3>3D Tiles bekijken in een CesiumJS Viewer</h3>
-                <p>We gaan nu de CesiumJS Viewer gebruiken om de 3D Tiles te bekijken.</p>
-                <div class="container">
-                    <div class="col left mr-3">
-                        <p>Kopieer <a href="./client/index.html" download="index.html">index.html</a> naar de container folder.
-                            Deze index.html pagina bevat Javascript code die met behulp van de CesiumJS library 3D data
-                            inlaadt.</p>
-                        <p>In de code worden 4 tilesets geladen:</p>
-                        <ul>
-                            <li>PDOK achtergrondkaart (grijs)</li>
-                            <li>PDOK quantized mesh terrein model</li>
-                            <li>DTB Vlakken: ./output/dtb_vlakken/tileset.json</li>
-                            <li>DTB punten: ./output/dtb_punten/tileset.json</li>
-                        </ul>
-                        <p>Open een browser en ga naar <a href="http://localhost:8080"
-                                target="_blank">http://localhost:8080</a></p>
-                    </div>
-                    <div class="col">
-                        <p>De Cesium viewer bevat een aantal kaartlagen:</p>
-                        <ul>
-                            <li>PDOK BRT achtergrondkaart</li>
-                            <li>3D Basisvoorziening - Digitaal Terreinmodel (DTM)</li>
-                        </ul>
-                        <img src="images/cesium-viewer-open.png" alt="Cesium Viewer">
-                    </div>
-                </div>
-            </section>
 
             <!-- Tileset stijlen aanpassen -->
             <section>
@@ -566,40 +482,6 @@ WHERE omschr = 'Boom';
 viewer.scene.primitives.add(tileset3DGebouwen);</code></pre>
 
             <p class="alert notice"><b>Tip:</b> Voor 3D LoD2.2 gebouwen gebruik https://data.3dbag.nl/v20250903/cesium3dtiles/lod22/tileset.json</p>
-
-            </section>
-
-            <!-- Optionele opdracht: maak 3D Tiles van panden in Andijk -->
-            <section class="center">
-                <h3>Maak 3D Tiles van panden in Andijk</h3>
-                <p>Ga naar site <a href="https://3dbag.nl/en/download">https://3dbag.nl/en/download</a> en klik op knop 'Pick a tile'.
-                    Selecteer het kaartblad waar Andijk in ligt (kaartblad 8-512-888) en download de BAG data (GeoPackage formaat).</p>
-                <p>Volg dezelfde stappen als bij DTB vlakken om 3D Tiles te genereren:</p>
-                
-                <p>Stappen:</p>
-                <ol>
-                    <li>Kopieer bestand 8-512-888.gpkg naar de container folder</li>
-                    <li>Importeer de data in PostgreSQL</li>
-                    <li>Maak 3D Tiles van de panden</li>
-                    <li>Voeg de tileset toe aan de Cesium Viewer</li>
-                </ol>
-                <p class="alert notice"><b>Tip:</b> De volgende slide bevat de uitwerkingen van deze stappen.</p>
-            </section>
-
-            <section>
-                <h3>Uitwerking 3D Tiles van panden in Andijk maken</h3>
-
-                <p class="left">1. Laden van de BAG data in PostgreSQL:</p>
-                <pre><code class="language-bash wrap">ogr2ogr -f "PostgreSQL" PG: 8-512-888.gpkg lod22_3d -nln public.bag3d -nlt MULTIPOLYGONZ</code></pre>
-                <p class="left">2. Aanmaken ruimtelijke index in DBeaver:</p>
-                <pre><code class="language-sql">CREATE INDEX ON public.bag3d USING gist(st_centroid(st_envelope(geom)));</code></pre>
-                <p class="left">3. 3D Tiles genereren:</p>
-                <pre><code class="language-bash wrap">pg2b3dm -U postgres -h postgis -p 5432 -d postgres -t public.bag3d -a labels --use_implicit_tiling false -o ./output/bag3d -c geom --create_gltf false</code></pre>
-                <p class="left">4. Toevoegen aan Cesium Viewer:</p>
-                <pre><code class="language-javascript">
-                const tilesetBag3dVlakken = await Cesium.Cesium3DTileset.fromUrl("./output/bag3d/tileset.json");
-                viewer.scene.primitives.add(tilesetBag3dVlakken);
-                </code></pre>
 
             </section>
 
