@@ -60,21 +60,9 @@
                 <h3>Programma</h3>
                 <ol>
                     <li>Introductie 3D Tiles</li>
-                    <li>3D Bag Panden omzetten naar 3D Tiles 
-                        <ul>
-                            <li>3D Bag Data downloaden en importeren</li>
-                            <li>3D Tiles panden maken</li>
-                            <li>3D Tiles panden valideren</li>
-                            <li>3D Tiles panden  visualiseren</li>
-                        </ul>
-                    </li>
-                    <li>Bomen visualiseren met 3D Tiles</li>
-                        <ul>
-                            <li>DTB Data downloaden en importeren</li>
-                            <li>3D Tiles bomen maken</li>
-                            <li>3D Tiles bomen visualiseren</li>
-                        </ul>
-                    </li>
+                    <li>Oefening 1: 3D Bag Panden omzetten naar 3D Tiles (Mesh)</li> 
+                    <li>Oefening 2: Bomen omzetten naar 3D Tiles (Instancing)</li>
+                    <li>Oefening 3: Windmolen plaatsen</li>
                 </ol>
             </section>
 
@@ -127,20 +115,16 @@ graph LR
             <section>
                 <h3>Waarom zijn 3D Tiles nuttig?</h3>
                 <ul>
-                    <li>Optimalisatie voor grote datasets
-                        <ul>
-                            <li>Alleen de noodzakelijke data wordt ingeladen</li>
-                            <li>Level of Detail (LOD) mechanisme</li>
-                        </ul>
-                    </li>
                     <li>Interoperabiliteit
                         <ul>
                             <li>Open standaard</li>
-                            <li>Ondersteund door verschillende viewers (Cesium, ArcGIS, QGIS, Unity3D, Unreal)</li>
+                            <li>Ondersteund door verschillende viewers (Cesium, ArcGIS, QGIS, Unity3D, Unreal, Godot)</li>
+                            <li>Nieuw: 3D Tiles in BabylonJS, Maplibre, Giro3D, ITowns</li>
                         </ul>
                     </li>
                     <li>Streaming van 3D content
                         <ul>
+                            <li>Alleen de noodzakelijke data wordt ingeladen</li>
                             <li>Progressief laden van data</li>
                             <li>Efficiënt voor web-based toepassingen</li>
                         </ul>
@@ -163,16 +147,10 @@ graph LR
                             <li>
                                 Data:
                                 <ul>
-                                    <li>De BAG voor gebouwen</li>
-                                </ul>
-                            </li>
-                            <li>
-                                Toevoegingen
-                                <ul>
+                                    <li>De 3D BAG voor panden</li>
+                                    <li>DTB voor bomen en andere objecten</li>
                                     <li>Windturbine 3D model (geanimeerd)</li>
-                                    <li>Boom 3D model</li>
-                                    <li>3D Basisvoorziening van PDOK</li>
-                                    <li>IFC model van een gebouw</li>
+                                </ul>
                             </li>
                         </ul>
                     </div>
@@ -270,12 +248,12 @@ graph LR
             </section>
 
             <section class="center">
-                <h3>3D Bag Panden van 3D Tiles</h3>
+                <h3 align = "left">Oefening 1: 3D Bag Panden</h3>
                 <div class="left">
                     <p>In dit deel gaan we:</p>
                     <ol>
                         <li>3D Bag panden downloaden en importeren</li>
-                        <li>3D Tiles maken van 3D Bag panden</li>
+                        <li>3D Tiles maken van 3D Bag panden (Mesh)</li>
                         <li>Tileset valideren</li>
                         <li>Tileset visualiseren</li>
                     </ol>
@@ -318,7 +296,7 @@ graph LR
 
             <!-- Data importeren in PostgreSQL -->
             <section>
-                <h3>Data importeren in PostgreSQL</h3>
+                <h3 align="left">Data importeren in PostgreSQL</h3>
                 <p align="left">Nu gaan we de 3D Bag inladen in de database. Run de volgende commando's vanuit de shell container.
                 </p>
                     <div class="col">
@@ -382,7 +360,7 @@ graph LR
                 <pre><code class="language-bash">http-server</code></pre>
             </section>
 
-                        <!-- Cesium Viewer -->
+                <!-- Cesium Viewer -->
             <section>
                 <h3>3D Tiles bekijken in een CesiumJS Viewer</h3>
                 <p>We gaan nu de CesiumJS Viewer gebruiken om de 3D Tiles te bekijken.</p>
@@ -399,6 +377,7 @@ graph LR
                         </ul>
                         <p>Open een browser en ga naar <a href="http://localhost:8080"
                                 target="_blank">http://localhost:8080</a></p>
+                        <p>Click op een pand om details te bekijken, attribuut 'identificatie' wordt getoond.</p>
                     </div>
                     <div class="col">
                         <img src="images/cesium-viewer-open.png" alt="Cesium Viewer">
@@ -407,49 +386,134 @@ graph LR
             </section>
 
 
-            <!-- Deel 2: Datavisualisatie - Introductie -->
             <section class="center">
-                <h3>Deel 2: Datavisualisatie in 3D</h3>
-                <p>In dit deel gaan we:</p>
-                <ol>
-                    <li>Een webserver opzetten</li>
-                    <li>3D Tiles inladen in Cesium Viewer</li>
-                    <li>Tileset stijlen aanpassen</li>
-                    <li>3D modellen toevoegen</li>
-                    <li>3D Basisvoorziening gebruiken</li>
-                    <li>3D Tiles in QGIS inladen</li>
-                </ol>
+                <h3 align = "left">Oefening 2: Bomen uit DTB (Digitaal Topografisch Bestand)</h3>
+                <div class="left">
+                    <p>In deze oefening gaan we:</p>
+                    <ol>
+                        <li>DTB downloaden en importeren</li>
+                        <li>3D Tiles maken van bomen</li>
+                        <li>Tileset visualiseren</li>
+                    </ol>
+                    <p class="alert notice"><b>Tip:</b> Zie folder 'resultaten' voor al aangemaakte tilesets</p>
+                </div>
+
             </section>
 
-
-            <!-- Tileset stijlen aanpassen -->
+            <!-- Data downloaden en importeren -->
             <section>
-                <h3>Tileset stijlen aanpassen</h3>
-                <p>Styling kan worden toegepast op twee manieren:</p>
-                <ul>
-                    <li>Tijdens het genereren van de tileset</li>
-                    <li>Tijdens het visualiseren in de client</li>
-                </ul>
-                <p>In index.html, voeg de volgende code toe voor het aanpassen van de style van DTB vlakken tijdens visualisatie:</p>
-                <p class="alert notice"><b>Tip:</b> Voeg code toe onder regel '// todo: voeg hier code toe'</p>
+                <h3>Data downloaden en importeren</h3>
+                <div class="container">
+                    <div class="col left">
+                        <ol>
+                            <li>Zoek via de <a
+                                    href="https://geoweb.rijkswaterstaat.nl/ModuleViewer/?app=1c8c833022c04e63a0f74533c19a6a27"
+                                    target="_blank">RWS DTB Bladindeling viewer</a> het Andijk kaartblad (DTB kaartblad
+                                d15cz)</li>
+                            <li>Download de data (d15cz.zip) en plaats de ZIP in <code>./container</code> folder.</li>
+                            <li>Bekijk de inhoud met GDAL (vanuit je container shell):</li>
+                        </ol>
+                        <pre><code class="language-bash">ogrinfo /vsizip/d15cz.zip</code></pre>
+                        <p>De zip bevat 3 shapefiles:</p>
+                        <ul>
+                            <li>d15cz_lin.shp (DTB lijnen)</li>
+                            <li>d15cz_reg.shp (DTB vlakken)</li>
+                            <li>d15cz_sym.shp (DTB punten)</li>
+                        </ul>
+                        <p class="alert notice"><b>Good to know:</b> de <code>/vsizip/</code> prefix voor de file path
+                            in ogrinfo zorgt ervoor dat je ZIPs kunt inspecteren.</p>
+                        <p class="alert notice">Vraag: wat is de projectie van de bestanden?</p>
 
-                <pre><code class="language-javascript">tilesetDtbVlakken.style = new Cesium.Cesium3DTileStyle({
-  color: {
-    conditions: [
-    ["${feature['osmchr']} === 'Bitumen'", "color('#430719')"],
-    ["${feature['omschr']} === 'Steen bekleding'", "color('#740320')"],
-    ["${feature['omschr']} === 'Bomen en struiken'", "color('#008000')"],
-    ["${feature['omschr']} === 'Industrieterrein'", "color('#FFFF00')"]
-    // todo: add more conditions
-    ]
-  }
-});</code></pre>
-                <p class="alert notice">Opdracht: maak features waar omschr === 'Meer' blauw (code #0000FF).</p>
+                    </div>
+                    <div class="col">
+                        <img src="images/andijk.png" alt="Andijk">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Data importeren in PostgreSQL -->
+            <section>
+                <h3>Data importeren in PostgreSQL</h3>
+                <p>Nu gaan we de punten van de DTB data inladen in de database. Run het volgende commando vanuit de shell container.
+                </p>
+                <div class="container">
+                    <div class="col left mr-3">
+                        <pre><code class="language-bash wrap">ogr2ogr -f "PostgreSQL" PG: /vsizip/d15cz.zip/d15cz_sym.shp -nln public.dtb_punt_andijk -nlt POINTZ</code></pre>
+                    </div>
+                    <div class="col">
+                        <p>Controleer of de data goed geladen is (15318 punten):</p>
+                        <pre><code class="language-bash wrap">psql -c "SELECT count(*) from public.dtb_punt_andijk;"</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h3>Ruimtelijke index + view aanmaken</h3>
+                <p class="left">Maak ruimtelijke index aan voor DTB punten met het volgende SQL commando:</p>
+                <pre><code class="language-sql">psql -c "CREATE INDEX ON public.dtb_punt_andijk USING gist(wkb_geometry)"</code></pre>
+
+                <p align="left">Maak een database view voor alleen de bomen:</p>
+                <pre><code class="language-sql">psql -c "CREATE or replace view public.v_dtb_punt_andijk AS
+SELECT
+    RANDOM()*360 AS yaw,
+    0 AS pitch,
+    0 AS roll,
+    (RANDOM()*1.5)+0.5 AS scale,
+    json_build_array(json_build_object('dtb id',dtb_id),
+    json_build_object('omschrijving',omschr),
+    json_build_object('datum',datum)) AS tags,
+    'tree.glb' AS model,
+    wkb_geometry AS geom
+FROM public.dtb_punt_andijk
+WHERE omschr = 'Boom'"</code></pre>
+                <p class="alert notice"><b>Good to know:</b> we geven de bomen een random rotation en scale, zodat er
+                    wat variatie in zit. Merk ook op dat we 'tree.glb' als string toevoegen, hiermee koppelen we
+                    het 3D model voor de boom.</p>
+
+            </section>
+
+            <!-- 3D Tiles maken van DTB punten -->
+            <section>
+                <h3>Instanced 3D Tiles maken van bomen</h3>
+                <p  align="left">We kunnen op elk punt een 3D-model (bijvoorbeeld van een 3D boom model) tekenen.
+                </p>
+                <p class="left">Kopieer <a href= "./client/tree.glb">tree.glb</a> naar de container directory.</p>
+                <div class="container">
+                    <div class="col left mr-3">
+                        <pre><code class="language-bash wrap">i3dm.export -c "Host=postgis;Username=postgres;Password=postgres;Database=postgres;Port=5432" -t public.v_dtb_punt_andijk -o ./output/dtb_punten --use_i3dm true</code></pre>
+                    </div>
+                    <div class="col">
+                        <p class="small-text">Resultaat: een tileset.json bestand, een directory 'content' met de 3D
+                            tiles in i3dm formaat, en een subtree folder.</p>
+                        <img src="images/tree_model.png" alt="Tree Model">
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h3>Instanced 3D Tiles bekijken in een CesiumJS Viewer</h3>
+                <p align="left">We gaan nu de CesiumJS Viewer gebruiken om de 3D Tiles van de bomen te bekijken.</p>
+                <div class="container">
+                    <div class="col left mr-3">
+                        <p>In index.html voeg de volgende code onder // todo: voeg hier code toe</p>
+                        <pre><code class="language-javascript">
+                        const tilesetDtbBomen = await Cesium.Cesium3DTileset.fromUrl("output/dtb_punten/tileset.json");
+                        viewer.scene.primitives.add(tilesetDtbBomen);</code></pre>
+                        <p> Start de webserver in de container:</p>
+                        <pre><code class="language-bash wrap">http-server</code></pre>
+
+                        <p>Open een browser en ga naar <a href="http://localhost:8080"
+                                target="_blank">http://localhost:8080</a></p>
+
+                        <p>Click op een boom om details te bekijken, attributen 'dtb id', 'omschrijving' en 'datum' worden getoond.</p>
+                        <img src="images/dtb_trees.png" alt="Cesium Viewer" width="200">
+                    </div>
+                </div>
             </section>
 
             <!-- 3D modellen toevoegen -->
             <section>
-                <h3>3D modellen toevoegen</h3>
+                <h3>Oefening 3: 3D modellen toevoegen</h3>
                 <div class="container">
                     <div class="col left mr-3">
                         <p>Kopieer <a href="./client/windturbine.glb" download="windturbine.glb">windturbine.glb</a> naar de container directory.</p>
@@ -468,50 +532,10 @@ graph LR
                 </div>
             </section>
 
-            <!-- 3D Basisvoorziening -->
-            <section>
-                <h3>3D Basisvoorziening</h3>
-                <p>In de 3D Basis voorziening van PDOK zijn landelijke 3D Tilesets beschikbaar.</p>
-                <p>Voeg de 3D gebouwen tileset toe aan de Cesium Viewer:</p>
-                <pre><code class="language-javascript">const tileset3DGebouwen = await Cesium.Cesium3DTileset.fromUrl(
-  "https://api.pdok.nl/kadaster/3d-basisvoorziening/ogc/v1_0/collections/gebouwen/3dtiles"
-);  
-viewer.scene.primitives.add(tileset3DGebouwen);</code></pre>
-
-            <p class="alert notice"><b>Tip:</b> Voor 3D LoD2.2 gebouwen gebruik https://data.3dbag.nl/v20250903/cesium3dtiles/lod22/tileset.json</p>
-
-            </section>
-
-            <!-- Optionele opdracht 2: voeg IFC model toe -->
-            <section class="center">
-                <h3>Conversie IFC naar GLB</h3>
-                <p class="left m-0">Ga naar site <a href = "https://3dviewer.net/#model=https://geonovum.github.io/GeoBIM_Georefereren/data/Kievitsweg_R25_ILS%20Spaces%2020250815_LoGeoRef.ifc">https://3dviewer.net/#model=https://geonovum.github.io/GeoBIM_Georefereren/data/Kievitsweg_R25_ILS%20Spaces%2020250815_LoGeoRef.ifc</a>
-                en klik op know 'Export'. Kies export naar GLB.
-                <img src="images/3dviewer_export.png" alt="IFC to GLB conversion">
-                </p>
-            </section>
-            <section>
-                <h3>Voeg IFC model toe</h3>
-                <p class="left m-0">Plaats model.glb in container folder</p>
-                <p class="left m-0">Voeg toe aan Cesium Viewer:</p>
-                <pre><code class="language-javascript">
-                viewer.entities.add({ 
-                    position: Cesium.Cartesian3.fromDegrees(5.194139,52.753524), 
-                    model: { 
-                    uri: "model.glb",
-                        heightReference: Cesium.HeightReference.CLAMP_TO_GROUND         
-                    }, 
-                });
-                </code></pre>
-                <p class="alert notice"><b>Tip:</b> Gebruik HeightReference.CLAMP_TO_GROUND om het model op het terrein te plaatsen.</p>
-                <p class="alert notice"><b>Tip:</b> Het IFC model wordt geplaatst in de buurt van de windturbine</p>
-                <p class="alert notice"><b>Tip:</b> Element 'IfcSite' in de IFC file kan worden gebruikt om de juiste locatie van het model te definiëren.</p>
-                <p class="alert notice"><b>Vraag:</b> Wat zijn de beperkingen van deze aanpak?</p>
-            </section>
 
             <!-- QGIS 3D Tiles -->
             <section>
-                <h3>QGIS 3D Tiles</h3>
+                <h3>Oefening 4: QGIS 3D Tiles</h3>
                 <div class="two-columns">
                     <div>
                         <ol>
@@ -519,7 +543,7 @@ viewer.scene.primitives.add(tileset3DGebouwen);</code></pre>
                             <li>Zet 'Source Type' op 'Service'</li>
                             <li>Maak een nieuwe connectie aan via 'New' -> 'New Cesium 3D Tiles Connection'</li>
                             <li>Name: panden</li>
-                            <li>URL: http://localhost:8080/output/bag3d/tileset.json</li>
+                            <li>URL: http://localhost:8080/output/panden/tileset.json</li>
                         </ol>
                     </div>
                     <div>
@@ -572,7 +596,6 @@ viewer.scene.primitives.add(tileset3DGebouwen);</code></pre>
                     <li>Kennis van de 3D Tiles-standaard</li>
                     <li>Inzicht in de software en technieken voor het maken van 3D-tilesets</li>
                     <li>Een 3D-tileset laden in een webomgeving en in QGIS</li>
-                    <li>Mogelijkheden voor datavisualisatie met CesiumJS</li>
                 </ul>
                 </p>
             </section>

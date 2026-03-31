@@ -10,7 +10,8 @@ RUN apk add --no-cache \
     python3 \
     make \
     g++ \
-    icu-libs
+    icu-libs \
+    krb5-libs
 
 # Install Node 20 manually
 RUN curl -fsSL https://unofficial-builds.nodejs.org/download/release/v20.11.1/node-v20.11.1-linux-x64-musl.tar.gz \
