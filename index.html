@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="nl">
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>Geef je data diepte: van 2D naar 3D met OS tools</title>
+    <title>Give your data depth: from 2D to 3D with OS tools</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reset.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
@@ -24,45 +24,45 @@
 <body>
     <div class="reveal">
         <div class="slides">
-            <!-- Titel slide -->
+            <!-- Title slide -->
             <section class="center">
-                <h3>Geef je data diepte:<br> van 2D naar 3D met OS tools</h3>
+                <h3>Give your data depth:<br> from 2D to 3D with OS tools</h3>
                 <p>
                     &middot; Workshop 3D Tiles &middot; 
                 </p>
             </section>
 
-            <!-- Doelen en benodigdheden -->
+            <!-- Goals and requirements -->
             <section class="center">
                 <div class="container">
                     <div class="col">
-                        <h5>Na deze workshop</h5>
+                        <h5>After this workshop</h5>
                         <ul>
-                            <li>Heb je kennis van de 3D Tiles-standaard</li>
-                            <li>Kun je 3D-tilesets maken uit 2D data</li>
-                            <li>Kun je een 3D-tileset inladen in een CesiumJS-webomgeving</li>
-                            <li>Zijn de mogelijkheden voor datavisualisatie met CesiumJS bekend</li>
+                            <li>You have knowledge of the 3D Tiles standard</li>
+                            <li>You can create 3D tilesets from 2D data</li>
+                            <li>You can load a 3D tileset into a CesiumJS web environment</li>
+                            <li>You are familiar with the data visualisation possibilities of CesiumJS</li>
                         </ul>
                     </div>
                     <div class="col">
-                        <h5>Benodigdheden</h5>
+                        <h5>Requirements</h5>
                         <ul>
-                            <li>Laptop met internetverbinding</li>
+                            <li>Laptop with internet connection</li>
                             <li>Docker</li>
-                            <li>QGIS 3.40 of hoger</li>
+                            <li>QGIS 3.40 or higher</li>
                         </ul>
                     </div>
                 </div>
             </section>
 
-            <!-- Programma slide -->
+            <!-- Program slide -->
             <section class="center">
-                <h3>Programma</h3>
+                <h3>Program</h3>
                 <ol>
-                    <li>Introductie 3D Tiles</li>
-                    <li>Oefening 1: 3D Bag Panden omzetten naar 3D Tiles (Mesh)</li> 
-                    <li>Oefening 2: Bomen omzetten naar 3D Tiles (Instancing)</li>
-                    <li>Oefening 3: Windmolen plaatsen</li>
+                    <li>Introduction 3D Tiles</li>
+                    <li>Exercise 1: Convert 3D BAG Buildings to 3D Tiles (Mesh)</li> 
+                    <li>Exercise 2: Convert Trees to 3D Tiles (Instancing)</li>
+                    <li>Exercise 3: Place an animated Wind Turbine</li>
                 </ol>
             </section>
 
@@ -72,27 +72,27 @@
                 <div class="mermaid">
 %%{init: {'flowchart': {'htmlLabels': true}}}%%
 graph LR
-    A[Data importeren] --> B[Data voorbereiden]
-    B --> C[Tiles genereren]
-    C --> D[Valideren]
-    D --> E[Serveren]
-    E --> F[Visualiseren]
+    A[Import data] --> B[Prepare data]
+    B --> C[Generate tiles]
+    C --> D[Validate]
+    D --> E[Serve]
+    E --> F[Visualise]
 
     classDef step fill:#06D6A0,stroke:#333,stroke-width:2px,color:#000;
     class A,B,C,D,E,F step;
                 </div>
             </section>
 
-            <!-- 3D Tiles: een OGC standaard -->
+            <!-- 3D Tiles: an OGC standard -->
             <section>
-                <h3>3D Tiles: een OGC standaard</h3>
+                <h3>3D Tiles: an OGC standard</h3>
                 <div class="container">
                     <div class="col">
                         <ul>
-                            <li>Open standaard voor het visualiseren van (grote hoeveelheden) 3D geodata op het web</li>
-                            <li>Ontwikkeld door Cesium en gestandaardiseerd door OGC</li>
-                            <li>Hiërarchische datastructuur (spatial tiling)</li>
-                            <li>Ondersteunt verschillende formaten:
+                            <li>Open standard for visualising (large amounts of) 3D geodata on the web</li>
+                            <li>Developed by Cesium and standardised by OGC</li>
+                            <li>Hierarchical data structure (spatial tiling)</li>
+                            <li>Supports various formats:
                                 <ul>
                                     <li>Batched 3D Models (b3dm)</li>
                                     <li>Instanced 3D Models (i3dm)</li>
@@ -106,30 +106,30 @@ graph LR
                         <img src="images/3dtiles_ecosysteem.png" alt="3D Tiles Ecosysteem">
                     </div>
                 </div>
-                <p class="small-text">Zie voor een gedetailleerd overzicht van de 3D Tiles specificatie: <a
+                <p class="small-text">For a detailed overview of the 3D Tiles specification, see: <a
                         href="https://github.com/CesiumGS/3d-tiles/blob/main/3d-tiles-reference-card.pdf"
                         target="_blank">3D Tiles Reference Card</a></p>
             </section>
 
-            <!-- Waarom zijn 3D Tiles nuttig? -->
+            <!-- Why are 3D Tiles useful? -->
             <section>
-                <h3>Waarom zijn 3D Tiles nuttig?</h3>
+                <h3>Why are 3D Tiles useful?</h3>
                 <ul>
-                    <li>Interoperabiliteit
+                    <li>Interoperability
                         <ul>
-                            <li>Open standaard</li>
-                            <li>Ondersteund door verschillende viewers (Cesium, ArcGIS, QGIS, Unity3D, Unreal, Godot)</li>
-                            <li>Nieuw: 3D Tiles in BabylonJS, Maplibre, Giro3D, ITowns</li>
+                            <li>Open standard</li>
+                            <li>Supported by various viewers (Cesium, ArcGIS, QGIS, Unity3D, Unreal, Godot)</li>
+                            <li>New: 3D Tiles in BabylonJS, Maplibre, Giro3D, ITowns</li>
                         </ul>
                     </li>
-                    <li>Streaming van 3D content
+                    <li>Streaming of 3D content
                         <ul>
-                            <li>Alleen de noodzakelijke data wordt ingeladen</li>
-                            <li>Progressief laden van data</li>
-                            <li>Efficiënt voor web-based toepassingen</li>
+                            <li>Only the necessary data is loaded</li>
+                            <li>Progressive loading of data</li>
+                            <li>Efficient for web-based applications</li>
                         </ul>
                     </li>
-                    <li>Styling mogelijkheden
+                    <li>Styling capabilities
                         <ul>
                             <li>3D Tiles Styling Language</li>
                         </ul>
@@ -137,73 +137,72 @@ graph LR
                 </ul>
             </section>
 
-            <!-- Introductie Digital Twins -->
+            <!-- Introduction Digital Twins -->
             <section>
-                <h3>Aan de slag!</h3>
+                <h3>Let's get started!</h3>
                 <div class="container">
                     <div class="col">
                         <ul>
-                            <li>Casus: Proefpolderdijk bij Andijk</li>
+                            <li>Case: Proefpolderdijk near Andijk</li>
                             <li>
                                 Data:
                                 <ul>
-                                    <li>De 3D BAG voor panden</li>
-                                    <li>DTB voor bomen en andere objecten</li>
-                                    <li>Windturbine 3D model (geanimeerd)</li>
+                                    <li>The 3D BAG for buildings</li>
+                                    <li>DTB for trees and other objects</li>
+                                    <li>Wind turbine 3D model (animated)</li>
                                 </ul>
                             </li>
                         </ul>
                     </div>
                     <div class="col">
-                        <img src="images/windturbine.gif" alt="Het eindresultaat van de digital twin van Andijk">
+                        <img src="images/windturbine.gif" alt="The final result of the digital twin of Andijk">
                     </div>
                 </div>
             </section>
 
             <section>
-                <h3>Docker omgeving</h3>
+                <h3>Docker environment</h3>
 
-                <p class="alert notice"><b>Let op:</b> Controleer dat Docker (https://docs.docker.com/get-started/) is geïnstalleerd en draait voordat je verder gaat.</p>
+                <p class="alert notice"><b>Note:</b> Make sure Docker (https://docs.docker.com/get-started/) is installed and running before continuing.</p>
 
                 <pre><code class="language-bash">docker ps</code></pre>
                 <img src="images/docker_ps.png" alt="Docker ps Result">
 
-                <p class="left m-0">Om de Docker omgeving op te starten zijn er twee bestanden nodig: <a href= "docker-compose.yml">docker-compose.yml</a> en 
-                    <a href="Dockerfile">Dockerfile</a>. Deze bestanden staan in de repository van de workshop.</p>
+                <p class="left m-0">To start the Docker environment, two files are needed: <a href= "docker-compose.yml">docker-compose.yml</a> and 
+                    <a href="Dockerfile">Dockerfile</a>. These files are in the workshop repository.</p>
 
-                <p class="left m-0">Kopieer deze bestanden naar een lege directory op je lokale machine, bijvoorbeeld <code>c:\3dtiles-workshop</code>. Een makkelijke
-                    manier om dit te doen is click rechtermuis op de link en kies 'Save link as...'</p>
-                <p class="alert notice"><b>Tip:</b> Een alternatieve manier om de twee bestanden op te halen is de gehele repository te clonen via 'git clone'</p>
+                <p class="left m-0">Copy these files to an empty directory on your local machine, for example <code>c:\3dtiles-workshop</code>. An easy
+                    way to do this is to right-click the link and choose 'Save link as...'</p>
+                <p class="alert notice"><b>Tip:</b> An alternative way to retrieve the two files is to clone the entire repository via 'git clone'</p>
 
-                <p class="left m-0">Open een terminal (cmd, PowerShell of Git Bash) en ga naar de directory waar je de bestanden hebt opgeslagen</p>
+                <p class="left m-0">Open a terminal (cmd, PowerShell or Git Bash) and navigate to the directory where you saved the files</p>
 
-                <p class="alert notice"><b>Tip: </b>Voor ARM64 gebruik <a href= "docker-compose-arm64.yml">docker-compose-arm64.yml</a> en <a href= "Dockerfile-arm64">Dockerfile-arm64</a></p>
+                <p class="alert notice"><b>Tip: </b>For ARM64 use <a href= "docker-compose-arm64.yml">docker-compose-arm64.yml</a> and <a href= "Dockerfile-arm64">Dockerfile-arm64</a></p>
             </section>
-            <!-- Workspace opzetten -->
+            <!-- Setting up workspace -->
             <section>
-                <h3>Workspace opzetten met Docker</h3>
-                <p class="left m-0">Voor het opzetten van de workspace run het volgende commando vanuit de
-                    directory waar de bestanden <code>docker-compose.yml</code> en <code>Dockerfile</code> staan:</p>
+                <h3>Setting up workspace with Docker</h3>
+                <p class="left m-0">To set up the workspace, run the following command from the
+                    directory where the files <code>docker-compose.yml</code> and <code>Dockerfile</code> are located:</p>
                 </p>
                 <pre><code class="language-bash">docker compose up -d</code></pre>
                 <img src="images/dockercomposeup.png" alt="Docker Compose Up Result"> 
                 <p class="left m-0">
-                    Er worden 2 containers gestart:
+                    2 containers will be started:
                     <ul>
-                        <li><code>postgis</code>: een PostgreSQL database met PostGIS extensie</li>
-                        <li><code>workspace</code>: een container met daarin alle benodigde tools geïnstalleerd (alpine)</li>
+                        <li><code>postgis</code>: a PostgreSQL database with PostGIS extension</li>
+                        <li><code>workspace</code>: a container with all necessary tools installed (alpine)</li>
                     </ul> 
                 </p>
 
-                <p class="left m-0">De twee containers draaien in een apart netwerk en kunnen met elkaar communiceren. De database is vanaf de host machine 
-                    bereikbaar via poort <code>5439</code>, de workspace container is bereikbaar via poort <code>8080</code> (voor de webserver die we later gaan gebruiken).
+                <p class="left m-0">The two containers run in a separate network and can communicate with each other. The database is accessible from the host machine 
+                    via port <code>5439</code>, the workspace container is accessible via port <code>8080</code> (for the web server we will use later).
                 </p>
 
-                <p class="alert notice"><b>Tip:</b>Voor ARM64 gebruik:</p>
+                <p class="alert notice"><b>Tip:</b>For ARM64 use:</p>
                 <pre><code class="language-bash">docker compose -f docker-compose-arm64.yml up -d </code></pre>
 
-                <p class="alert notice"><b>Tip:</b> Gebruik het commando <code>docker compose down</code> om de containers
-                    te stoppen en te verwijderen.</p>
+                <p class="alert notice"><b>Tip:</b> Use the command <code>docker compose down</code> to stop and remove the containers.</p>
             </section>
 
             <section>
@@ -211,71 +210,71 @@ graph LR
                 <img src="images/docker_containers.png" alt="Docker Containers">
             </section>
 
-            <!-- Verbinden met de database -->
+            <!-- Connecting to the database -->
             <section>
-                <h3>QGIS connectie met database</h3>
+                <h3>QGIS connection to database</h3>
                 <div class="left">
-                    <p>Gebruik username: <code>postgres</code> | password: <code>postgres</code></p>
+                    <p>Use username: <code>postgres</code> | password: <code>postgres</code></p>
                 </div>
                 <div style="display: flex; align-items: flex-start;">
-                    <img src="images/qgis_new_connection.png" alt="QGIS Database new Connectie"  style="margin-right: 10px;" >
+                    <img src="images/qgis_new_connection.png" alt="QGIS Database new Connection"  style="margin-right: 10px;" >
                     <img src="images/qgis_db_connection.png" alt="QGIS Database Connectie">
                 </div>
             </section>
 
-            <!-- Shell verbinding maken met de workspace container -->
+            <!-- Connecting to the workspace container via shell -->
             <section>
-                <h3>Verbinding maken met workspace</h3>
+                <h3>Connecting to the workspace</h3>
                 <div>
                     <ol>
                         <li>
-                            <p>Gebruik het volgende commando om een shell verbinding te maken met de workspace
+                            <p>Use the following command to open a shell connection to the workspace
                                 container:</p>
                             <pre><code class="language-bash">docker exec -it workspace bash</code></pre>
                         </li>
                         <img src="images/docker_workspace.png" alt="Docker Exec Result">
                         <li>
-                            <p>Je komt nu in directory <code>/workspace</code> terecht. Deze map is via
-                                een volume mapping direct verbonden met de <code>./container</code> map op je lokale
-                                machine.</code> Alle bestanden die je in <code>./container</code> zet zijn ook
-                                beschikbaar in <code>/workspace</code>, en andersom.</code></p>
+                            <p>You will land in the <code>/workspace</code> directory. This folder is directly linked via
+                                a volume mapping to the <code>./container</code> folder on your local
+                                machine.</code> All files you place in <code>./container</code> are also
+                                available in <code>/workspace</code>, and vice versa.</code></p>
                         </li>
                     </ol>
-                    <p class="alert notice"><b>Tip:</b> Gebruik het commando <code>exit</code> of Ctrl + D om de
-                        verbinding met de container te verbreken.</p>
+                    <p class="alert notice"><b>Tip:</b> Use the command <code>exit</code> or Ctrl + D to
+                        disconnect from the container.</p>
 
                 </div>
             </section>
 
             <section class="center">
-                <h3 align = "left">Oefening 1: 3D Bag Panden</h3>
+                <h3 align = "left">Exercise 1: 3D BAG Buildings</h3>
                 <div class="left">
-                    <p>In dit deel gaan we:</p>
+                    <p>In this part we will:</p>
                     <ol>
-                        <li>3D Bag panden downloaden en importeren</li>
-                        <li>3D Tiles maken van 3D Bag panden (Mesh)</li>
-                        <li>Tileset valideren</li>
-                        <li>Tileset visualiseren</li>
+                        <li>Download and import 3D BAG buildings</li>
+                        <li>Create 3D Tiles from 3D BAG buildings (Mesh)</li>
+                        <li>Validate tileset</li>
+                        <li>Visualise tileset</li>
                     </ol>
-                    <p class="alert notice"><b>Tip:</b> Zie folder 'resultaten' voor al aangemaakte tilesets</p>
+                    <p class="alert notice"><b>Tip:</b> See folder 'resultaten' for pre-created tilesets</p>
                 </div>
 
             </section>
 
-            <!-- Data downloaden en importeren -->
+            <!-- Downloading and importing data -->
             <section>
-                <h3>3D Bag downloaden en importeren</h3>
+                <h3>Download and import 3D BAG</h3>
                 <div class="container">
                     <div class="col left">
                         <ol>
-                            <li>Ga naar site <a href="https://3dbag.nl/en/download">https://3dbag.nl/en/download</a> en klik op knop 'Pick a tile'.
-                    Selecteer het kaartblad waar Andijk in ligt (kaartblad 8-512-888), Click 'Confirm Selection' en download de BAG data (GeoPackage formaat).</p>
+                            <li>Go to <a href="https://3dbag.nl/en/download">https://3dbag.nl/en/download</a> and click the 'Pick a tile' button.
+                    Select the map sheet containing Andijk (sheet 8-512-888), click 'Confirm Selection' and download the BAG data (GeoPackage format).</p>
                             </li>
-                            <li>Download de data (8-512-888.gpkg) en plaats in <code>./container</code> folder.</li>
-                            <li>Bekijk de inhoud met GDAL (vanuit je container shell):</li>
+                            <li>Download the data (8-512-888.gpkg) and place it in the <code>./container</code> folder.</li>
+                            <li>Inspect the contents with GDAL (from your container shell):</li>
                         </ol>
                         <pre><code class="language-bash">ogrinfo 8-512-888.gpkg</code></pre>
-                        <p>De GeoPackage bevat 7 lagen, we gebuiken nu alleen lod22_3d:</p>
+                        <p>The GeoPackage contains 7 layers, we now only use lod22_3d:</p>
                         <ul>
                             <li>lod12_3d (3D Multi Polygon)</li>
                             <li>lod12_2d (Polygon)</li>
@@ -285,7 +284,7 @@ graph LR
                             <li>lod22_2d (Polygon)</li>
                             <li>pand (Polygon)</li>
                         </ul>
-                        <p class="alert notice">Vraag: wat is de projectie van de bestanden?</p>
+                        <p class="alert notice">Question: what is the projection of the files?</p>
 
                     </div>
                     <div class="col">
@@ -294,51 +293,51 @@ graph LR
                 </div>
             </section>
 
-            <!-- Data importeren in PostgreSQL -->
+            <!-- Importing data into PostgreSQL -->
             <section>
-                <h3 align="left">Data importeren in PostgreSQL</h3>
-                <p align="left">Nu gaan we de 3D Bag inladen in de database. Run de volgende commando's vanuit de shell container.
+                <h3 align="left">Import data into PostgreSQL</h3>
+                <p align="left">Now we will load the 3D BAG into the database. Run the following commands from the container shell.
                 </p>
                     <div class="col">
                         <pre><code class="language-bash wrap">ogr2ogr -f "PostgreSQL" PG: 8-512-888.gpkg lod22_3d -nln public.panden_andijk -nlt MULTIPOLYGONZ</code></pre>
                     </div>
                     <div class="col">
-                        <p align="left">Maak spatial index aan::</p>
+                        <p align="left">Create spatial index:</p>
                         <pre><code class="language-bash wrap">psql -c "CREATE INDEX ON public.panden_andijk USING gist(st_centroid(st_envelope(geom)));" </code></pre>
                     </div>
                     <div class="col">
-                        <p align="left">Controleer of de data goed geladen is (990 panden):</p>
+                        <p align="left">Check that the data was loaded correctly (990 buildings):</p>
                         <pre><code class="language-bash wrap">psql -c "SELECT count(*) from public.panden_andijk;"</code></pre>
                     </div>
             </section>
 
-            <!-- 3D Tiles maken van 3D Bag panden -->
+            <!-- Creating 3D Tiles from 3D BAG buildings -->
             <section>
-                <h3>3D Tiles maken van 3D Bag Panden</h3>
+                <h3>Create 3D Tiles from 3D BAG Buildings</h3>
                 <div class="container">
                     <div class="col mr-3">
                         <pre><code class="language-bash wrap">pg2b3dm --connection "Host=postgis" -t public.panden_andijk -a identificatie -o ./output/panden -c geom --create_gltf false</code></pre>
                     </div>
                     <div class="col left">
-                        <p class="small-text">Resultaat: een tileset.json bestand en een directory 'content' met de 3D
-                            tiles in b3dm formaat.</p>
+                        <p class="small-text">Result: a tileset.json file and a 'content' directory with the 3D
+                            tiles in b3dm format.</p>
                         <img src="images/output_pg2b3dm.png" alt="b3dm Tileset">
                     </div>
                 </div>
             </section>
 
-            <!-- Valideren tilesets -->
+            <!-- Validating tilesets -->
             <section>
-                <h3>Tilesets valideren</h3>
+                <h3>Validate tilesets</h3>
                     <div>
-                        <p align="left">Valideer de tileset met de <a
+                        <p align="left">Validate the tileset with the <a
                                 href="https://classic.yarnpkg.com/en/package/3d-tiles-validator">3d-tiles-validator</a>
-                            (in de Docker container):</p>
+                            (in the Docker container):</p>
                         <pre><code class="language-bash wrap">3d-tiles-validator --tilesetFile ./output/panden/tileset.json</code></pre>
                     </div>
                     
                     <div>
-                        <p class="small-text" align="left">Resultaat: een validatie rapport in de terminal. Er mogen geen errors zijn, warnings kunnen worden genegeerd.</p>
+                        <p class="small-text" align="left">Result: a validation report in the terminal. There should be no errors; warnings can be ignored.</p>
                         <p align="left"><code>Validating tileset ./output/panden/tileset.json
                         Validation result:
                         {
@@ -350,34 +349,33 @@ graph LR
                     </div>
             </section>
 
-            <!-- Visualiseren tilesets -->
+            <!-- Visualising tilesets -->
             <section>
-                <h3>Tilesets visualiseren - webserver opzetten</h3>
+                <h3>Visualise tilesets - set up web server</h3>
 
-                <p align="left">Er is een webserver geïnstalleerd in de docker container. De webserver serveert alle files uit de
-                    <code>/workspace</code> folder. De server draait standaard op poort 8080.</p>
-                <p align="left">Start de server:</p>
+                <p align="left">A web server is installed in the Docker container. The web server serves all files from the
+                    <code>/workspace</code> folder. The server runs by default on port 8080.</p>
+                <p align="left">Start the server:</p>
                 <pre><code class="language-bash">http-server</code></pre>
             </section>
 
                 <!-- Cesium Viewer -->
             <section>
-                <h3>3D Tiles bekijken in een CesiumJS Viewer</h3>
-                <p>We gaan nu de CesiumJS Viewer gebruiken om de 3D Tiles te bekijken.</p>
+                <h3>View 3D Tiles in a CesiumJS Viewer</h3>
+                <p>We will now use the CesiumJS Viewer to view the 3D Tiles.</p>
                 <div class="container">
                     <div class="col left mr-3">
-                        <p>Kopieer <a href="./client/index.html" download="index.html">index.html</a> naar de container folder.
-                            Deze index.html pagina bevat Javascript code die met behulp van de CesiumJS library 3D data
-                            inlaadt.</p>
-                        <p>In de code worden 4 tilesets geladen:</p>
+                        <p>Copy <a href="./client/index.html" download="index.html">index.html</a> to the container folder.
+                            This index.html page contains Javascript code that loads 3D data using the CesiumJS library.</p>
+                        <p>The code loads 4 tilesets:</p>
                         <ul>
-                            <li>PDOK achtergrondkaart (grijs)</li>
-                            <li>PDOK quantized mesh terrein model</li>
-                            <li>3D Bag panden</li>
+                            <li>PDOK background map (grey)</li>
+                            <li>PDOK quantized mesh terrain model</li>
+                            <li>3D BAG buildings</li>
                         </ul>
-                        <p>Open een browser en ga naar <a href="http://localhost:8080"
+                        <p>Open a browser and go to <a href="http://localhost:8080"
                                 target="_blank">http://localhost:8080</a></p>
-                        <p>Click op een pand om details te bekijken, attribuut 'identificatie' wordt getoond.</p>
+                        <p>Click on a building to view details; the 'identificatie' attribute will be shown.</p>
                     </div>
                     <div class="col">
                         <img src="images/cesium-viewer-open.png" alt="Cesium Viewer">
@@ -387,42 +385,42 @@ graph LR
 
 
             <section class="center">
-                <h3 align = "left">Oefening 2: Bomen uit DTB (Digitaal Topografisch Bestand)</h3>
+                <h3 align = "left">Exercise 2: Trees from DTB (Digital Topographic File)</h3>
                 <div class="left">
-                    <p>In deze oefening gaan we:</p>
+                    <p>In this exercise we will:</p>
                     <ol>
-                        <li>DTB downloaden en importeren</li>
-                        <li>3D Tiles maken van bomen</li>
-                        <li>Tileset visualiseren</li>
+                        <li>Download and import DTB</li>
+                        <li>Create 3D Tiles from trees</li>
+                        <li>Visualise tileset</li>
                     </ol>
-                    <p class="alert notice"><b>Tip:</b> Zie folder 'resultaten' voor al aangemaakte tilesets</p>
+                    <p class="alert notice"><b>Tip:</b> See folder 'resultaten' for pre-created tilesets</p>
                 </div>
 
             </section>
 
-            <!-- Data downloaden en importeren -->
+            <!-- Downloading and importing data -->
             <section>
-                <h3>Data downloaden en importeren</h3>
+                <h3>Download and import data</h3>
                 <div class="container">
                     <div class="col left">
                         <ol>
-                            <li>Zoek via de <a
+                            <li>Search via the <a
                                     href="https://geoweb.rijkswaterstaat.nl/ModuleViewer/?app=1c8c833022c04e63a0f74533c19a6a27"
-                                    target="_blank">RWS DTB Bladindeling viewer</a> het Andijk kaartblad (DTB kaartblad
+                                    target="_blank">RWS DTB Sheet Index viewer</a> for the Andijk map sheet (DTB sheet
                                 d15cz)</li>
-                            <li>Download de data (d15cz.zip) en plaats de ZIP in <code>./container</code> folder.</li>
-                            <li>Bekijk de inhoud met GDAL (vanuit je container shell):</li>
+                            <li>Download the data (d15cz.zip) and place the ZIP in the <code>./container</code> folder.</li>
+                            <li>Inspect the contents with GDAL (from your container shell):</li>
                         </ol>
                         <pre><code class="language-bash">ogrinfo /vsizip/d15cz.zip</code></pre>
-                        <p>De zip bevat 3 shapefiles:</p>
+                        <p>The zip contains 3 shapefiles:</p>
                         <ul>
-                            <li>d15cz_lin.shp (DTB lijnen)</li>
-                            <li>d15cz_reg.shp (DTB vlakken)</li>
-                            <li>d15cz_sym.shp (DTB punten)</li>
+                            <li>d15cz_lin.shp (DTB lines)</li>
+                            <li>d15cz_reg.shp (DTB polygons)</li>
+                            <li>d15cz_sym.shp (DTB points)</li>
                         </ul>
-                        <p class="alert notice"><b>Good to know:</b> de <code>/vsizip/</code> prefix voor de file path
-                            in ogrinfo zorgt ervoor dat je ZIPs kunt inspecteren.</p>
-                        <p class="alert notice">Vraag: wat is de projectie van de bestanden?</p>
+                        <p class="alert notice"><b>Good to know:</b> the <code>/vsizip/</code> prefix before the file path
+                            in ogrinfo allows you to inspect ZIPs.</p>
+                        <p class="alert notice">Question: what is the projection of the files?</p>
 
                     </div>
                     <div class="col">
@@ -431,28 +429,28 @@ graph LR
                 </div>
             </section>
 
-            <!-- Data importeren in PostgreSQL -->
+            <!-- Importing data into PostgreSQL -->
             <section>
-                <h3>Data importeren in PostgreSQL</h3>
-                <p>Nu gaan we de punten van de DTB data inladen in de database. Run het volgende commando vanuit de shell container.
+                <h3>Import data into PostgreSQL</h3>
+                <p>Now we will load the DTB point data into the database. Run the following command from the container shell.
                 </p>
                 <div class="container">
                     <div class="col left mr-3">
                         <pre><code class="language-bash wrap">ogr2ogr -f "PostgreSQL" PG: /vsizip/d15cz.zip/d15cz_sym.shp -nln public.dtb_punt_andijk -nlt POINTZ</code></pre>
                     </div>
                     <div class="col">
-                        <p>Controleer of de data goed geladen is (15318 punten):</p>
+                        <p>Check that the data was loaded correctly (15318 points):</p>
                         <pre><code class="language-bash wrap">psql -c "SELECT count(*) from public.dtb_punt_andijk;"</code></pre>
                     </div>
                 </div>
             </section>
 
             <section>
-                <h3>Ruimtelijke index + view aanmaken</h3>
-                <p class="left">Maak ruimtelijke index aan voor DTB punten met het volgende SQL commando:</p>
+                <h3>Create spatial index + view</h3>
+                <p class="left">Create a spatial index for the DTB points with the following SQL command:</p>
                 <pre><code class="language-sql">psql -c "CREATE INDEX ON public.dtb_punt_andijk USING gist(wkb_geometry)"</code></pre>
 
-                <p align="left">Maak een database view voor alleen de bomen:</p>
+                <p align="left">Create a database view for trees only:</p>
                 <pre><code class="language-sql">psql -c "CREATE or replace view public.v_dtb_punt_andijk AS
 SELECT
     RANDOM()*360 AS yaw,
@@ -466,58 +464,58 @@ SELECT
     wkb_geometry AS geom
 FROM public.dtb_punt_andijk
 WHERE omschr = 'Boom'"</code></pre>
-                <p class="alert notice"><b>Good to know:</b> we geven de bomen een random rotation en scale, zodat er
-                    wat variatie in zit. Merk ook op dat we 'tree.glb' als string toevoegen, hiermee koppelen we
-                    het 3D model voor de boom.</p>
+                <p class="alert notice"><b>Good to know:</b> we give the trees a random rotation and scale to add
+                    some variation. Also note that we add 'tree.glb' as a string, which links
+                    the 3D model for the tree.</p>
 
             </section>
 
-            <!-- 3D Tiles maken van DTB punten -->
+            <!-- Creating 3D Tiles from DTB points -->
             <section>
-                <h3>Instanced 3D Tiles maken van bomen</h3>
-                <p  align="left">We kunnen op elk punt een 3D-model (bijvoorbeeld van een 3D boom model) tekenen.
+                <h3>Create Instanced 3D Tiles from trees</h3>
+                <p  align="left">We can draw a 3D model (e.g. a 3D tree model) at each point.
                 </p>
-                <p class="left">Kopieer <a href= "./client/tree.glb">tree.glb</a> naar de container directory.</p>
+                <p class="left">Copy <a href= "./client/tree.glb">tree.glb</a> to the container directory.</p>
                 <div class="container">
                     <div class="col left mr-3">
                         <pre><code class="language-bash wrap">i3dm.export -c "Host=postgis;Username=postgres;Password=postgres;Database=postgres;Port=5432" -t public.v_dtb_punt_andijk -o ./output/dtb_punten --use_i3dm true</code></pre>
                     </div>
                     <div class="col">
-                        <p class="small-text">Resultaat: een tileset.json bestand, een directory 'content' met de 3D
-                            tiles in i3dm formaat, en een subtree folder.</p>
+                        <p class="small-text">Result: a tileset.json file, a 'content' directory with the 3D
+                            tiles in i3dm format, and a subtree folder.</p>
                         <img src="images/tree_model.png" alt="Tree Model">
                     </div>
                 </div>
             </section>
 
             <section>
-                <h3>Instanced 3D Tiles bekijken in een CesiumJS Viewer</h3>
-                <p align="left">We gaan nu de CesiumJS Viewer gebruiken om de 3D Tiles van de bomen te bekijken.</p>
+                <h3>View Instanced 3D Tiles in a CesiumJS Viewer</h3>
+                <p align="left">We will now use the CesiumJS Viewer to view the 3D Tiles of the trees.</p>
                 <div class="container">
                     <div class="col left mr-3">
-                        <p>In index.html voeg de volgende code onder // todo: voeg hier code toe</p>
+                        <p>In index.html add the following code under // todo: add code here</p>
                         <pre><code class="language-javascript">
                         const tilesetDtbBomen = await Cesium.Cesium3DTileset.fromUrl("output/dtb_punten/tileset.json");
                         viewer.scene.primitives.add(tilesetDtbBomen);</code></pre>
-                        <p> Start de webserver in de container:</p>
+                        <p> Start the web server in the container:</p>
                         <pre><code class="language-bash wrap">http-server</code></pre>
 
-                        <p>Open een browser en ga naar <a href="http://localhost:8080"
+                        <p>Open a browser and go to <a href="http://localhost:8080"
                                 target="_blank">http://localhost:8080</a></p>
 
-                        <p>Click op een boom om details te bekijken, attributen 'dtb id', 'omschrijving' en 'datum' worden getoond.</p>
+                        <p>Click on a tree to view details; the attributes 'dtb id', 'omschrijving' and 'datum' will be shown.</p>
                         <img src="images/dtb_trees.png" alt="Cesium Viewer" width="200">
                     </div>
                 </div>
             </section>
 
-            <!-- 3D modellen toevoegen -->
+            <!-- Adding 3D models -->
             <section>
-                <h3>Oefening 3: 3D modellen toevoegen</h3>
+                <h3>Exercise 3: Adding 3D models</h3>
                 <div class="container">
                     <div class="col left mr-3">
-                        <p>Kopieer <a href="./client/windturbine.glb" download="windturbine.glb">windturbine.glb</a> naar de container directory.</p>
-                        <p>Voeg de volgende code toe aan <code>index.html</code></p>
+                        <p>Copy <a href="./client/windturbine.glb" download="windturbine.glb">windturbine.glb</a> to the container directory.</p>
+                        <p>Add the following code to <code>index.html</code></p>
                         <pre><code class="language-javascript">const windturbine = viewer.entities.add({ 
   position: Cesium.Cartesian3.fromDegrees(5.193486,52.754867), 
   model: { 
@@ -533,42 +531,42 @@ WHERE omschr = 'Boom'"</code></pre>
             </section>
 
 
-            <!-- Cleanup na de workshop -->
+            <!-- Cleanup after the workshop -->
             <section>
-                <h3>Cleanup na de workshop</h3>
-                <p>Voer de volgende commando's uit om de Docker containers te stoppen en te verwijderen:</p>
+                <h3>Cleanup after the workshop</h3>
+                <p>Run the following commands to stop and remove the Docker containers:</p>
                 <pre><code class="language-bash">docker compose down</code></pre>
                 <!-- Delete dangling docker images -->
-                <p>Verwijder docker images:</p>
+                <p>Remove docker images:</p>
                 <pre><code class="language-bash">docker rmi 3dtiles_workshop-workspace</code></pre>
                 <pre><code class="language-bash">docker rmi postgis/postgis</code></pre>
-                <p>Verwijder database data:</p>
+                <p>Remove database data:</p>
                 <pre><code class="language-bash">docker volume rm 3dtiles_workshop_postgis_data</code></pre>
             </section>
 
-            <!-- Afsluiting -->
+            <!-- Closing -->
             <section class="center">
-                <h3>Afsluiting</h3>
-                <p><b>Wat hebben we geleerd?</b>
+                <h3>Wrap-up</h3>
+                <p><b>What have we learned?</b>
                 <ul>
-                    <li>Kennis van de 3D Tiles-standaard</li>
-                    <li>Inzicht in de software en technieken voor het maken van 3D-tilesets</li>
-                    <li>Een 3D-tileset laden in een webomgeving en in QGIS</li>
+                    <li>Knowledge of the 3D Tiles standard</li>
+                    <li>Insight into the software and techniques for creating 3D tilesets</li>
+                    <li>Loading a 3D tileset in a web environment and in QGIS</li>
                 </ul>
                 </p>
             </section>
 
-            <!-- Bronnen en links -->
+            <!-- Sources and links -->
             <section class="center">
-                <h3>Bronnen en links</h3>
+                <h3>Sources and links</h3>
                 <ul class="small-text">
-                    <li><a href="https://github.com/CesiumGS/3d-tiles" target="_blank">3D Tiles specificatie</a></li>
+                    <li><a href="https://github.com/CesiumGS/3d-tiles" target="_blank">3D Tiles specification</a></li>
                     <li><a href="https://github.com/CesiumGS/3d-tiles/blob/main/3d-tiles-reference-card.pdf"
                             target="_blank">3D Tiles Reference Card</a></li>
-                    <li><a href="https://github.com/Geodan/pg2b3dm" target="_blank">pg2b3dm</a> - Tool voor het maken
-                        van b3dm tilesets</li>
-                    <li><a href="https://github.com/Geodan/i3dm.export" target="_blank">i3dm.export</a> - Tool voor het
-                        maken van i3dm tilesets</li>
+                    <li><a href="https://github.com/Geodan/pg2b3dm" target="_blank">pg2b3dm</a> - Tool for creating
+                        b3dm tilesets</li>
+                    <li><a href="https://github.com/Geodan/i3dm.export" target="_blank">i3dm.export</a> - Tool for
+                        creating i3dm tilesets</li>
                     <li><a href="https://github.com/CesiumGS/3d-tiles-validator" target="_blank">3D Tiles Validator</a>
                     </li>
                     <li><a href="https://cesium.com/platform/cesiumjs/" target="_blank">CesiumJS</a></li>
