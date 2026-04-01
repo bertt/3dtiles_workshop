@@ -19,7 +19,7 @@
       ]
     },
     "content": {
-      "uri": "content/{level}_{x}_{y}.cmpt"
+      "uri": "content/{level}_{x}_{y}.glb"
     },
     "implicitTiling": {
       "availableLevels": 1,
