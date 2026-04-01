@@ -19,7 +19,7 @@
       ]
     },
     "content": {
-      "uri": "content/{level}_{x}_{y}.i3dm"
+      "uri": "content/{level}_{x}_{y}.glb"
     },
     "implicitTiling": {
       "availableLevels": 2,

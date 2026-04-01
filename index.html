@@ -74,12 +74,11 @@
 graph LR
     A[Import data] --> B[Prepare data]
     B --> C[Generate tiles]
-    C --> D[Validate]
-    D --> E[Serve]
-    E --> F[Visualise]
+    C --> D[Serve]
+    D --> E[Visualise]
 
     classDef step fill:#06D6A0,stroke:#333,stroke-width:2px,color:#000;
-    class A,B,C,D,E,F step;
+    class A,B,C,D,E step;
                 </div>
             </section>
 
@@ -103,7 +102,7 @@ graph LR
                         </ul>
                     </div>
                     <div class="col">
-                        <img src="images/3dtiles_ecosysteem.png" alt="3D Tiles Ecosysteem">
+                        <img src="images/3dtiles_ecosysteem.png" alt="3D Tiles Ecosystem">
                     </div>
                 </div>
                 <p class="small-text">For a detailed overview of the 3D Tiles specification, see: <a
@@ -218,7 +217,7 @@ graph LR
                 </div>
                 <div style="display: flex; align-items: flex-start;">
                     <img src="images/qgis_new_connection.png" alt="QGIS Database new Connection"  style="margin-right: 10px;" >
-                    <img src="images/qgis_db_connection.png" alt="QGIS Database Connectie">
+                    <img src="images/qgis_db_connection.png" alt="QGIS Database Connection">
                 </div>
             </section>
 
@@ -253,7 +252,6 @@ graph LR
                     <ol>
                         <li>Download and import 3D BAG buildings</li>
                         <li>Create 3D Tiles from 3D BAG buildings (Mesh)</li>
-                        <li>Validate tileset</li>
                         <li>Visualise tileset</li>
                     </ol>
                     <p class="alert notice"><b>Tip:</b> See folder 'resultaten' for pre-created tilesets</p>
@@ -316,37 +314,14 @@ graph LR
                 <h3>Create 3D Tiles from 3D BAG Buildings</h3>
                 <div class="container">
                     <div class="col mr-3">
-                        <pre><code class="language-bash wrap">pg2b3dm --connection "Host=postgis" -t public.panden_andijk -a identificatie -o ./output/panden -c geom --create_gltf false</code></pre>
+                        <pre><code class="language-bash wrap">pg2b3dm --connection "Host=postgis" -t public.panden_andijk -a identificatie -o ./output/panden -c geom</code></pre>
                     </div>
                     <div class="col left">
-                        <p class="small-text">Result: a tileset.json file and a 'content' directory with the 3D
-                            tiles in b3dm format.</p>
+                        <p class="small-text">Result: a tileset.json file, a 'content' directory with the 3D
+                            tiles in glTF 2.0 format and a subtree folder.</p>
                         <img src="images/output_pg2b3dm.png" alt="b3dm Tileset">
                     </div>
                 </div>
-            </section>
-
-            <!-- Validating tilesets -->
-            <section>
-                <h3>Validate tilesets</h3>
-                    <div>
-                        <p align="left">Validate the tileset with the <a
-                                href="https://classic.yarnpkg.com/en/package/3d-tiles-validator">3d-tiles-validator</a>
-                            (in the Docker container):</p>
-                        <pre><code class="language-bash wrap">3d-tiles-validator --tilesetFile ./output/panden/tileset.json</code></pre>
-                    </div>
-                    
-                    <div>
-                        <p class="small-text" align="left">Result: a validation report in the terminal. There should be no errors; warnings can be ignored.</p>
-                        <p align="left"><code>Validating tileset ./output/panden/tileset.json
-                        Validation result:
-                        {
-                        "date": "2026-03-30T13:47:10.266Z",
-                        "numErrors": 0,
-                        "numWarnings": 0,
-                        "numInfos": 0
-                        }</code></p>
-                    </div>
             </section>
 
             <!-- Visualising tilesets -->
@@ -478,11 +453,11 @@ WHERE omschr = 'Boom'"</code></pre>
                 <p class="left">Copy <a href= "./client/tree.glb">tree.glb</a> to the container directory.</p>
                 <div class="container">
                     <div class="col left mr-3">
-                        <pre><code class="language-bash wrap">i3dm.export -c "Host=postgis;Username=postgres;Password=postgres;Database=postgres;Port=5432" -t public.v_dtb_punt_andijk -o ./output/dtb_punten --use_i3dm true</code></pre>
+                        <pre><code class="language-bash wrap">i3dm.export -c "Host=postgis;Username=postgres;Password=postgres;Database=postgres;Port=5432" -t public.v_dtb_punt_andijk -o ./output/dtb_punten --use_gpu_instancing true</code></pre>
                     </div>
                     <div class="col">
-                        <p class="small-text">Result: a tileset.json file, a 'content' directory with the 3D
-                            tiles in i3dm format, and a subtree folder.</p>
+                        <p class="small-text">Result: a tileset.json file, a 'content' directory with the instance3D
+                            tiles in glTF 2.0 format, and a subtree folder.</p>
                         <img src="images/tree_model.png" alt="Tree Model">
                     </div>
                 </div>
