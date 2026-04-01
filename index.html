@@ -63,6 +63,7 @@
                     <li>Exercise 1: Convert 3D BAG Buildings to 3D Tiles (Mesh)</li> 
                     <li>Exercise 2: Convert Trees to 3D Tiles (Instancing)</li>
                     <li>Exercise 3: Place an animated Wind Turbine</li>
+                    <li>Exercise 4: Place street lights from the BGT as Instanced 3D Tiles</li>
                 </ol>
             </section>
 
@@ -149,6 +150,7 @@ graph LR
                                     <li>The 3D BAG for buildings</li>
                                     <li>DTB for trees and other objects</li>
                                     <li>Wind turbine 3D model (animated)</li>
+                                    <li>Street lights from the BGT as Instanced 3D Tiles</li>
                                 </ul>
                             </li>
                         </ul>
@@ -360,7 +362,7 @@ graph LR
 
 
             <section class="center">
-                <h3 align = "left">Exercise 2: Trees from DTB (Digital Topographic File)</h3>
+                <h3 align = "left">Exercise 2: Trees from DTB (Digital Topographic Bestand)</h3>
                 <div class="left">
                     <p>In this exercise we will:</p>
                     <ol>
@@ -505,6 +507,17 @@ WHERE omschr = 'Boom'"</code></pre>
                 </div>
             </section>
 
+            <section>
+                <h3>🌶️Extra exercise: Adding streetlights from BGT🌶️</h3>
+                <p>Try to add streetlights from the BGT as Instanced 3D Tiles. The workflow is similar to the trees from the DTB, but 
+                    now you need to use the BGT data and create a different database view for the streetlights.</p>
+                <p>Source data: <a href="https://app.pdok.nl/lv/bgt/download-viewer/">https://app.pdok.nl/lv/bgt/download-viewer/</a>" (choose GML Light) - dataset bgt_paal.gml</p>
+                <P>DEM data: get from <a href="https://www.ahn.nl/dataroom">https://www.ahn.nl/dataroom</a></P>
+                <p>Put street lights on correct elevation using QGIS Drape (set z value from raster)</p>
+                <p>In database view use plus_type = 'lichtmast'</p>
+                <p>Bonus: rotate street lights towards the road using dataset bgt_wegdeel.gml</p>
+                <img src="images/bgt_poles.png" alt="BGT Pole Model" width="300">
+            </section>
 
             <!-- Cleanup after the workshop -->
             <section>
@@ -526,7 +539,7 @@ WHERE omschr = 'Boom'"</code></pre>
                 <ul>
                     <li>Knowledge of the 3D Tiles standard</li>
                     <li>Insight into the software and techniques for creating 3D tilesets</li>
-                    <li>Loading a 3D tileset in a web environment and in QGIS</li>
+                    <li>Loading a 3D tileset in a web environment</li>
                 </ul>
                 </p>
             </section>

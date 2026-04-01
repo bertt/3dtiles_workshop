@@ -1,0 +1,33 @@
+{
+  "asset": {
+    "generator": "i3dm.export 2.18.1.0",
+    "version": "1.1",
+    "crs": "EPSG:4326 (WGS84)"
+  },
+  "geometricError": 1000.0,
+  "root": {
+    "geometricError": 1000.0,
+    "refine": "ADD",
+    "boundingVolume": {
+      "region": [
+        0.08999705873108248,
+        0.9201272434507232,
+        0.09186959504766233,
+        0.9205833173293185,
+        39.242645506856825,
+        54.56302136806631
+      ]
+    },
+    "content": {
+      "uri": "content/{level}_{x}_{y}.cmpt"
+    },
+    "implicitTiling": {
+      "availableLevels": 1,
+      "subdivisionScheme": "QUADTREE",
+      "subtreeLevels": 2,
+      "subtrees": {
+        "uri": "subtrees/{level}_{x}_{y}.subtree"
+      }
+    }
+  }
+}
