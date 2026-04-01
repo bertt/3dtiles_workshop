@@ -522,13 +522,13 @@ WHERE omschr = 'Boom'"</code></pre>
             <!-- Cleanup after the workshop -->
             <section>
                 <h3>Cleanup after the workshop</h3>
-                <p>Run the following commands to stop and remove the Docker containers:</p>
+                <p align="left">Run the following commands to stop and remove the Docker containers:</p>
                 <pre><code class="language-bash">docker compose down</code></pre>
                 <!-- Delete dangling docker images -->
-                <p>Remove docker images:</p>
+                <p align="left">Remove docker images:</p>
                 <pre><code class="language-bash">docker rmi 3dtiles_workshop-workspace</code></pre>
                 <pre><code class="language-bash">docker rmi postgis/postgis</code></pre>
-                <p>Remove database data:</p>
+                <p align="left">Remove database data:</p>
                 <pre><code class="language-bash">docker volume rm 3dtiles_workshop_postgis_data</code></pre>
             </section>
 
