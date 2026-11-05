@@ -526,8 +526,8 @@ WHERE omschr = 'Boom'"</code></pre>
                 <pre><code class="language-bash">podman compose down</code></pre>
                 <!-- Delete dangling images -->
                 <p align="left">Remove images:</p>
-                <pre><code class="language-bash">podman rmi localhost/3dtiles_workshop-workspace</code></pre>
-                <pre><code class="language-bash">podman rmi docker.io/postgis/postgis</code></pre>
+                <pre><code class="language-bash">podman rmi 3dtiles_workshop-workspace</code></pre>
+                <pre><code class="language-bash">podman rmi docker.io/postgis/postgis:17-3.5-alpine</code></pre>
                 <p align="left">Remove database data:</p>
                 <pre><code class="language-bash">podman volume rm 3dtiles_workshop_postgis_data</code></pre>
             </section>
