@@ -48,7 +48,7 @@
                         <h5>Requirements</h5>
                         <ul>
                             <li>Laptop with internet connection</li>
-                            <li>Docker</li>
+                            <li>Podman</li>
                             <li>QGIS 3.40 or higher</li>
                         </ul>
                     </div>
@@ -162,15 +162,15 @@ graph LR
             </section>
 
             <section>
-                <h3>Docker environment</h3>
+                <h3>Podman environment</h3>
 
-                <p class="alert notice"><b>Note:</b> Make sure Docker (https://docs.docker.com/get-started/) is installed and running before continuing.</p>
+                <p class="alert notice"><b>Note:</b> Make sure Podman (https://podman.io/docs/installation) and a compose provider (podman-compose or docker-compose) are installed and, on Windows/macOS, that the Podman machine is running (<code>podman machine start</code>) before continuing.</p>
 
-                <pre><code class="language-bash">docker ps</code></pre>
+                <pre><code class="language-bash">podman ps</code></pre>
                 <img src="images/docker_ps.png" alt="Docker ps Result">
 
-                <p class="left m-0">To start the Docker environment, two files are needed: <a href= "docker-compose.yml">docker-compose.yml</a> and 
-                    <a href="Dockerfile">Dockerfile</a>. These files are in the workshop repository.</p>
+                <p class="left m-0">To start the Podman environment, two files are needed: <a href= "compose.yml">compose.yml</a> and 
+                    <a href="Containerfile">Containerfile</a>. These files are in the workshop repository.</p>
 
                 <p class="left m-0">Copy these files to an empty directory on your local machine, for example <code>c:\3dtiles-workshop</code>. An easy
                     way to do this is to right-click the link and choose 'Save link as...'</p>
@@ -178,15 +178,15 @@ graph LR
 
                 <p class="left m-0">Open a terminal (cmd, PowerShell or Git Bash) and navigate to the directory where you saved the files</p>
 
-                <p class="alert notice"><b>Tip: </b>For ARM64 use <a href= "docker-compose-arm64.yml">docker-compose-arm64.yml</a> and <a href= "Dockerfile-arm64">Dockerfile-arm64</a></p>
+                <p class="alert notice"><b>Tip: </b>For ARM64 use <a href= "compose-arm64.yml">compose-arm64.yml</a> and <a href= "Containerfile-arm64">Containerfile-arm64</a></p>
             </section>
             <!-- Setting up workspace -->
             <section>
-                <h3>Setting up workspace with Docker</h3>
+                <h3>Setting up workspace with Podman</h3>
                 <p class="left m-0">To set up the workspace, run the following command from the
-                    directory where the files <code>docker-compose.yml</code> and <code>Dockerfile</code> are located:</p>
+                    directory where the files <code>compose.yml</code> and <code>Containerfile</code> are located:</p>
                 </p>
-                <pre><code class="language-bash">docker compose up -d</code></pre>
+                <pre><code class="language-bash">podman compose up -d</code></pre>
                 <img src="images/dockercomposeup.png" alt="Docker Compose Up Result"> 
                 <p class="left m-0">
                     2 containers will be started:
@@ -201,13 +201,13 @@ graph LR
                 </p>
 
                 <p class="alert notice"><b>Tip:</b>For ARM64 use:</p>
-                <pre><code class="language-bash">docker compose -f docker-compose-arm64.yml up -d </code></pre>
+                <pre><code class="language-bash">podman compose -f compose-arm64.yml up -d </code></pre>
 
-                <p class="alert notice"><b>Tip:</b> Use the command <code>docker compose down</code> to stop and remove the containers.</p>
+                <p class="alert notice"><b>Tip:</b> Use the command <code>podman compose down</code> to stop and remove the containers.</p>
             </section>
 
             <section>
-                <h3>Docker containers</h3>
+                <h3>Podman containers</h3>
                 <img src="images/docker_containers.png" alt="Docker Containers">
             </section>
 
@@ -231,7 +231,7 @@ graph LR
                         <li>
                             <p>Use the following command to open a shell connection to the workspace
                                 container:</p>
-                            <pre><code class="language-bash">docker exec -it workspace bash</code></pre>
+                            <pre><code class="language-bash">podman exec -it workspace bash</code></pre>
                         </li>
                         <img src="images/docker_workspace.png" alt="Docker Exec Result">
                         <li>
@@ -330,7 +330,7 @@ graph LR
             <section>
                 <h3>Visualise tilesets - set up web server</h3>
 
-                <p align="left">A web server is installed in the Docker container. The web server serves all files from the
+                <p align="left">A web server is installed in the Podman container. The web server serves all files from the
                     <code>/workspace</code> folder. The server runs by default on port 8080.</p>
                 <p align="left">Start the server:</p>
                 <pre><code class="language-bash">http-server</code></pre>
@@ -522,14 +522,14 @@ WHERE omschr = 'Boom'"</code></pre>
             <!-- Cleanup after the workshop -->
             <section>
                 <h3>Cleanup after the workshop</h3>
-                <p align="left">Run the following commands to stop and remove the Docker containers:</p>
-                <pre><code class="language-bash">docker compose down</code></pre>
-                <!-- Delete dangling docker images -->
-                <p align="left">Remove docker images:</p>
-                <pre><code class="language-bash">docker rmi 3dtiles_workshop-workspace</code></pre>
-                <pre><code class="language-bash">docker rmi postgis/postgis</code></pre>
+                <p align="left">Run the following commands to stop and remove the Podman containers:</p>
+                <pre><code class="language-bash">podman compose down</code></pre>
+                <!-- Delete dangling images -->
+                <p align="left">Remove images:</p>
+                <pre><code class="language-bash">podman rmi localhost/3dtiles_workshop-workspace</code></pre>
+                <pre><code class="language-bash">podman rmi docker.io/postgis/postgis</code></pre>
                 <p align="left">Remove database data:</p>
-                <pre><code class="language-bash">docker volume rm 3dtiles_workshop_postgis_data</code></pre>
+                <pre><code class="language-bash">podman volume rm 3dtiles_workshop_postgis_data</code></pre>
             </section>
 
             <!-- Closing -->
