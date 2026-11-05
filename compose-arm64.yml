@@ -1,6 +1,7 @@
 services:
   postgis:
-    image: postgis/postgis:17-3.5-alpine
+    image: docker.io/imresamu/postgis:16-3.5-alpine  # ARM64-compatibel alternatief
+    platform: linux/arm64
     container_name: postgis
     environment:
       POSTGRES_PASSWORD: postgres
@@ -15,6 +16,7 @@ services:
   workspace:
     build:
       context: .
+      dockerfile: Containerfile-arm64
     container_name: workspace
     ports:
       - "8080:8080"
@@ -23,10 +25,9 @@ services:
       - PGPORT=5432
       - PGUSER=postgres
       - PGPASSWORD=postgres
-      - PGDATABASE=postgres
       - PROJ_NETWORK=ON
     volumes:
-      - ./container:/workspace
+      - ./container:/workspace:Z
     networks:
       - my_network
 
@@ -36,4 +37,3 @@ networks:
 
 volumes:
   postgis_data:
-    driver: local
