@@ -514,6 +514,32 @@ viewer.scene.primitives.add(tilesetDtbBomen);</code></pre>
                                 <p>In the database view, use plus_type = 'lichtmast' and set the model to '<a href="client/pole.glb" target="_blank">pole.glb</a>'</p>
                 <p>Bonus: rotate street lights towards the road using dataset bgt_wegdeel.gml</p>
                 <img src="images/bgt_poles.png" alt="BGT Pole Model" width="300">
+                <aside class="notes">
+                    Example query (street lights rotated towards the nearest road):
+                    <pre><code class="language-sql">SELECT
+    l.ogc_fid,
+    degrees(ST_Azimuth(l.geometrie_punt, ST_ClosestPoint(w.geom,l.geometrie_punt)))::INTEGER as rotation,
+    st_transform(l.geometrie_punt, 4326) as geom,
+    1 AS scale,
+    NULL::json AS tags,
+    'pole.glb' AS model
+FROM
+    bgt_202202.paal l
+INNER JOIN LATERAL (
+    SELECT
+        ST_CurveToLine(geometrie_vlak) as geom
+    FROM
+        bgt_202202.wegdeel x
+    WHERE
+        bgt_functie LIKE '%rijbaan%'
+    AND ST_DWithin(l.geometrie_punt, x.geometrie_vlak, 20)
+    ORDER BY
+        ST_CurveToLine(x.geometrie_vlak) &lt;-&gt; l.geometrie_punt
+    LIMIT 1
+) as w on TRUE
+WHERE
+    plus_type = 'lichtmast';</code></pre>
+                </aside>
             </section>
 
             <!-- Cleanup after the workshop -->
