@@ -191,21 +191,20 @@ graph LR
             <!-- Setting up workspace -->
             <section>
                 <h3>Setting up workspace with Podman</h3>
-                <p class="left m-0">To set up the workspace, run the following command from the
-                    directory where the files <code>compose.yml</code> and <code>Containerfile</code> are located:</p>
-                </p>
+                <p class="left m-0">Run the following command from the directory with <code>compose.yml</code> and <code>Containerfile</code>:</p>
                 <pre><code class="language-bash">podman-compose up -d</code></pre>
-                <img src="images/dockercomposeup.png" alt="Docker Compose Up Result"> 
-                <p class="left m-0">
-                    2 containers will be started:
-                    <ul>
-                        <li><code>postgis</code>: a PostgreSQL database with PostGIS extension</li>
-                        <li><code>workspace</code>: a container with all necessary tools installed (alpine)</li>
-                    </ul> 
-                </p>
+                <img src="images/dockercomposeup.png" alt="Docker Compose Up Result">
+                <p class="left m-0">2 containers will be started:</p>
+                <ul>
+                    <li><code>postgis</code>: PostgreSQL database with PostGIS</li>
+                    <li><code>workspace</code>: all necessary tools (alpine)</li>
+                </ul>
+            </section>
 
-                <p class="left m-0">The two containers run in a separate network and can communicate with each other. The database is accessible from the host machine 
-                    via port <code>5439</code>, the workspace container is accessible via port <code>8080</code> (for the web server we will use later).
+            <section>
+                <h3>Setting up workspace: details</h3>
+                <p class="left">The two containers run in a separate network and can communicate with each other. The database is accessible from the host machine
+                    via port <code>5439</code>, the workspace container via port <code>8080</code> (for the web server we will use later).
                 </p>
 
                 <p class="alert notice"><b>Tip:</b> For ARM64 use:</p>
