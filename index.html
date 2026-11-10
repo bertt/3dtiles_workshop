@@ -164,7 +164,11 @@ graph LR
             <section>
                 <h3>Podman environment</h3>
 
-                <p class="alert notice"><b>Note:</b> Make sure Podman (https://podman.io/docs/installation) and a compose provider (podman-compose or docker-compose) are installed and, on Windows/macOS, that the Podman machine is running (<code>podman machine start</code>) before continuing.</p>
+                <p class="alert notice"><b>Note:</b> Make sure Podman (https://podman.io/docs/installation) and podman-compose are installed and, on Windows/macOS, that the Podman machine is running (<code>podman machine start</code>) before continuing.</p>
+
+                                <p class="left m-0">Check that podman-compose is installed:</p>
+                                <pre><code class="language-bash">podman-compose --version</code></pre>
+                                <p class="alert notice"><b>Tip:</b> If this command is not found, install it with <code>pip install podman-compose</code> (or <code>uv tool install podman-compose</code>).</p>
 
                 <pre><code class="language-bash">podman ps</code></pre>
                 <img src="images/docker_ps.png" alt="Docker ps Result">
@@ -186,7 +190,7 @@ graph LR
                 <p class="left m-0">To set up the workspace, run the following command from the
                     directory where the files <code>compose.yml</code> and <code>Containerfile</code> are located:</p>
                 </p>
-                <pre><code class="language-bash">podman compose up -d</code></pre>
+                <pre><code class="language-bash">podman-compose up -d</code></pre>
                 <img src="images/dockercomposeup.png" alt="Docker Compose Up Result"> 
                 <p class="left m-0">
                     2 containers will be started:
@@ -201,9 +205,9 @@ graph LR
                 </p>
 
                 <p class="alert notice"><b>Tip:</b>For ARM64 use:</p>
-                <pre><code class="language-bash">podman compose -f compose-arm64.yml up -d </code></pre>
+                <pre><code class="language-bash">podman-compose -f compose-arm64.yml up -d </code></pre>
 
-                <p class="alert notice"><b>Tip:</b> Use the command <code>podman compose down</code> to stop and remove the containers.</p>
+                <p class="alert notice"><b>Tip:</b> Use the command <code>podman-compose down</code> to stop and remove the containers.</p>
             </section>
 
             <section>
@@ -523,10 +527,10 @@ WHERE omschr = 'Boom'"</code></pre>
             <section>
                 <h3>Cleanup after the workshop</h3>
                 <p align="left">Run the following commands to stop and remove the Podman containers:</p>
-                <pre><code class="language-bash">podman compose down</code></pre>
+                <pre><code class="language-bash">podman-compose down</code></pre>
                 <!-- Delete dangling images -->
                 <p align="left">Remove images:</p>
-                <pre><code class="language-bash">podman rmi 3dtiles_workshop-workspace</code></pre>
+                <pre><code class="language-bash">podman rmi localhost/3dtiles_workshop_workspace</code></pre>
                 <pre><code class="language-bash">podman rmi docker.io/postgis/postgis:17-3.5-alpine</code></pre>
                 <p align="left">Remove database data:</p>
                 <pre><code class="language-bash">podman volume rm 3dtiles_workshop_postgis_data</code></pre>
