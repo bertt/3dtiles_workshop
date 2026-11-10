@@ -53,6 +53,10 @@
                         </ul>
                     </div>
                 </div>
+                <div style="text-align:center; margin-top:20px;">
+                    <img src="qr.svg" alt="QR code" style="height:180px; background:#fff; padding:8px; margin:0;">
+                    <div style="font-size:0.5em;">https://bertt.github.io/3dtiles_workshop/</div>
+                </div>
             </section>
 
             <!-- Program slide -->
@@ -365,20 +369,6 @@ graph LR
             </section>
 
 
-            <section class="center">
-                <h3 align = "left">Exercise 2: Trees from DTB (Digital Topographic File)</h3>
-                <div class="left">
-                    <p>In this exercise we will:</p>
-                    <ol>
-                        <li>Download and import DTB</li>
-                        <li>Create 3D Tiles from trees</li>
-                        <li>Visualise the tileset</li>
-                    </ol>
-                    <p class="alert notice"><b>Tip:</b> See folder 'resultaten' for pre-created tilesets</p>
-                </div>
-
-            </section>
-
             <!-- Downloading and importing data -->
             <section>
                 <h3>Download and import data</h3>
@@ -584,7 +574,7 @@ viewer.scene.primitives.add(tilesetDtbBomen);</code></pre>
         });
         
         Reveal.initialize({
-            center: false,
+            center: true,
             hash: true,
             slideNumber: (slide) => [Reveal.getIndices(slide).h, '/', Reveal.getTotalSlides() - 1],
             copycode: {
