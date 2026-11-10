@@ -293,6 +293,10 @@ graph LR
                             <li>pand (Polygon)</li>
                         </ul>
                         <p class="alert notice">                        Question: what is the coordinate reference system (CRS) of the files?</p>
+                        <aside class="notes">
+                            Answer: EPSG:7415 (Amersfoort / RD New + NAP height), a compound CRS.
+                            Horizontal: EPSG:28992 (Amersfoort / RD New). Vertical: EPSG:5709 (NAP height).
+                        </aside>
 
                     </div>
                     <div class="col">
@@ -392,6 +396,10 @@ graph LR
                         <p class="alert notice"><b>Good to know:</b> the <code>/vsizip/</code> prefix before the file path
                                                     lets ogrinfo read inside ZIP files.</p>
                                                 <p class="alert notice">Question: what is the coordinate reference system (CRS) of the files?</p>
+                        <aside class="notes">
+                            Answer: EPSG:7415 (Amersfoort / RD New + NAP height), a compound CRS.
+                            Horizontal: EPSG:28992 (Amersfoort / RD New). Vertical: EPSG:5709 (NAP height).
+                        </aside>
 
                     </div>
                     <div class="col">
@@ -504,7 +512,7 @@ viewer.scene.primitives.add(tilesetDtbBomen);</code></pre>
                 <p>Source data: <a href="https://app.pdok.nl/lv/bgt/download-viewer/">https://app.pdok.nl/lv/bgt/download-viewer/</a> (choose GML Light) - dataset bgt_paal.gml</p>
                 <p>Elevation data (DEM): download from <a href="https://www.ahn.nl/dataroom">https://www.ahn.nl/dataroom</a></p>
                                 <p>Place the street lights at the correct elevation using QGIS Drape (set z value from raster)</p>
-                                <p>In the database view, use plus_type = 'lichtmast' and set the model to 'pole.glb'</p>
+                                <p>In the database view, use plus_type = 'lichtmast' and set the model to '<a href="client/pole.glb" target="_blank">pole.glb</a>'</p>
                 <p>Bonus: rotate street lights towards the road using dataset bgt_wegdeel.gml</p>
                 <img src="images/bgt_poles.png" alt="BGT Pole Model" width="300">
             </section>
@@ -531,9 +539,16 @@ viewer.scene.primitives.add(tilesetDtbBomen);</code></pre>
                     <li>Creating 3D tilesets from 2D data</li>
                     <li>Loading a 3D tileset in a web environment</li>
                 </ul>
-                <p><b>Next steps</b></p>
+            </section>
+
+            <section class="center">
+                <h3>Next steps</h3>
                 <ul>
                     <li>Convert other data to 3D Tiles: Gaussian Splats, point clouds, IFC models</li>
+                    <li>Import CityGML with <a href="https://github.com/3dcitydb/3dcitydb" target="_blank">3DCityDB</a> and create 3D Tiles from it (using pg2b3dm)</li>
+                    <li>Explore the <a href="https://github.com/geosolutions-it/digital-twin-toolbox/" target="_blank">digital-twin-toolbox</a></li>
+                    <li>Learn about georeferencing BIM models: <a href="https://nl-digigo.github.io/GeoBIM_Georefereren/" target="_blank">GeoBIM Georefereren</a></li>
+                    <li>Join the Dutch community: <a href="https://3dtilesnederland.nl/" target="_blank">3D Tiles Nederland</a></li>
                     <li>Customize CesiumJS: styling, interaction and your own viewer</li>
                     <li>Validate tilesets with <a href="https://github.com/CesiumGS/3d-tiles-validator" target="_blank">3d-tiles-validator</a> and process them with <a href="https://github.com/CesiumGS/3d-tiles-tools" target="_blank">3d-tiles-tools</a></li>
                 </ul>
