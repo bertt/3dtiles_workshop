@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>Give your data depth: from 2D to 3D with OS tools</title>
+    <title>Give your data depth: from 2D to 3D with open-source tools</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reset.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
@@ -26,7 +26,7 @@
         <div class="slides">
             <!-- Title slide -->
             <section class="center">
-                <h3>Give your data depth:<br> from 2D to 3D with OS tools</h3>
+                <h3>Give your data depth:<br> from 2D to 3D with open-source tools</h3>
                 <p>
                     &middot; Workshop 3D Tiles &middot; 
                 </p>
@@ -48,7 +48,7 @@
                         <h5>Requirements</h5>
                         <ul>
                             <li>Laptop with internet connection</li>
-                            <li>Docker</li>
+                            <li>Podman</li>
                             <li>QGIS 3.40 or higher</li>
                         </ul>
                     </div>
@@ -161,32 +161,36 @@ graph LR
                 </div>
             </section>
 
-            <section>
-                <h3>Docker environment</h3>
+            <section class="left">
+                <h3 style="text-align:left;">Podman environment</h3>
 
-                <p class="alert notice"><b>Note:</b> Make sure Docker (https://docs.docker.com/get-started/) is installed and running before continuing.</p>
+                <p class="alert notice"><b>Note:</b> Install <a href="https://podman.io/docs/installation">Podman</a> and podman-compose (<code>pip install podman-compose</code>). On Windows/macOS, run <code>podman machine start</code> first.</p>
 
-                <pre><code class="language-bash">docker ps</code></pre>
-                <img src="images/docker_ps.png" alt="Docker ps Result">
+                <div style="display: flex; gap: 20px; align-items: flex-start;">
+                    <div class="left" style="flex: 1;">
+                        <p class="m-0">Check that Podman is running:</p>
+                        <pre style="width:100%; margin:0.5em 0;"><code class="language-bash">podman ps</code></pre>
+                        <img src="images/podman_ps.png" alt="Podman ps Result" style="display:block; margin-left:0; max-width:100%;">
+                    </div>
+                    <div class="left" style="flex: 1;">
+                        <p class="m-0">Check that podman-compose is installed:</p>
+                        <pre style="width:100%; margin:0.5em 0;"><code class="language-bash">podman-compose --version</code></pre>
+                        <img src="images/podman_compose_version.png" alt="podman-compose version Result" style="display:block; margin-left:0; max-width:100%;">
+                    </div>
+                </div>
 
-                <p class="left m-0">To start the Docker environment, two files are needed: <a href= "docker-compose.yml">docker-compose.yml</a> and 
-                    <a href="Dockerfile">Dockerfile</a>. These files are in the workshop repository.</p>
+                <p class="left m-0">Download <a href="compose.yml">compose.yml</a> and <a href="Containerfile">Containerfile</a> (or 'git clone' the repository) to an empty directory, e.g. <code>c:\3dtiles-workshop</code>, and open a terminal there.</p>
+                <p class="alert notice"><b>Tip:</b> <code>Containerfile</code> has no file extension, so make sure your browser or editor does not add <code>.txt</code>.</p>
 
-                <p class="left m-0">Copy these files to an empty directory on your local machine, for example <code>c:\3dtiles-workshop</code>. An easy
-                    way to do this is to right-click the link and choose 'Save link as...'</p>
-                <p class="alert notice"><b>Tip:</b> An alternative way to retrieve the two files is to clone the entire repository via 'git clone'</p>
-
-                <p class="left m-0">Open a terminal (cmd, PowerShell or Git Bash) and navigate to the directory where you saved the files</p>
-
-                <p class="alert notice"><b>Tip: </b>For ARM64 use <a href= "docker-compose-arm64.yml">docker-compose-arm64.yml</a> and <a href= "Dockerfile-arm64">Dockerfile-arm64</a></p>
+                <p class="alert notice"><b>Tip: </b>For ARM64 use <a href= "compose-arm64.yml">compose-arm64.yml</a> and <a href= "Containerfile-arm64">Containerfile-arm64</a></p>
             </section>
             <!-- Setting up workspace -->
             <section>
-                <h3>Setting up workspace with Docker</h3>
+                <h3>Setting up workspace with Podman</h3>
                 <p class="left m-0">To set up the workspace, run the following command from the
-                    directory where the files <code>docker-compose.yml</code> and <code>Dockerfile</code> are located:</p>
+                    directory where the files <code>compose.yml</code> and <code>Containerfile</code> are located:</p>
                 </p>
-                <pre><code class="language-bash">docker compose up -d</code></pre>
+                <pre><code class="language-bash">podman-compose up -d</code></pre>
                 <img src="images/dockercomposeup.png" alt="Docker Compose Up Result"> 
                 <p class="left m-0">
                     2 containers will be started:
@@ -200,14 +204,14 @@ graph LR
                     via port <code>5439</code>, the workspace container is accessible via port <code>8080</code> (for the web server we will use later).
                 </p>
 
-                <p class="alert notice"><b>Tip:</b>For ARM64 use:</p>
-                <pre><code class="language-bash">docker compose -f docker-compose-arm64.yml up -d </code></pre>
+                <p class="alert notice"><b>Tip:</b> For ARM64 use:</p>
+                <pre><code class="language-bash">podman-compose -f compose-arm64.yml up -d </code></pre>
 
-                <p class="alert notice"><b>Tip:</b> Use the command <code>docker compose down</code> to stop and remove the containers.</p>
+                <p class="alert notice"><b>Tip:</b> Use the command <code>podman-compose down</code> to stop and remove the containers.</p>
             </section>
 
             <section>
-                <h3>Docker containers</h3>
+                <h3>Podman containers</h3>
                 <img src="images/docker_containers.png" alt="Docker Containers">
             </section>
 
@@ -215,7 +219,7 @@ graph LR
             <section>
                 <h3>QGIS connection to database</h3>
                 <div class="left">
-                    <p>Use username: <code>postgres</code> | password: <code>postgres</code></p>
+                    <p>Username: <code>postgres</code> | Password: <code>postgres</code></p>
                 </div>
                 <div style="display: flex; align-items: flex-start;">
                     <img src="images/qgis_new_connection.png" alt="QGIS Database new Connection"  style="margin-right: 10px;" >
@@ -231,14 +235,14 @@ graph LR
                         <li>
                             <p>Use the following command to open a shell connection to the workspace
                                 container:</p>
-                            <pre><code class="language-bash">docker exec -it workspace bash</code></pre>
+                            <pre><code class="language-bash">podman exec -it workspace bash</code></pre>
                         </li>
                         <img src="images/docker_workspace.png" alt="Docker Exec Result">
                         <li>
                             <p>You will land in the <code>/workspace</code> directory. This folder is directly linked via
                                 a volume mapping to the <code>./container</code> folder on your local
-                                machine.</code> All files you place in <code>./container</code> are also
-                                available in <code>/workspace</code>, and vice versa.</code></p>
+                                machine. All files you place in <code>./container</code> are also
+                                available in <code>/workspace</code>, and vice versa.</p>
                         </li>
                     </ol>
                     <p class="alert notice"><b>Tip:</b> Use the command <code>exit</code> or Ctrl + D to
@@ -254,7 +258,7 @@ graph LR
                     <ol>
                         <li>Download and import 3D BAG buildings</li>
                         <li>Create 3D Tiles from 3D BAG buildings (Mesh)</li>
-                        <li>Visualise tileset</li>
+                        <li>Visualise the tileset</li>
                     </ol>
                     <p class="alert notice"><b>Tip:</b> See folder 'resultaten' for pre-created tilesets</p>
                 </div>
@@ -268,13 +272,13 @@ graph LR
                     <div class="col left">
                         <ol>
                             <li>Go to <a href="https://3dbag.nl/en/download">https://3dbag.nl/en/download</a> and click the 'Pick a tile' button.
-                    Select the map sheet containing Andijk (sheet 8-512-888), click 'Confirm Selection' and download the BAG data (GeoPackage format).</p>
+                    Select the map sheet containing Andijk (sheet 8-512-888), click 'Confirm Selection' and download the BAG data (GeoPackage format).
                             </li>
                             <li>Download the data (8-512-888.gpkg) and place it in the <code>./container</code> folder.</li>
                             <li>Inspect the contents with GDAL (from your container shell):</li>
                         </ol>
                         <pre><code class="language-bash">ogrinfo 8-512-888.gpkg</code></pre>
-                        <p>The GeoPackage contains 7 layers, we now only use lod22_3d:</p>
+                        <p>The GeoPackage contains 7 layers; we will only use lod22_3d:</p>
                         <ul>
                             <li>lod12_3d (3D Multi Polygon)</li>
                             <li>lod12_2d (Polygon)</li>
@@ -284,7 +288,7 @@ graph LR
                             <li>lod22_2d (Polygon)</li>
                             <li>pand (Polygon)</li>
                         </ul>
-                        <p class="alert notice">Question: what is the projection of the files?</p>
+                        <p class="alert notice">                        Question: what is the coordinate reference system (CRS) of the files?</p>
 
                     </div>
                     <div class="col">
@@ -330,7 +334,7 @@ graph LR
             <section>
                 <h3>Visualise tilesets - set up web server</h3>
 
-                <p align="left">A web server is installed in the Docker container. The web server serves all files from the
+                <p align="left">A web server is installed in the Podman container. The web server serves all files from the
                     <code>/workspace</code> folder. The server runs by default on port 8080.</p>
                 <p align="left">Start the server:</p>
                 <pre><code class="language-bash">http-server</code></pre>
@@ -343,8 +347,8 @@ graph LR
                 <div class="container">
                     <div class="col left mr-3">
                         <p>Copy <a href="./client/index.html" download="index.html">index.html</a> to the container folder.
-                            This index.html page contains Javascript code that loads 3D data using the CesiumJS library.</p>
-                        <p>The code loads 4 tilesets:</p>
+                            This index.html page contains JavaScript code that loads 3D data using the CesiumJS library.</p>
+                                                    <p>The code loads 3 tilesets:</p>
                         <ul>
                             <li>PDOK background map (grey)</li>
                             <li>PDOK quantized mesh terrain model</li>
@@ -362,13 +366,13 @@ graph LR
 
 
             <section class="center">
-                <h3 align = "left">Exercise 2: Trees from DTB (Digital Topographic Bestand)</h3>
+                <h3 align = "left">Exercise 2: Trees from DTB (Digital Topographic File)</h3>
                 <div class="left">
                     <p>In this exercise we will:</p>
                     <ol>
                         <li>Download and import DTB</li>
                         <li>Create 3D Tiles from trees</li>
-                        <li>Visualise tileset</li>
+                        <li>Visualise the tileset</li>
                     </ol>
                     <p class="alert notice"><b>Tip:</b> See folder 'resultaten' for pre-created tilesets</p>
                 </div>
@@ -381,9 +385,9 @@ graph LR
                 <div class="container">
                     <div class="col left">
                         <ol>
-                            <li>Search via the <a
+                            <li>Use the <a
                                     href="https://geoweb.rijkswaterstaat.nl/ModuleViewer/?app=1c8c833022c04e63a0f74533c19a6a27"
-                                    target="_blank">RWS DTB Sheet Index viewer</a> for the Andijk map sheet (DTB sheet
+                                    target="_blank">RWS DTB Sheet Index viewer</a> to find the Andijk map sheet (DTB sheet
                                 d15cz)</li>
                             <li>Download the data (d15cz.zip) and place the ZIP in the <code>./container</code> folder.</li>
                             <li>Inspect the contents with GDAL (from your container shell):</li>
@@ -396,8 +400,8 @@ graph LR
                             <li>d15cz_sym.shp (DTB points)</li>
                         </ul>
                         <p class="alert notice"><b>Good to know:</b> the <code>/vsizip/</code> prefix before the file path
-                            in ogrinfo allows you to inspect ZIPs.</p>
-                        <p class="alert notice">Question: what is the projection of the files?</p>
+                                                    lets ogrinfo read inside ZIP files.</p>
+                                                <p class="alert notice">Question: what is the coordinate reference system (CRS) of the files?</p>
 
                     </div>
                     <div class="col">
@@ -407,19 +411,15 @@ graph LR
             </section>
 
             <!-- Importing data into PostgreSQL -->
-            <section>
-                <h3>Import data into PostgreSQL</h3>
-                <p>Now we will load the DTB point data into the database. Run the following command from the container shell.
-                </p>
-                <div class="container">
-                    <div class="col left mr-3">
-                        <pre><code class="language-bash wrap">ogr2ogr -f "PostgreSQL" PG: /vsizip/d15cz.zip/d15cz_sym.shp -nln public.dtb_punt_andijk -nlt POINTZ</code></pre>
-                    </div>
-                    <div class="col">
-                        <p>Check that the data was loaded correctly (15318 points):</p>
-                        <pre><code class="language-bash wrap">psql -c "SELECT count(*) from public.dtb_punt_andijk;"</code></pre>
-                    </div>
-                </div>
+            <section class="left">
+                <h3 style="text-align:left;">Import data into PostgreSQL</h3>
+                <p>Now we will load the DTB point data into the database. Run the following commands from the container shell.</p>
+
+                <p class="m-0"><b>1. Import the data</b></p>
+                <pre style="width:100%; margin:0.5em 0 1em;"><code class="language-bash wrap">ogr2ogr -f "PostgreSQL" PG: /vsizip/d15cz.zip/d15cz_sym.shp -nln public.dtb_punt_andijk -nlt POINTZ</code></pre>
+
+                <p class="m-0"><b>2. Check that the data was loaded correctly</b> (15318 points)</p>
+                <pre style="width:100%; margin:0.5em 0;"><code class="language-bash wrap">psql -c "SELECT count(*) from public.dtb_punt_andijk;"</code></pre>
             </section>
 
             <section>
@@ -441,9 +441,9 @@ SELECT
     wkb_geometry AS geom
 FROM public.dtb_punt_andijk
 WHERE omschr = 'Boom'"</code></pre>
-                <p class="alert notice"><b>Good to know:</b> we give the trees a random rotation and scale to add
-                    some variation. Also note that we add 'tree.glb' as a string, which links
-                    the 3D model for the tree.</p>
+                <p class="alert notice">                <b>Good to know:</b> we give each tree a random rotation and scale to add
+                                    some variation. Also note that 'tree.glb' is added as a string, which links
+                                    to the 3D model of the tree.</p>
 
             </section>
 
@@ -458,7 +458,7 @@ WHERE omschr = 'Boom'"</code></pre>
                         <pre><code class="language-bash wrap">i3dm.export -c "Host=postgis;Username=postgres;Password=postgres;Database=postgres;Port=5432" -t public.v_dtb_punt_andijk -o ./output/dtb_punten --use_gpu_instancing true</code></pre>
                     </div>
                     <div class="col">
-                        <p class="small-text">Result: a tileset.json file, a 'content' directory with the instance3D
+                        <p class="small-text">Result: a tileset.json file, a                         'content' directory with the instanced 3D
                             tiles in glTF 2.0 format, and a subtree folder.</p>
                         <img src="images/tree_model.png" alt="Tree Model">
                     </div>
@@ -470,17 +470,17 @@ WHERE omschr = 'Boom'"</code></pre>
                 <p align="left">We will now use the CesiumJS Viewer to view the 3D Tiles of the trees.</p>
                 <div class="container">
                     <div class="col left mr-3">
-                        <p>In index.html add the following code under // todo: add code here</p>
-                        <pre><code class="language-javascript">
-                        const tilesetDtbBomen = await Cesium.Cesium3DTileset.fromUrl("output/dtb_punten/tileset.json");
-                        viewer.scene.primitives.add(tilesetDtbBomen);</code></pre>
+                        <p>In index.html, add the following code below the line <code>// todo: add code here</code></p>
+                        <pre style="width:100%; margin:0.5em 0;"><code class="language-javascript">const tilesetDtbBomen = await Cesium.Cesium3DTileset.fromUrl("output/dtb_punten/tileset.json");
+viewer.scene.primitives.add(tilesetDtbBomen);</code></pre>
                         <p> Start the web server in the container:</p>
-                        <pre><code class="language-bash wrap">http-server</code></pre>
+                        <pre style="width:100%; margin:0.5em 0;"><code class="language-bash wrap">http-server</code></pre>
 
                         <p>Open a browser and go to <a href="http://localhost:8080"
                                 target="_blank">http://localhost:8080</a></p>
 
                         <p>Click on a tree to view details; the attributes 'dtb id', 'omschrijving' and 'datum' will be shown.</p>
+                        <p class="alert notice"><b>Tip:</b> If you don't see the trees, do a hard refresh of the browser with <code>Ctrl</code>+<code>F5</code> (or <code>Ctrl</code>+<code>Shift</code>+<code>R</code>) to bypass the cache.</p>
                         <img src="images/dtb_trees.png" alt="Cesium Viewer" width="200">
                     </div>
                 </div>
@@ -508,13 +508,13 @@ WHERE omschr = 'Boom'"</code></pre>
             </section>
 
             <section>
-                <h3>🌶️Exercise 4: Adding streetlights from BGT🌶️</h3>
-                <p>Try to add streetlights from the BGT as Instanced 3D Tiles. The workflow is similar to the trees from the DTB, but 
-                    now you need to use the BGT data and create a different database view for the streetlights.</p>
+                <h3>🌶️Exercise 4: Adding street lights from BGT🌶️</h3>
+                <p>Try to add street lights from the BGT as Instanced 3D Tiles. The workflow is similar to the trees from the DTB, but 
+                                    this time you need to use the BGT data and create a different database view for the street lights.</p>
                 <p>Source data: <a href="https://app.pdok.nl/lv/bgt/download-viewer/">https://app.pdok.nl/lv/bgt/download-viewer/</a> (choose GML Light) - dataset bgt_paal.gml</p>
-                <P>DEM data: get from <a href="https://www.ahn.nl/dataroom">https://www.ahn.nl/dataroom</a></P>
-                <p>Put street lights on correct elevation using QGIS Drape (set z value from raster)</p>
-                <p>In database view use plus_type = 'lichtmast', as model use 'pole.glb'</p>
+                <p>Elevation data (DEM): download from <a href="https://www.ahn.nl/dataroom">https://www.ahn.nl/dataroom</a></p>
+                                <p>Place the street lights at the correct elevation using QGIS Drape (set z value from raster)</p>
+                                <p>In the database view, use plus_type = 'lichtmast' and set the model to 'pole.glb'</p>
                 <p>Bonus: rotate street lights towards the road using dataset bgt_wegdeel.gml</p>
                 <img src="images/bgt_poles.png" alt="BGT Pole Model" width="300">
             </section>
@@ -522,26 +522,31 @@ WHERE omschr = 'Boom'"</code></pre>
             <!-- Cleanup after the workshop -->
             <section>
                 <h3>Cleanup after the workshop</h3>
-                <p align="left">Run the following commands to stop and remove the Docker containers:</p>
-                <pre><code class="language-bash">docker compose down</code></pre>
-                <!-- Delete dangling docker images -->
-                <p align="left">Remove docker images:</p>
-                <pre><code class="language-bash">docker rmi 3dtiles_workshop-workspace</code></pre>
-                <pre><code class="language-bash">docker rmi postgis/postgis</code></pre>
+                <p align="left">Run the following commands to stop and remove the Podman containers:</p>
+                <pre><code class="language-bash">podman-compose down</code></pre>
+                <!-- Delete dangling images -->
+                <p align="left">Remove images:</p>
+                <pre><code class="language-bash">podman rmi localhost/3dtiles_workshop_workspace</code></pre>
+                <pre><code class="language-bash">podman rmi docker.io/postgis/postgis:17-3.5-alpine</code></pre>
                 <p align="left">Remove database data:</p>
-                <pre><code class="language-bash">docker volume rm 3dtiles_workshop_postgis_data</code></pre>
+                <pre><code class="language-bash">podman volume rm 3dtiles_workshop_postgis_data</code></pre>
             </section>
 
             <!-- Closing -->
             <section class="center">
                 <h3>Wrap-up</h3>
-                <p><b>What have we learned?</b>
+                <p><b>What have we learned?</b></p>
                 <ul>
-                    <li>Knowledge of the 3D Tiles standard</li>
-                    <li>Insight into the software and techniques for creating 3D tilesets</li>
+                    <li>The 3D Tiles standard</li>
+                    <li>Creating 3D tilesets from 2D data</li>
                     <li>Loading a 3D tileset in a web environment</li>
                 </ul>
-                </p>
+                <p><b>Next steps</b></p>
+                <ul>
+                    <li>Convert other data to 3D Tiles: Gaussian Splats, point clouds, IFC models</li>
+                    <li>Customize CesiumJS: styling, interaction and your own viewer</li>
+                    <li>Validate tilesets with <a href="https://github.com/CesiumGS/3d-tiles-validator" target="_blank">3d-tiles-validator</a> and process them with <a href="https://github.com/CesiumGS/3d-tiles-tools" target="_blank">3d-tiles-tools</a></li>
+                </ul>
             </section>
 
             <!-- Sources and links -->
@@ -581,7 +586,7 @@ WHERE omschr = 'Boom'"</code></pre>
         Reveal.initialize({
             center: false,
             hash: true,
-            slideNumber: 'c/t',
+            slideNumber: (slide) => [Reveal.getIndices(slide).h, '/', Reveal.getTotalSlides() - 1],
             copycode: {
                 style: {
                     copybg: "#347CAE",

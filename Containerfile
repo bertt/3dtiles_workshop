@@ -13,8 +13,8 @@ RUN apk add --no-cache \
     icu-libs \
     krb5-libs
 
-# Install Node 20 manually
-RUN curl -fsSL https://unofficial-builds.nodejs.org/download/release/v20.11.1/node-v20.11.1-linux-x64-musl.tar.gz \
+# Install Node 22 manually
+RUN curl -fsSL https://unofficial-builds.nodejs.org/download/release/v22.22.0/node-v22.22.0-linux-x64-musl.tar.gz \
     | tar -xz -C /usr/local --strip-components=1
 
 # Install npm packages
